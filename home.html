@@ -1,0 +1,2223 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="theme-color"
+        content="#020b18"
+    >
+
+    <title>Red Sea - الرئيسية</title>
+
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+
+        html,
+        body {
+            width: 100%;
+            min-height: 100%;
+        }
+
+
+        body {
+
+            min-height: 100vh;
+
+            font-family:
+                Arial,
+                Tahoma,
+                sans-serif;
+
+            color: #fff;
+
+            background:
+                radial-gradient(
+                    circle at 50% -10%,
+                    #084b83 0%,
+                    #042744 30%,
+                    #020f20 62%,
+                    #010711 100%
+                );
+
+            overflow-x: hidden;
+        }
+
+
+        button {
+            font-family: inherit;
+        }
+
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+
+        /* =========================================
+           APP
+        ========================================= */
+
+        .app {
+
+            width: 100%;
+
+            max-width: 600px;
+
+            min-height: 100vh;
+
+            margin: auto;
+
+            position: relative;
+
+            padding-bottom: 90px;
+
+        }
+
+
+        /* =========================================
+           TOP HEADER
+        ========================================= */
+
+        .header {
+
+            height: 78px;
+
+            padding:
+                15px
+                17px
+                10px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            position: sticky;
+
+            top: 0;
+
+            z-index: 20;
+
+            background:
+                rgba(2, 15, 31, .72);
+
+            backdrop-filter:
+                blur(18px);
+
+            -webkit-backdrop-filter:
+                blur(18px);
+
+            border-bottom:
+                1px solid
+                rgba(255,255,255,.055);
+
+        }
+
+
+        .profile-mini {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+
+            min-width: 0;
+
+        }
+
+
+        .avatar {
+
+            width: 45px;
+
+            height: 45px;
+
+            border-radius: 50%;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            flex-shrink: 0;
+
+            font-size: 19px;
+
+            font-weight: 800;
+
+            color: #fff;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #078dff,
+                    #0049b9
+                );
+
+            border:
+                2px solid
+                rgba(78,201,255,.55);
+
+            box-shadow:
+                0 0 18px
+                rgba(0,145,255,.25);
+
+        }
+
+
+        .user-info {
+
+            min-width: 0;
+
+        }
+
+
+        .welcome {
+
+            font-size: 10px;
+
+            color:
+                rgba(255,255,255,.42);
+
+            margin-bottom: 3px;
+
+        }
+
+
+        .username {
+
+            font-size: 15px;
+
+            font-weight: 800;
+
+            max-width: 150px;
+
+            white-space: nowrap;
+
+            overflow: hidden;
+
+            text-overflow: ellipsis;
+
+        }
+
+
+        .header-actions {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+        }
+
+
+        .icon-btn {
+
+            width: 40px;
+
+            height: 40px;
+
+            border-radius: 13px;
+
+            border:
+                1px solid
+                rgba(255,255,255,.08);
+
+            background:
+                rgba(255,255,255,.045);
+
+            color: #fff;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 18px;
+
+            cursor: pointer;
+
+        }
+
+
+        /* =========================================
+           COIN CARD
+        ========================================= */
+
+        .wallet-card {
+
+            margin:
+                16px
+                16px
+                12px;
+
+            padding: 17px;
+
+            border-radius: 22px;
+
+            position: relative;
+
+            overflow: hidden;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(7,63,108,.92),
+                    rgba(3,28,52,.96)
+                );
+
+            border:
+                1px solid
+                rgba(56,180,255,.16);
+
+            box-shadow:
+                0 18px 45px
+                rgba(0,0,0,.25);
+
+        }
+
+
+        .wallet-card::before {
+
+            content: "";
+
+            position: absolute;
+
+            width: 150px;
+
+            height: 150px;
+
+            border-radius: 50%;
+
+            background:
+                rgba(0,161,255,.13);
+
+            filter: blur(35px);
+
+            top: -70px;
+
+            left: -30px;
+
+        }
+
+
+        .wallet-top {
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            position: relative;
+
+            z-index: 1;
+
+        }
+
+
+        .wallet-title {
+
+            color:
+                rgba(255,255,255,.58);
+
+            font-size: 11px;
+
+            margin-bottom: 5px;
+
+        }
+
+
+        .coins {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 7px;
+
+        }
+
+
+        .coin-icon {
+
+            width: 30px;
+
+            height: 30px;
+
+            border-radius: 50%;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #ffd86b,
+                    #e29b20
+                );
+
+            box-shadow:
+                0 0 15px
+                rgba(255,190,45,.25);
+
+            font-size: 15px;
+
+        }
+
+
+        .coin-number {
+
+            font-size: 22px;
+
+            font-weight: 900;
+
+        }
+
+
+        .charge-btn {
+
+            border: none;
+
+            height: 38px;
+
+            padding:
+                0
+                15px;
+
+            border-radius: 12px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #00a8ff,
+                    #0066e8
+                );
+
+            color: #fff;
+
+            font-size: 12px;
+
+            font-weight: 800;
+
+            cursor: pointer;
+
+        }
+
+
+        /* =========================================
+           SEARCH
+        ========================================= */
+
+        .search-box {
+
+            margin:
+                0
+                16px
+                18px;
+
+            height: 48px;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+
+            padding:
+                0
+                15px;
+
+            border-radius: 15px;
+
+            background:
+                rgba(255,255,255,.045);
+
+            border:
+                1px solid
+                rgba(255,255,255,.07);
+
+        }
+
+
+        .search-icon {
+
+            font-size: 18px;
+
+            opacity: .5;
+
+        }
+
+
+        .search-box input {
+
+            flex: 1;
+
+            border: none;
+
+            outline: none;
+
+            background: transparent;
+
+            color: #fff;
+
+            font-size: 13px;
+
+            font-family: inherit;
+
+        }
+
+
+        .search-box input::placeholder {
+
+            color:
+                rgba(255,255,255,.35);
+
+        }
+
+
+        /* =========================================
+           SECTION
+        ========================================= */
+
+        .section {
+
+            margin:
+                0
+                16px
+                20px;
+
+        }
+
+
+        .section-head {
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            margin-bottom: 13px;
+
+        }
+
+
+        .section-title {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+            font-size: 17px;
+
+            font-weight: 800;
+
+        }
+
+
+        .live-dot {
+
+            width: 8px;
+
+            height: 8px;
+
+            border-radius: 50%;
+
+            background: #ff3154;
+
+            box-shadow:
+                0 0 10px
+                rgba(255,49,84,.8);
+
+            animation:
+                pulse 1.5s infinite;
+
+        }
+
+
+        @keyframes pulse {
+
+            0%,100% {
+                opacity: .5;
+                transform: scale(.85);
+            }
+
+            50% {
+                opacity: 1;
+                transform: scale(1);
+            }
+
+        }
+
+
+        .see-all {
+
+            color: #39bfff;
+
+            font-size: 11px;
+
+            cursor: pointer;
+
+        }
+
+
+        /* =========================================
+           CATEGORY
+        ========================================= */
+
+        .categories {
+
+            display: flex;
+
+            gap: 9px;
+
+            overflow-x: auto;
+
+            padding-bottom: 3px;
+
+            scrollbar-width: none;
+
+        }
+
+
+        .categories::-webkit-scrollbar {
+            display: none;
+        }
+
+
+        .category {
+
+            flex-shrink: 0;
+
+            padding:
+                9px
+                14px;
+
+            border-radius: 13px;
+
+            border:
+                1px solid
+                rgba(255,255,255,.07);
+
+            background:
+                rgba(255,255,255,.04);
+
+            color:
+                rgba(255,255,255,.65);
+
+            font-size: 11px;
+
+            cursor: pointer;
+
+        }
+
+
+        .category.active {
+
+            color: #fff;
+
+            background:
+                rgba(0,145,255,.2);
+
+            border-color:
+                rgba(0,168,255,.4);
+
+        }
+
+
+        /* =========================================
+           ROOMS
+        ========================================= */
+
+        .rooms {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, 1fr);
+
+            gap: 12px;
+
+        }
+
+
+        .room {
+
+            min-height: 175px;
+
+            padding: 13px;
+
+            border-radius: 20px;
+
+            position: relative;
+
+            overflow: hidden;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(8,51,83,.9),
+                    rgba(2,22,40,.95)
+                );
+
+            border:
+                1px solid
+                rgba(255,255,255,.07);
+
+            cursor: pointer;
+
+            transition: .2s;
+
+        }
+
+
+        .room:active {
+
+            transform: scale(.97);
+
+        }
+
+
+        .room-cover {
+
+            height: 72px;
+
+            border-radius: 14px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 30px;
+
+            margin-bottom: 10px;
+
+            background:
+                radial-gradient(
+                    circle at center,
+                    #0876bd,
+                    #031d38
+                );
+
+        }
+
+
+        .room:nth-child(2)
+        .room-cover {
+
+            background:
+                radial-gradient(
+                    circle at center,
+                    #61349c,
+                    #1c1234
+                );
+
+        }
+
+
+        .room:nth-child(3)
+        .room-cover {
+
+            background:
+                radial-gradient(
+                    circle at center,
+                    #9a5128,
+                    #30190e
+                );
+
+        }
+
+
+        .room:nth-child(4)
+        .room-cover {
+
+            background:
+                radial-gradient(
+                    circle at center,
+                    #207d68,
+                    #092d27
+                );
+
+        }
+
+
+        .live-label {
+
+            position: absolute;
+
+            top: 9px;
+
+            right: 9px;
+
+            padding:
+                4px
+                7px;
+
+            border-radius: 7px;
+
+            background:
+                rgba(255,38,70,.9);
+
+            font-size: 8px;
+
+            font-weight: 800;
+
+        }
+
+
+        .room-name {
+
+            font-size: 13px;
+
+            font-weight: 800;
+
+            white-space: nowrap;
+
+            overflow: hidden;
+
+            text-overflow: ellipsis;
+
+            margin-bottom: 5px;
+
+        }
+
+
+        .room-owner {
+
+            font-size: 10px;
+
+            color:
+                rgba(255,255,255,.42);
+
+            margin-bottom: 9px;
+
+        }
+
+
+        .room-bottom {
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+        }
+
+
+        .members {
+
+            color:
+                rgba(255,255,255,.48);
+
+            font-size: 10px;
+
+        }
+
+
+        .mic {
+
+            font-size: 14px;
+
+        }
+
+
+        /* =========================================
+           QUICK ACTIONS
+        ========================================= */
+
+        .quick-actions {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(4,1fr);
+
+            gap: 9px;
+
+        }
+
+
+        .quick {
+
+            min-height: 82px;
+
+            border-radius: 16px;
+
+            background:
+                rgba(255,255,255,.04);
+
+            border:
+                1px solid
+                rgba(255,255,255,.065);
+
+            display: flex;
+
+            flex-direction: column;
+
+            align-items: center;
+
+            justify-content: center;
+
+            gap: 7px;
+
+            cursor: pointer;
+
+        }
+
+
+        .quick-icon {
+
+            font-size: 23px;
+
+        }
+
+
+        .quick span {
+
+            font-size: 9px;
+
+            color:
+                rgba(255,255,255,.58);
+
+        }
+
+
+        /* =========================================
+           EMPTY
+        ========================================= */
+
+        .empty {
+
+            display: none;
+
+            padding: 30px 15px;
+
+            text-align: center;
+
+            color:
+                rgba(255,255,255,.4);
+
+            font-size: 12px;
+
+        }
+
+
+        /* =========================================
+           BOTTOM NAV
+        ========================================= */
+
+        .bottom-nav {
+
+            position: fixed;
+
+            left: 50%;
+
+            bottom: 0;
+
+            transform:
+                translateX(-50%);
+
+            width: 100%;
+
+            max-width: 600px;
+
+            height: 72px;
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(5,1fr);
+
+            align-items: center;
+
+            z-index: 50;
+
+            background:
+                rgba(1,10,21,.88);
+
+            border-top:
+                1px solid
+                rgba(255,255,255,.07);
+
+            backdrop-filter:
+                blur(20px);
+
+            -webkit-backdrop-filter:
+                blur(20px);
+
+        }
+
+
+        .nav-item {
+
+            height: 100%;
+
+            display: flex;
+
+            flex-direction: column;
+
+            align-items: center;
+
+            justify-content: center;
+
+            gap: 4px;
+
+            color:
+                rgba(255,255,255,.4);
+
+            cursor: pointer;
+
+            font-size: 9px;
+
+        }
+
+
+        .nav-icon {
+
+            font-size: 21px;
+
+        }
+
+
+        .nav-item.active {
+
+            color: #27b7ff;
+
+        }
+
+
+        .nav-item.active
+        .nav-icon {
+
+            filter:
+                drop-shadow(
+                    0 0 7px
+                    rgba(0,180,255,.5)
+                );
+
+        }
+
+
+        /* =========================================
+           LOADING
+        ========================================= */
+
+        .loading-screen {
+
+            position: fixed;
+
+            inset: 0;
+
+            z-index: 100;
+
+            background:
+                #020b18;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+        }
+
+
+        .loader {
+
+            width: 34px;
+
+            height: 34px;
+
+            border-radius: 50%;
+
+            border:
+                3px solid
+                rgba(255,255,255,.1);
+
+            border-top-color:
+                #12aaff;
+
+            animation:
+                spin .8s linear infinite;
+
+        }
+
+
+        @keyframes spin {
+
+            to {
+                transform: rotate(360deg);
+            }
+
+        }
+
+
+        /* =========================================
+           RESPONSIVE
+        ========================================= */
+
+        @media (max-width: 360px) {
+
+            .rooms {
+
+                grid-template-columns:
+                    1fr;
+
+            }
+
+            .quick-actions {
+
+                grid-template-columns:
+                    repeat(2,1fr);
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- Loading -->
+
+<div
+    class="loading-screen"
+    id="loadingScreen"
+>
+
+    <div class="loader"></div>
+
+</div>
+
+
+<div class="app">
+
+
+    <!-- =========================================
+         HEADER
+    ========================================== -->
+
+    <header class="header">
+
+        <div class="profile-mini">
+
+            <div
+                class="avatar"
+                id="avatar"
+            >
+                ?
+            </div>
+
+            <div class="user-info">
+
+                <div class="welcome">
+                    أهلاً بيك 👋
+                </div>
+
+                <div
+                    class="username"
+                    id="username"
+                >
+                    جاري التحميل...
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="header-actions">
+
+            <button
+                class="icon-btn"
+                id="notificationBtn"
+                type="button"
+            >
+                🔔
+            </button>
+
+            <button
+                class="icon-btn"
+                id="settingsBtn"
+                type="button"
+            >
+                ⚙️
+            </button>
+
+        </div>
+
+    </header>
+
+
+    <!-- =========================================
+         WALLET
+    ========================================== -->
+
+    <section class="wallet-card">
+
+        <div class="wallet-top">
+
+            <div>
+
+                <div class="wallet-title">
+                    رصيد العملات
+                </div>
+
+                <div class="coins">
+
+                    <div class="coin-icon">
+                        🪙
+                    </div>
+
+                    <div
+                        class="coin-number"
+                        id="coinBalance"
+                    >
+                        0
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <button
+                class="charge-btn"
+                id="chargeBtn"
+                type="button"
+            >
+                + شحن العملات
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================================
+         SEARCH
+    ========================================== -->
+
+    <div class="search-box">
+
+        <span class="search-icon">
+            🔎
+        </span>
+
+        <input
+            type="text"
+            id="searchInput"
+            placeholder="ابحث عن غرفة أو مستخدم..."
+        >
+
+    </div>
+
+
+    <!-- =========================================
+         CATEGORIES
+    ========================================== -->
+
+    <section class="section">
+
+        <div class="section-head">
+
+            <div class="section-title">
+                التصنيفات
+            </div>
+
+        </div>
+
+
+        <div class="categories">
+
+            <div
+                class="category active"
+                data-category="all"
+            >
+                الكل
+            </div>
+
+            <div
+                class="category"
+                data-category="friends"
+            >
+                أصدقاء
+            </div>
+
+            <div
+                class="category"
+                data-category="music"
+            >
+                🎵 موسيقى
+            </div>
+
+            <div
+                class="category"
+                data-category="games"
+            >
+                🎮 ألعاب
+            </div>
+
+            <div
+                class="category"
+                data-category="vip"
+            >
+                👑 VIP
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================================
+         LIVE ROOMS
+    ========================================== -->
+
+    <section class="section">
+
+        <div class="section-head">
+
+            <div class="section-title">
+
+                <span class="live-dot"></span>
+
+                الغرف الصوتية المباشرة
+
+            </div>
+
+            <span
+                class="see-all"
+                id="seeAllBtn"
+            >
+                عرض الكل
+            </span>
+
+        </div>
+
+
+        <div
+            class="rooms"
+            id="rooms"
+        >
+
+            <!-- Room 1 -->
+
+            <div
+                class="room"
+                data-name="سهرة البحر الأحمر"
+                data-category="friends"
+            >
+
+                <div class="live-label">
+                    LIVE
+                </div>
+
+                <div class="room-cover">
+                    🎙️
+                </div>
+
+                <div class="room-name">
+                    سهرة البحر الأحمر
+                </div>
+
+                <div class="room-owner">
+                    🎤 Ahmed
+                </div>
+
+                <div class="room-bottom">
+
+                    <span class="members">
+                        👥 128
+                    </span>
+
+                    <span class="mic">
+                        🎙️
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- Room 2 -->
+
+            <div
+                class="room"
+                data-name="Music Night"
+                data-category="music"
+            >
+
+                <div class="live-label">
+                    LIVE
+                </div>
+
+                <div class="room-cover">
+                    🎵
+                </div>
+
+                <div class="room-name">
+                    Music Night
+                </div>
+
+                <div class="room-owner">
+                    🎤 Sara
+                </div>
+
+                <div class="room-bottom">
+
+                    <span class="members">
+                        👥 86
+                    </span>
+
+                    <span class="mic">
+                        🎙️
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- Room 3 -->
+
+            <div
+                class="room"
+                data-name="لعبة مين أنا"
+                data-category="games"
+            >
+
+                <div class="live-label">
+                    LIVE
+                </div>
+
+                <div class="room-cover">
+                    🎮
+                </div>
+
+                <div class="room-name">
+                    لعبة مين أنا
+                </div>
+
+                <div class="room-owner">
+                    🎤 Karim
+                </div>
+
+                <div class="room-bottom">
+
+                    <span class="members">
+                        👥 54
+                    </span>
+
+                    <span class="mic">
+                        🎙️
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- Room 4 -->
+
+            <div
+                class="room"
+                data-name="VIP Lounge"
+                data-category="vip"
+            >
+
+                <div class="live-label">
+                    LIVE
+                </div>
+
+                <div class="room-cover">
+                    👑
+                </div>
+
+                <div class="room-name">
+                    VIP Lounge
+                </div>
+
+                <div class="room-owner">
+                    🎤 Red Sea VIP
+                </div>
+
+                <div class="room-bottom">
+
+                    <span class="members">
+                        👥 32
+                    </span>
+
+                    <span class="mic">
+                        🎙️
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div
+            class="empty"
+            id="emptyRooms"
+        >
+            لا توجد غرف مطابقة للبحث 🔎
+        </div>
+
+    </section>
+
+
+    <!-- =========================================
+         QUICK ACTIONS
+    ========================================== -->
+
+    <section class="section">
+
+        <div class="section-head">
+
+            <div class="section-title">
+                اختصارات
+            </div>
+
+        </div>
+
+
+        <div class="quick-actions">
+
+
+            <div
+                class="quick"
+                id="walletQuick"
+            >
+
+                <div class="quick-icon">
+                    🪙
+                </div>
+
+                <span>
+                    المحفظة
+                </span>
+
+            </div>
+
+
+            <div
+                class="quick"
+                id="giftsQuick"
+            >
+
+                <div class="quick-icon">
+                    🎁
+                </div>
+
+                <span>
+                    الهدايا
+                </span>
+
+            </div>
+
+
+            <div
+                class="quick"
+                id="vipQuick"
+            >
+
+                <div class="quick-icon">
+                    👑
+                </div>
+
+                <span>
+                    VIP
+                </span>
+
+            </div>
+
+
+            <div
+                class="quick"
+                id="profileQuick"
+            >
+
+                <div class="quick-icon">
+                    👤
+                </div>
+
+                <span>
+                    حسابي
+                </span>
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+</div>
+
+
+<!-- =========================================
+     BOTTOM NAV
+========================================== -->
+
+<nav class="bottom-nav">
+
+
+    <div
+        class="nav-item active"
+        data-page="home"
+    >
+
+        <div class="nav-icon">
+            🏠
+        </div>
+
+        <span>
+            الرئيسية
+        </span>
+
+    </div>
+
+
+    <div
+        class="nav-item"
+        data-page="rooms"
+    >
+
+        <div class="nav-icon">
+            🎙️
+        </div>
+
+        <span>
+            الغرف
+        </span>
+
+    </div>
+
+
+    <div
+        class="nav-item"
+        data-page="wallet"
+    >
+
+        <div class="nav-icon">
+            🪙
+        </div>
+
+        <span>
+            المحفظة
+        </span>
+
+    </div>
+
+
+    <div
+        class="nav-item"
+        data-page="gifts"
+    >
+
+        <div class="nav-icon">
+            🎁
+        </div>
+
+        <span>
+            الهدايا
+        </span>
+
+    </div>
+
+
+    <div
+        class="nav-item"
+        data-page="profile"
+    >
+
+        <div class="nav-icon">
+            👤
+        </div>
+
+        <span>
+            حسابي
+        </span>
+
+    </div>
+
+
+</nav>
+
+
+<!-- =========================================
+     FIREBASE
+========================================== -->
+
+<script type="module">
+
+    import {
+        initializeApp
+    } from
+        "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
+
+
+    import {
+        getAuth,
+        onAuthStateChanged
+    } from
+        "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
+
+
+    /* Firebase */
+
+    const firebaseConfig = {
+
+        apiKey:
+            "AIzaSyD_R-LAa0qHFLS36qXJ7mZbCLnh2DJyZhM",
+
+        authDomain:
+            "red-sea-8db76.firebaseapp.com",
+
+        projectId:
+            "red-sea-8db76",
+
+        storageBucket:
+            "red-sea-8db76.firebasestorage.app",
+
+        messagingSenderId:
+            "418468623324",
+
+        appId:
+            "1:418468623324:web:2a5fd96f353efccaf81519"
+
+    };
+
+
+    const app =
+        initializeApp(firebaseConfig);
+
+
+    const auth =
+        getAuth(app);
+
+
+    /* عناصر */
+
+    const loadingScreen =
+        document.getElementById(
+            "loadingScreen"
+        );
+
+
+    const usernameElement =
+        document.getElementById(
+            "username"
+        );
+
+
+    const avatarElement =
+        document.getElementById(
+            "avatar"
+        );
+
+
+    /*
+     * Firebase Authentication
+     */
+
+    onAuthStateChanged(
+        auth,
+        function(user) {
+
+            if (!user) {
+
+                window.location.replace(
+                    "login.html"
+                );
+
+                return;
+
+            }
+
+
+            let name =
+                user.displayName;
+
+
+            if (
+                !name ||
+                name.trim() === ""
+            ) {
+
+                name =
+                    user.email
+                    ? user.email.split("@")[0]
+                    : "مستخدم";
+
+            }
+
+
+            usernameElement.textContent =
+                name;
+
+
+            /*
+             * أول حرف من الاسم
+             */
+
+            const firstLetter =
+                name.trim().charAt(0);
+
+
+            avatarElement.textContent =
+                firstLetter || "👤";
+
+
+            /*
+             * إخفاء التحميل
+             */
+
+            setTimeout(
+                function() {
+
+                    loadingScreen.style.display =
+                        "none";
+
+                },
+                300
+            );
+
+        }
+    );
+
+
+    /* =========================================
+       SEARCH
+    ========================================== */
+
+    const searchInput =
+        document.getElementById(
+            "searchInput"
+        );
+
+
+    const rooms =
+        document.querySelectorAll(
+            ".room"
+        );
+
+
+    const emptyRooms =
+        document.getElementById(
+            "emptyRooms"
+        );
+
+
+    searchInput.addEventListener(
+        "input",
+        function() {
+
+            const value =
+                searchInput.value
+                .trim()
+                .toLowerCase();
+
+
+            let found = 0;
+
+
+            rooms.forEach(
+                function(room) {
+
+                    const name =
+                        room
+                        .getAttribute(
+                            "data-name"
+                        )
+                        .toLowerCase();
+
+
+                    if (
+                        !value ||
+                        name.includes(value)
+                    ) {
+
+                        room.style.display =
+                            "block";
+
+                        found++;
+
+                    } else {
+
+                        room.style.display =
+                            "none";
+
+                    }
+
+                }
+            );
+
+
+            if (found === 0) {
+
+                emptyRooms.style.display =
+                    "block";
+
+            } else {
+
+                emptyRooms.style.display =
+                    "none";
+
+            }
+
+        }
+    );
+
+
+    /* =========================================
+       CATEGORIES
+    ========================================== */
+
+    const categories =
+        document.querySelectorAll(
+            ".category"
+        );
+
+
+    categories.forEach(
+        function(category) {
+
+            category.addEventListener(
+                "click",
+                function() {
+
+                    categories.forEach(
+                        function(item) {
+
+                            item.classList.remove(
+                                "active"
+                            );
+
+                        }
+                    );
+
+
+                    category.classList.add(
+                        "active"
+                    );
+
+
+                    const selected =
+                        category.getAttribute(
+                            "data-category"
+                        );
+
+
+                    let found = 0;
+
+
+                    rooms.forEach(
+                        function(room) {
+
+                            const roomCategory =
+                                room.getAttribute(
+                                    "data-category"
+                                );
+
+
+                            if (
+                                selected ===
+                                "all" ||
+                                roomCategory ===
+                                selected
+                            ) {
+
+                                room.style.display =
+                                    "block";
+
+                                found++;
+
+                            } else {
+
+                                room.style.display =
+                                    "none";
+
+                            }
+
+                        }
+                    );
+
+
+                    emptyRooms.style.display =
+                        found === 0
+                        ? "block"
+                        : "none";
+
+                }
+            );
+
+        }
+    );
+
+
+    /* =========================================
+       BUTTONS
+    ========================================== */
+
+    document
+        .getElementById("settingsBtn")
+        .addEventListener(
+            "click",
+            function() {
+
+                window.location.href =
+                    "settings.html";
+
+            }
+        );
+
+
+    document
+        .getElementById("profileQuick")
+        .addEventListener(
+            "click",
+            function() {
+
+                window.location.href =
+                    "profile.html";
+
+            }
+        );
+
+
+    document
+        .getElementById("walletQuick")
+        .addEventListener(
+            "click",
+            function() {
+
+                window.location.href =
+                    "wallet.html";
+
+            }
+        );
+
+
+    document
+        .getElementById("chargeBtn")
+        .addEventListener(
+            "click",
+            function() {
+
+                window.location.href =
+                    "wallet.html";
+
+            }
+        );
+
+
+    document
+        .getElementById("giftsQuick")
+        .addEventListener(
+            "click",
+            function() {
+
+                window.location.href =
+                    "gifts.html";
+
+            }
+        );
+
+
+    document
+        .getElementById("vipQuick")
+        .addEventListener(
+            "click",
+            function() {
+
+                window.location.href =
+                    "vip.html";
+
+            }
+        );
+
+
+    document
+        .getElementById("seeAllBtn")
+        .addEventListener(
+            "click",
+            function() {
+
+                document
+                    .querySelector(
+                        '[data-page="rooms"]'
+                    )
+                    .click();
+
+            }
+        );
+
+
+    /* =========================================
+       ROOM CLICK
+    ========================================== */
+
+    rooms.forEach(
+        function(room) {
+
+            room.addEventListener(
+                "click",
+                function() {
+
+                    /*
+                     * لاحقًا هنرسل ID الغرفة
+                     * للسيرفر.
+                     */
+
+                    window.location.href =
+                        "room.html";
+
+                }
+            );
+
+        }
+    );
+
+
+    /* =========================================
+       BOTTOM NAV
+    ========================================== */
+
+    document
+        .querySelectorAll(
+            ".nav-item"
+        )
+        .forEach(
+            function(item) {
+
+                item.addEventListener(
+                    "click",
+                    function() {
+
+                        const page =
+                            item.getAttribute(
+                                "data-page"
+                            );
+
+
+                        if (
+                            page ===
+                            "home"
+                        ) {
+
+                            window.location.href =
+                                "home.html";
+
+                            return;
+
+                        }
+
+
+                        if (
+                            page ===
+                            "rooms"
+                        ) {
+
+                            /*
+                             * حاليًا نرجع لقسم الغرف
+                             */
+
+                            window.scrollTo({
+                                top: 0,
+                                behavior: "smooth"
+                            });
+
+                            return;
+
+                        }
+
+
+                        if (
+                            page ===
+                            "wallet"
+                        ) {
+
+                            window.location.href =
+                                "wallet.html";
+
+                            return;
+
+                        }
+
+
+                        if (
+                            page ===
+                            "gifts"
+                        ) {
+
+                            window.location.href =
+                                "gifts.html";
+
+                            return;
+
+                        }
+
+
+                        if (
+                            page ===
+                            "profile"
+                        ) {
+
+                            window.location.href =
+                                "profile.html";
+
+                            return;
+
+                        }
+
+                    }
+                );
+
+            }
+        );
+
+</script>
+
+
+</body>
+
+  </html>
