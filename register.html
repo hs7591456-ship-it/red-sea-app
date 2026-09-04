@@ -26,7 +26,12 @@
             font-family: Arial, Tahoma, sans-serif;
             color: #fff;
             background:
-                radial-gradient(circle at 50% 0%, #073d70 0%, #031d38 38%, #010914 100%);
+                radial-gradient(
+                    circle at 50% 0%,
+                    #073d70 0%,
+                    #031d38 38%,
+                    #010914 100%
+                );
             display: flex;
             justify-content: center;
             align-items: center;
@@ -167,6 +172,7 @@
             color: rgba(255, 255, 255, .55);
             font-size: 17px;
             cursor: pointer;
+            padding: 5px;
         }
 
         .terms {
@@ -177,6 +183,7 @@
             color: rgba(255, 255, 255, .52);
             font-size: 11px;
             line-height: 1.6;
+            cursor: pointer;
         }
 
         .terms input {
@@ -202,7 +209,11 @@
             font-size: 16px;
             font-weight: 800;
             cursor: pointer;
-            background: linear-gradient(135deg, #008cff, #0059d9);
+            background: linear-gradient(
+                135deg,
+                #008cff,
+                #0059d9
+            );
             box-shadow:
                 0 10px 25px rgba(0, 119, 255, .28),
                 inset 0 1px 0 rgba(255, 255, 255, .18);
@@ -239,6 +250,12 @@
             font-size: 14px;
             font-weight: 700;
             cursor: pointer;
+            transition: .2s;
+        }
+
+        .back:active {
+            transform: scale(.98);
+            background: rgba(255, 255, 255, .07);
         }
 
         .footer {
@@ -307,13 +324,11 @@
     </div>
 
     <div class="title">
-
         <h1>إنشاء حساب جديد</h1>
 
         <p>
             انضم إلى عالم Red Sea
         </p>
-
     </div>
 
     <div class="card">
@@ -400,7 +415,6 @@
                         type="button"
                         class="show-password"
                         data-target="password"
-                        aria-label="إظهار كلمة المرور"
                     >
                         👁
                     </button>
@@ -437,7 +451,6 @@
                         type="button"
                         class="show-password"
                         data-target="confirmPassword"
-                        aria-label="إظهار تأكيد كلمة المرور"
                     >
                         👁
                     </button>
@@ -461,7 +474,7 @@
 
                     <a
                         href="#"
-                        onclick="return false;"
+                        onclick="event.preventDefault();"
                     >
                         شروط الاستخدام
                     </a>
@@ -470,7 +483,7 @@
 
                     <a
                         href="#"
-                        onclick="return false;"
+                        onclick="event.preventDefault();"
                     >
                         سياسة الخصوصية
                     </a>
@@ -480,7 +493,7 @@
             </label>
 
 
-            <!-- زر إنشاء الحساب -->
+            <!-- زر التسجيل -->
             <button
                 type="submit"
                 class="register-btn"
@@ -490,7 +503,7 @@
             </button>
 
 
-            <!-- رسالة -->
+            <!-- الرسائل -->
             <div
                 class="message"
                 id="message"
@@ -499,7 +512,7 @@
         </form>
 
 
-        <!-- العودة لتسجيل الدخول -->
+        <!-- زر العودة -->
         <button
             type="button"
             class="back"
@@ -511,7 +524,6 @@
     </div>
 
 
-    <!-- Footer -->
     <div class="footer">
 
         RED SEA • VOICE ROOMS • CHAT • FRIENDS • GAMES • GIFTS
@@ -522,19 +534,14 @@
 
 
 <!-- =====================================================
-     FIREBASE AUTHENTICATION
+     FIREBASE
 ===================================================== -->
 
 <script type="module">
 
-    /*
-     * Firebase SDK 12.18.0
-     */
-
     import {
         initializeApp
     } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
-
 
     import {
         getAuth,
@@ -543,9 +550,7 @@
     } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
 
 
-    /*
-     * Firebase Configuration
-     */
+    /* Firebase Configuration */
 
     const firebaseConfig = {
 
@@ -570,54 +575,51 @@
     };
 
 
-    /*
-     * تشغيل Firebase
-     */
+    /* تشغيل Firebase */
 
     const app =
         initializeApp(firebaseConfig);
 
 
-    /*
-     * تشغيل Authentication
-     */
-
     const auth =
         getAuth(app);
 
 
-    /*
-     * عناصر الصفحة
-     */
+    /* عناصر الصفحة */
 
     const form =
-        document.getElementById("registerForm");
-
+        document.getElementById(
+            "registerForm"
+        );
 
     const message =
-        document.getElementById("message");
-
+        document.getElementById(
+            "message"
+        );
 
     const registerBtn =
-        document.getElementById("registerBtn");
-
+        document.getElementById(
+            "registerBtn"
+        );
 
     const backBtn =
-        document.getElementById("backBtn");
+        document.getElementById(
+            "backBtn"
+        );
 
 
-    /*
-     * عرض رسالة
-     */
+    /* رسالة */
 
     function showMessage(
         text,
         success = false
     ) {
 
-        message.style.display = "block";
+        message.style.display =
+            "block";
 
-        message.textContent = text;
+        message.textContent =
+            text;
 
 
         if (success) {
@@ -641,23 +643,7 @@
     }
 
 
-    /*
-     * إخفاء الرسالة
-     */
-
-    function hideMessage() {
-
-        message.style.display =
-            "none";
-
-        message.textContent = "";
-
-    }
-
-
-    /*
-     * إنشاء الحساب
-     */
+    /* تسجيل الحساب */
 
     form.addEventListener(
         "submit",
@@ -665,12 +651,6 @@
 
             event.preventDefault();
 
-            hideMessage();
-
-
-            /*
-             * قراءة البيانات
-             */
 
             const name =
                 document
@@ -704,9 +684,7 @@
                     .checked;
 
 
-            /*
-             * التحقق من الاسم
-             */
+            /* التحقق من الاسم */
 
             if (!name) {
 
@@ -715,13 +693,10 @@
                 );
 
                 return;
-
             }
 
 
-            /*
-             * التحقق من البريد
-             */
+            /* التحقق من البريد */
 
             if (!email) {
 
@@ -730,13 +705,10 @@
                 );
 
                 return;
-
             }
 
 
-            /*
-             * التحقق من كلمة المرور
-             */
+            /* التحقق من كلمة المرور */
 
             if (password.length < 6) {
 
@@ -745,13 +717,10 @@
                 );
 
                 return;
-
             }
 
 
-            /*
-             * تأكيد كلمة المرور
-             */
+            /* مطابقة كلمة المرور */
 
             if (
                 password !==
@@ -763,13 +732,10 @@
                 );
 
                 return;
-
             }
 
 
-            /*
-             * الموافقة على الشروط
-             */
+            /* الشروط */
 
             if (!terms) {
 
@@ -778,15 +744,13 @@
                 );
 
                 return;
-
             }
 
 
-            /*
-             * تعطيل الزر
-             */
+            /* تشغيل حالة التحميل */
 
-            registerBtn.disabled = true;
+            registerBtn.disabled =
+                true;
 
             registerBtn.textContent =
                 "جاري إنشاء الحساب...";
@@ -794,9 +758,7 @@
 
             try {
 
-                /*
-                 * إنشاء الحساب في Firebase Authentication
-                 */
+                /* إنشاء الحساب */
 
                 const userCredential =
                     await createUserWithEmailAndPassword(
@@ -806,30 +768,22 @@
                     );
 
 
-                /*
-                 * الحصول على المستخدم
-                 */
-
                 const user =
                     userCredential.user;
 
 
-                /*
-                 * حفظ اسم المستخدم
-                 * داخل Firebase Authentication
-                 */
+                /* حفظ اسم المستخدم */
 
                 await updateProfile(
                     user,
                     {
-                        displayName: name
+                        displayName:
+                            name
                     }
                 );
 
 
-                /*
-                 * رسالة نجاح
-                 */
+                /* نجاح */
 
                 showMessage(
                     "تم إنشاء الحساب بنجاح 🎉",
@@ -837,15 +791,18 @@
                 );
 
 
-                /*
-                 * الانتقال للصفحة الرئيسية
-                 */
+                registerBtn.textContent =
+                    "تم إنشاء الحساب ✓";
+
+
+                /* الذهاب للصفحة الرئيسية */
 
                 setTimeout(
                     function() {
 
-                        window.location.href =
-                            "home.html";
+                        window.location.replace(
+                            "home.html"
+                        );
 
                     },
                     1000
@@ -855,23 +812,27 @@
             } catch (error) {
 
                 console.error(
-                    "Firebase Authentication Error:",
                     error
                 );
 
 
-                /*
-                 * Firebase Errors
-                 */
+                console.error(
+                    "Firebase error code:",
+                    error.code
+                );
+
+
+                let errorMessage =
+                    "حدث خطأ أثناء إنشاء الحساب";
+
 
                 if (
                     error.code ===
                     "auth/email-already-in-use"
                 ) {
 
-                    showMessage(
-                        "البريد الإلكتروني مستخدم بالفعل"
-                    );
+                    errorMessage =
+                        "البريد الإلكتروني مستخدم بالفعل";
 
 
                 } else if (
@@ -879,9 +840,8 @@
                     "auth/invalid-email"
                 ) {
 
-                    showMessage(
-                        "البريد الإلكتروني غير صحيح"
-                    );
+                    errorMessage =
+                        "البريد الإلكتروني غير صحيح";
 
 
                 } else if (
@@ -889,9 +849,8 @@
                     "auth/weak-password"
                 ) {
 
-                    showMessage(
-                        "كلمة المرور ضعيفة"
-                    );
+                    errorMessage =
+                        "كلمة المرور ضعيفة";
 
 
                 } else if (
@@ -899,9 +858,8 @@
                     "auth/network-request-failed"
                 ) {
 
-                    showMessage(
-                        "تأكد من اتصال الإنترنت"
-                    );
+                    errorMessage =
+                        "تأكد من اتصال الإنترنت";
 
 
                 } else if (
@@ -909,9 +867,8 @@
                     "auth/operation-not-allowed"
                 ) {
 
-                    showMessage(
-                        "تسجيل الدخول بالبريد الإلكتروني غير مفعّل في Firebase"
-                    );
+                    errorMessage =
+                        "تسجيل البريد الإلكتروني غير مفعّل في Firebase";
 
 
                 } else if (
@@ -919,24 +876,32 @@
                     "auth/api-key-not-valid"
                 ) {
 
-                    showMessage(
-                        "مفتاح Firebase API غير صالح"
-                    );
+                    errorMessage =
+                        "مفتاح Firebase غير صالح";
+
+
+                } else if (
+                    error.code ===
+                    "auth/too-many-requests"
+                ) {
+
+                    errorMessage =
+                        "تم إرسال طلبات كثيرة، حاول مرة أخرى لاحقًا";
 
 
                 } else {
 
-                    showMessage(
+                    errorMessage =
                         "حدث خطأ أثناء إنشاء الحساب: " +
-                        error.message
-                    );
+                        error.message;
 
                 }
 
 
-                /*
-                 * إعادة تفعيل الزر
-                 */
+                showMessage(
+                    errorMessage
+                );
+
 
                 registerBtn.disabled =
                     false;
@@ -950,18 +915,23 @@
     );
 
 
-    /*
-     * إظهار / إخفاء كلمة المرور
-     */
+    /* =====================================================
+       زر إظهار كلمة المرور
+    ===================================================== */
 
     document
-        .querySelectorAll(".show-password")
+        .querySelectorAll(
+            ".show-password"
+        )
         .forEach(
             function(button) {
 
                 button.addEventListener(
                     "click",
-                    function() {
+                    function(event) {
+
+                        event.preventDefault();
+
 
                         const target =
                             document.getElementById(
@@ -999,16 +969,18 @@
         );
 
 
-    /*
-     * العودة لتسجيل الدخول
-     */
+    /* =====================================================
+       العودة لتسجيل الدخول
+       
+       هذا الزر مستقل عن Firebase.
+       ===================================================== */
 
     backBtn.addEventListener(
         "click",
         function() {
 
             window.location.href =
-                "login.html";
+                "./login.html";
 
         }
     );
@@ -1017,4 +989,4 @@
 
 </body>
 
-</html>
+    </html>
