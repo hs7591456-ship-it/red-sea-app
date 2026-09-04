@@ -69,10 +69,6 @@
         }
 
 
-        /* =========================================
-           APP
-        ========================================= */
-
         .app {
 
             width: 100%;
@@ -185,9 +181,7 @@
 
 
         .user-info {
-
             min-width: 0;
-
         }
 
 
@@ -262,7 +256,7 @@
 
 
         /* =========================================
-           COIN CARD
+           WALLET
         ========================================= */
 
         .wallet-card {
@@ -699,9 +693,7 @@
 
 
         .room:active {
-
             transform: scale(.97);
-
         }
 
 
@@ -845,9 +837,7 @@
 
 
         .mic {
-
             font-size: 14px;
-
         }
 
 
@@ -896,9 +886,7 @@
 
 
         .quick-icon {
-
             font-size: 23px;
-
         }
 
 
@@ -1003,16 +991,12 @@
 
 
         .nav-icon {
-
             font-size: 21px;
-
         }
 
 
         .nav-item.active {
-
             color: #27b7ff;
-
         }
 
 
@@ -1082,10 +1066,6 @@
         }
 
 
-        /* =========================================
-           RESPONSIVE
-        ========================================= */
-
         @media (max-width: 360px) {
 
             .rooms {
@@ -1109,7 +1089,7 @@
 </head>
 
 
-<body>
+<body data-page-title="home.title">
 
 
 <!-- Loading -->
@@ -1127,9 +1107,7 @@
 <div class="app">
 
 
-    <!-- =========================================
-         HEADER
-    ========================================== -->
+    <!-- HEADER -->
 
     <header class="header">
 
@@ -1144,13 +1122,17 @@
 
             <div class="user-info">
 
-                <div class="welcome">
+                <div
+                    class="welcome"
+                    data-i18n="home.welcome"
+                >
                     أهلاً بيك 👋
                 </div>
 
                 <div
                     class="username"
                     id="username"
+                    data-i18n="home.username"
                 >
                     جاري التحميل...
                 </div>
@@ -1166,6 +1148,7 @@
                 class="icon-btn"
                 id="notificationBtn"
                 type="button"
+                aria-label="Notifications"
             >
                 🔔
             </button>
@@ -1174,6 +1157,7 @@
                 class="icon-btn"
                 id="settingsBtn"
                 type="button"
+                aria-label="Settings"
             >
                 ⚙️
             </button>
@@ -1183,9 +1167,7 @@
     </header>
 
 
-    <!-- =========================================
-         WALLET
-    ========================================== -->
+    <!-- WALLET -->
 
     <section class="wallet-card">
 
@@ -1193,7 +1175,10 @@
 
             <div>
 
-                <div class="wallet-title">
+                <div
+                    class="wallet-title"
+                    data-i18n="home.wallet"
+                >
                     رصيد العملات
                 </div>
 
@@ -1219,6 +1204,7 @@
                 class="charge-btn"
                 id="chargeBtn"
                 type="button"
+                data-i18n="home.charge"
             >
                 + شحن العملات
             </button>
@@ -1228,9 +1214,7 @@
     </section>
 
 
-    <!-- =========================================
-         SEARCH
-    ========================================== -->
+    <!-- SEARCH -->
 
     <div class="search-box">
 
@@ -1241,21 +1225,23 @@
         <input
             type="text"
             id="searchInput"
+            data-i18n-placeholder="home.searchPlaceholder"
             placeholder="ابحث عن غرفة أو مستخدم..."
         >
 
     </div>
 
 
-    <!-- =========================================
-         CATEGORIES
-    ========================================== -->
+    <!-- CATEGORIES -->
 
     <section class="section">
 
         <div class="section-head">
 
-            <div class="section-title">
+            <div
+                class="section-title"
+                data-i18n="home.categories"
+            >
                 التصنيفات
             </div>
 
@@ -1267,6 +1253,7 @@
             <div
                 class="category active"
                 data-category="all"
+                data-i18n="home.categoryAll"
             >
                 الكل
             </div>
@@ -1274,6 +1261,7 @@
             <div
                 class="category"
                 data-category="friends"
+                data-i18n="home.categoryFriends"
             >
                 أصدقاء
             </div>
@@ -1281,6 +1269,7 @@
             <div
                 class="category"
                 data-category="music"
+                data-i18n="home.categoryMusic"
             >
                 🎵 موسيقى
             </div>
@@ -1288,6 +1277,7 @@
             <div
                 class="category"
                 data-category="games"
+                data-i18n="home.categoryGames"
             >
                 🎮 ألعاب
             </div>
@@ -1295,6 +1285,7 @@
             <div
                 class="category"
                 data-category="vip"
+                data-i18n="home.categoryVip"
             >
                 👑 VIP
             </div>
@@ -1304,15 +1295,16 @@
     </section>
 
 
-    <!-- =========================================
-         LIVE ROOMS
-    ========================================== -->
+    <!-- LIVE ROOMS -->
 
     <section class="section">
 
         <div class="section-head">
 
-            <div class="section-title">
+            <div
+                class="section-title"
+                data-i18n="home.liveRooms"
+            >
 
                 <span class="live-dot"></span>
 
@@ -1323,6 +1315,7 @@
             <span
                 class="see-all"
                 id="seeAllBtn"
+                data-i18n="home.seeAll"
             >
                 عرض الكل
             </span>
@@ -1335,7 +1328,7 @@
             id="rooms"
         >
 
-            <!-- Room 1 -->
+            <!-- TEMPORARY DEMO ROOM -->
 
             <div
                 class="room"
@@ -1374,7 +1367,7 @@
             </div>
 
 
-            <!-- Room 2 -->
+            <!-- TEMPORARY DEMO ROOM -->
 
             <div
                 class="room"
@@ -1413,7 +1406,7 @@
             </div>
 
 
-            <!-- Room 3 -->
+            <!-- TEMPORARY DEMO ROOM -->
 
             <div
                 class="room"
@@ -1452,7 +1445,7 @@
             </div>
 
 
-            <!-- Room 4 -->
+            <!-- TEMPORARY DEMO ROOM -->
 
             <div
                 class="room"
@@ -1496,6 +1489,7 @@
         <div
             class="empty"
             id="emptyRooms"
+            data-i18n="home.noRooms"
         >
             لا توجد غرف مطابقة للبحث 🔎
         </div>
@@ -1503,15 +1497,16 @@
     </section>
 
 
-    <!-- =========================================
-         QUICK ACTIONS
-    ========================================== -->
+    <!-- QUICK ACTIONS -->
 
     <section class="section">
 
         <div class="section-head">
 
-            <div class="section-title">
+            <div
+                class="section-title"
+                data-i18n="home.shortcuts"
+            >
                 اختصارات
             </div>
 
@@ -1530,7 +1525,7 @@
                     🪙
                 </div>
 
-                <span>
+                <span data-i18n="home.walletShortcut">
                     المحفظة
                 </span>
 
@@ -1546,7 +1541,7 @@
                     🎁
                 </div>
 
-                <span>
+                <span data-i18n="home.giftsShortcut">
                     الهدايا
                 </span>
 
@@ -1562,7 +1557,7 @@
                     👑
                 </div>
 
-                <span>
+                <span data-i18n="home.vipShortcut">
                     VIP
                 </span>
 
@@ -1578,7 +1573,7 @@
                     👤
                 </div>
 
-                <span>
+                <span data-i18n="home.profileShortcut">
                     حسابي
                 </span>
 
@@ -1593,9 +1588,7 @@
 </div>
 
 
-<!-- =========================================
-     BOTTOM NAV
-========================================== -->
+<!-- BOTTOM NAV -->
 
 <nav class="bottom-nav">
 
@@ -1609,7 +1602,7 @@
             🏠
         </div>
 
-        <span>
+        <span data-i18n="nav.home">
             الرئيسية
         </span>
 
@@ -1625,7 +1618,7 @@
             🎙️
         </div>
 
-        <span>
+        <span data-i18n="nav.rooms">
             الغرف
         </span>
 
@@ -1641,7 +1634,7 @@
             🪙
         </div>
 
-        <span>
+        <span data-i18n="nav.wallet">
             المحفظة
         </span>
 
@@ -1657,7 +1650,7 @@
             🎁
         </div>
 
-        <span>
+        <span data-i18n="nav.gifts">
             الهدايا
         </span>
 
@@ -1673,7 +1666,7 @@
             👤
         </div>
 
-        <span>
+        <span data-i18n="nav.profile">
             حسابي
         </span>
 
@@ -1683,9 +1676,16 @@
 </nav>
 
 
-<!-- =========================================
+<!-- =====================================================
+     RED SEA LANGUAGE SYSTEM
+===================================================== -->
+
+<script src="js/i18n.js"></script>
+
+
+<!-- =====================================================
      FIREBASE
-========================================== -->
+===================================================== -->
 
 <script type="module">
 
@@ -1702,12 +1702,10 @@
         "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
 
 
-    /* Firebase */
-
     const firebaseConfig = {
 
         apiKey:
-            "AIzaSyD_R-LAa0qHFLS36qXJ7mZbCLnh2DJyZhM",
+            "AIzaSyD_R-LAa0qHFLS36QXJ7mZbCLnh2DJyZhM",
 
         authDomain:
             "red-sea-8db76.firebaseapp.com",
@@ -1735,8 +1733,6 @@
         getAuth(app);
 
 
-    /* عناصر */
-
     const loadingScreen =
         document.getElementById(
             "loadingScreen"
@@ -1755,9 +1751,9 @@
         );
 
 
-    /*
-     * Firebase Authentication
-     */
+    /* =========================================
+       AUTH
+    ========================================= */
 
     onAuthStateChanged(
         auth,
@@ -1786,7 +1782,7 @@
                 name =
                     user.email
                     ? user.email.split("@")[0]
-                    : "مستخدم";
+                    : "User";
 
             }
 
@@ -1795,10 +1791,6 @@
                 name;
 
 
-            /*
-             * أول حرف من الاسم
-             */
-
             const firstLetter =
                 name.trim().charAt(0);
 
@@ -1806,10 +1798,6 @@
             avatarElement.textContent =
                 firstLetter || "👤";
 
-
-            /*
-             * إخفاء التحميل
-             */
 
             setTimeout(
                 function() {
@@ -1827,7 +1815,7 @@
 
     /* =========================================
        SEARCH
-    ========================================== */
+    ========================================= */
 
     const searchInput =
         document.getElementById(
@@ -1892,17 +1880,10 @@
             );
 
 
-            if (found === 0) {
-
-                emptyRooms.style.display =
-                    "block";
-
-            } else {
-
-                emptyRooms.style.display =
-                    "none";
-
-            }
+            emptyRooms.style.display =
+                found === 0
+                ? "block"
+                : "none";
 
         }
     );
@@ -1910,7 +1891,7 @@
 
     /* =========================================
        CATEGORIES
-    ========================================== */
+    ========================================= */
 
     const categories =
         document.querySelectorAll(
@@ -1960,10 +1941,8 @@
 
 
                             if (
-                                selected ===
-                                "all" ||
-                                roomCategory ===
-                                selected
+                                selected === "all" ||
+                                roomCategory === selected
                             ) {
 
                                 room.style.display =
@@ -1996,7 +1975,7 @@
 
     /* =========================================
        BUTTONS
-    ========================================== */
+    ========================================= */
 
     document
         .getElementById("settingsBtn")
@@ -2094,7 +2073,7 @@
 
     /* =========================================
        ROOM CLICK
-    ========================================== */
+    ========================================= */
 
     rooms.forEach(
         function(room) {
@@ -2102,11 +2081,6 @@
             room.addEventListener(
                 "click",
                 function() {
-
-                    /*
-                     * لاحقًا هنرسل ID الغرفة
-                     * للسيرفر.
-                     */
 
                     window.location.href =
                         "room.html";
@@ -2120,7 +2094,7 @@
 
     /* =========================================
        BOTTOM NAV
-    ========================================== */
+    ========================================= */
 
     document
         .querySelectorAll(
@@ -2140,8 +2114,7 @@
 
 
                         if (
-                            page ===
-                            "home"
+                            page === "home"
                         ) {
 
                             window.location.href =
@@ -2153,13 +2126,8 @@
 
 
                         if (
-                            page ===
-                            "rooms"
+                            page === "rooms"
                         ) {
-
-                            /*
-                             * حاليًا نرجع لقسم الغرف
-                             */
 
                             window.scrollTo({
                                 top: 0,
@@ -2172,8 +2140,7 @@
 
 
                         if (
-                            page ===
-                            "wallet"
+                            page === "wallet"
                         ) {
 
                             window.location.href =
@@ -2185,8 +2152,7 @@
 
 
                         if (
-                            page ===
-                            "gifts"
+                            page === "gifts"
                         ) {
 
                             window.location.href =
@@ -2198,8 +2164,7 @@
 
 
                         if (
-                            page ===
-                            "profile"
+                            page === "profile"
                         ) {
 
                             window.location.href =
@@ -2220,4 +2185,4 @@
 
 </body>
 
-  </html>
+    </html>
