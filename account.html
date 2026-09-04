@@ -1,0 +1,2004 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+>
+
+<title>Red Sea - الحساب</title>
+
+<script src="https://www.gstatic.com/firebasejs/12.18.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/12.18.0/firebase-auth-compat.js"></script>
+
+<style>
+
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0
+}
+
+:root{
+  --bg:#07111f;
+  --card:#0d1b2d;
+  --card2:#10243a;
+  --line:rgba(255,255,255,.08);
+  --text:#f4f7fb;
+  --muted:#91a1b6;
+  --blue:#28a9ff;
+  --gold:#ffc94a;
+  --danger:#ff6464
+}
+
+html,
+body{
+  width:100%;
+  min-height:100%;
+}
+
+body{
+  font-family:Arial,Tahoma,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  min-height:100vh;
+  padding-bottom:76px
+}
+
+button,
+input{
+  font:inherit
+}
+
+button{
+  border:0;
+  cursor:pointer
+}
+
+.page{
+  width:100%;
+  max-width:680px;
+  margin:auto
+}
+
+/* =========================================================
+   TOP
+========================================================= */
+
+.top{
+  position:sticky;
+  top:0;
+  z-index:20;
+  background:rgba(7,17,31,.96);
+  backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--line)
+}
+
+.top-inner{
+  height:64px;
+  max-width:680px;
+  margin:auto;
+  padding:0 14px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between
+}
+
+.back-btn{
+  width:40px;
+  height:40px;
+  border-radius:12px;
+  background:var(--card);
+  border:1px solid var(--line);
+  color:white;
+  font-size:20px
+}
+
+.title{
+  font-size:18px;
+  font-weight:900
+}
+
+.top-space{
+  width:40px
+}
+
+/* =========================================================
+   LOADING
+========================================================= */
+
+#loading{
+  min-height:calc(100vh - 140px);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-direction:column;
+  gap:14px;
+  color:var(--muted);
+  font-size:13px
+}
+
+.spinner{
+  width:42px;
+  height:42px;
+  border-radius:50%;
+  border:4px solid rgba(40,169,255,.15);
+  border-top-color:var(--blue);
+  animation:spin .8s linear infinite
+}
+
+@keyframes spin{
+  to{
+    transform:rotate(360deg)
+  }
+}
+
+/* =========================================================
+   ERROR
+========================================================= */
+
+#errorBox{
+  display:none;
+  padding:30px 16px;
+  text-align:center
+}
+
+.error-icon{
+  font-size:45px;
+  margin-bottom:14px
+}
+
+.error-title{
+  font-size:18px;
+  font-weight:900;
+  margin-bottom:8px
+}
+
+.error-text{
+  color:var(--muted);
+  font-size:12px;
+  line-height:1.8;
+  margin-bottom:18px
+}
+
+.login-btn{
+  height:48px;
+  padding:0 25px;
+  border-radius:13px;
+  background:var(--blue);
+  color:white;
+  font-weight:900
+}
+
+/* =========================================================
+   CONTENT
+========================================================= */
+
+#content{
+  display:none
+}
+
+/* =========================================================
+   PROFILE
+========================================================= */
+
+.profile{
+  padding:28px 15px 20px;
+  text-align:center
+}
+
+.avatar{
+  width:96px;
+  height:96px;
+  margin:auto;
+  border-radius:50%;
+  background:linear-gradient(135deg,#168fe0,#6dd2ff);
+  border:3px solid rgba(40,169,255,.3);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
+  font-size:38px;
+  font-weight:900;
+  box-shadow:0 0 0 5px rgba(40,169,255,.07)
+}
+
+.avatar img{
+  width:100%;
+  height:100%;
+  object-fit:cover
+}
+
+.name{
+  margin-top:14px;
+  font-size:23px;
+  font-weight:900
+}
+
+.uid{
+  margin-top:7px;
+  color:var(--muted);
+  font-size:11px;
+  direction:ltr;
+  word-break:break-all
+}
+
+/* =========================================================
+   STATS
+========================================================= */
+
+.stats{
+  max-width:680px;
+  padding:0 14px;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:9px
+}
+
+.stat{
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:15px;
+  padding:14px 5px;
+  text-align:center
+}
+
+.stat-number{
+  color:var(--blue);
+  font-size:18px;
+  font-weight:900
+}
+
+.stat-label{
+  margin-top:5px;
+  color:var(--muted);
+  font-size:10px
+}
+
+/* =========================================================
+   CARD
+========================================================= */
+
+.card{
+  margin:15px 14px 0;
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:16px;
+  overflow:hidden
+}
+
+.card-title{
+  padding:15px;
+  font-size:15px;
+  font-weight:900;
+  border-bottom:1px solid var(--line)
+}
+
+.row{
+  min-height:57px;
+  padding:11px 15px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:15px;
+  border-bottom:1px solid rgba(255,255,255,.05)
+}
+
+.row:last-child{
+  border-bottom:0
+}
+
+.label{
+  color:var(--muted);
+  font-size:12px
+}
+
+.value{
+  max-width:62%;
+  font-size:12px;
+  text-align:left;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap
+}
+
+/* =========================================================
+   ACTIONS
+========================================================= */
+
+.actions{
+  padding:15px 14px 5px
+}
+
+.action{
+  width:100%;
+  min-height:51px;
+  margin-bottom:9px;
+  border-radius:14px;
+  background:var(--card2);
+  border:1px solid var(--line);
+  color:white;
+  font-size:14px;
+  font-weight:800
+}
+
+.action:active{
+  transform:scale(.98)
+}
+
+.action.primary{
+  background:var(--blue);
+  border-color:transparent
+}
+
+.action.danger{
+  background:rgba(255,70,70,.08);
+  color:#ff8989;
+  border-color:rgba(255,70,70,.14)
+}
+
+/* =========================================================
+   BOTTOM
+========================================================= */
+
+.bottom{
+  position:fixed;
+  bottom:0;
+  left:0;
+  right:0;
+  height:66px;
+  z-index:30;
+  background:rgba(8,18,31,.98);
+  backdrop-filter:blur(18px);
+  border-top:1px solid var(--line)
+}
+
+.bottom-inner{
+  max-width:680px;
+  height:100%;
+  margin:auto;
+  display:grid;
+  grid-template-columns:repeat(3,1fr)
+}
+
+.nav{
+  background:none;
+  color:var(--muted);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:4px;
+  font-size:10px;
+  font-weight:800
+}
+
+.nav span{
+  font-size:19px
+}
+
+.nav.active{
+  color:var(--blue)
+}
+
+/* =========================================================
+   MODAL
+========================================================= */
+
+.modal{
+  position:fixed;
+  inset:0;
+  z-index:100;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:18px;
+  background:rgba(0,0,0,.75)
+}
+
+.modal-box{
+  width:100%;
+  max-width:500px;
+  background:#0c1a29;
+  border:1px solid var(--line);
+  border-radius:20px;
+  padding:20px
+}
+
+.modal-title{
+  font-size:18px;
+  font-weight:900;
+  margin-bottom:18px
+}
+
+.input{
+  width:100%;
+  height:50px;
+  margin-bottom:10px;
+  padding:0 14px;
+  border-radius:13px;
+  border:1px solid #20364a;
+  background:#07111f;
+  color:white;
+  outline:none
+}
+
+.input:focus{
+  border-color:var(--blue)
+}
+
+.modal-actions{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:9px;
+  margin-top:4px
+}
+
+.modal-btn{
+  height:48px;
+  border-radius:13px;
+  background:var(--card2);
+  color:white
+}
+
+.modal-btn.save{
+  background:var(--blue)
+}
+
+/* =========================================================
+   TOAST
+========================================================= */
+
+#toast{
+  position:fixed;
+  left:50%;
+  bottom:82px;
+  transform:translate(-50%,20px);
+  opacity:0;
+  pointer-events:none;
+  z-index:200;
+  background:#13283a;
+  border:1px solid var(--line);
+  color:white;
+  padding:12px 18px;
+  border-radius:12px;
+  font-size:12px;
+  transition:.25s;
+  max-width:90%;
+  text-align:center
+}
+
+#toast.show{
+  opacity:1;
+  transform:translate(-50%,0)
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="page">
+
+  <!-- =====================================================
+       TOP
+  ====================================================== -->
+
+  <header class="top">
+
+    <div class="top-inner">
+
+      <button
+        class="back-btn"
+        onclick="goHome()"
+      >
+        →
+      </button>
+
+      <div class="title">
+        الحساب
+      </div>
+
+      <div class="top-space"></div>
+
+    </div>
+
+  </header>
+
+
+  <!-- =====================================================
+       LOADING
+  ====================================================== -->
+
+  <div id="loading">
+
+    <div class="spinner"></div>
+
+    <div>
+      جاري تحميل الحساب...
+    </div>
+
+  </div>
+
+
+  <!-- =====================================================
+       ERROR
+  ====================================================== -->
+
+  <div id="errorBox">
+
+    <div class="error-icon">
+      🔐
+    </div>
+
+    <div class="error-title">
+      لم يتم تسجيل الدخول
+    </div>
+
+    <div class="error-text">
+      يجب تسجيل الدخول أولاً لعرض بيانات الحساب.
+    </div>
+
+    <button
+      class="login-btn"
+      onclick="goLogin()"
+    >
+      تسجيل الدخول
+    </button>
+
+  </div>
+
+
+  <!-- =====================================================
+       CONTENT
+  ====================================================== -->
+
+  <main id="content">
+
+    <section class="profile">
+
+      <div
+        class="avatar"
+        id="avatar"
+      >
+        ?
+      </div>
+
+      <div
+        class="name"
+        id="userName"
+      >
+        المستخدم
+      </div>
+
+      <div
+        class="uid"
+        id="userId"
+      >
+        ID: -
+      </div>
+
+    </section>
+
+
+    <!-- ===================================================
+         STATS
+    ==================================================== -->
+
+    <section class="stats">
+
+      <div class="stat">
+
+        <div
+          class="stat-number"
+          id="coins"
+        >
+          0
+        </div>
+
+        <div class="stat-label">
+          العملات
+        </div>
+
+      </div>
+
+
+      <div class="stat">
+
+        <div
+          class="stat-number"
+          id="followers"
+        >
+          0
+        </div>
+
+        <div class="stat-label">
+          المتابعين
+        </div>
+
+      </div>
+
+
+      <div class="stat">
+
+        <div
+          class="stat-number"
+          id="following"
+        >
+          0
+        </div>
+
+        <div class="stat-label">
+          المتابَعين
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ===================================================
+         INFORMATION
+    ==================================================== -->
+
+    <section class="card">
+
+      <div class="card-title">
+        معلومات الحساب
+      </div>
+
+
+      <div class="row">
+
+        <div class="label">
+          الاسم
+        </div>
+
+        <div
+          class="value"
+          id="infoName"
+        >
+          -
+        </div>
+
+      </div>
+
+
+      <div class="row">
+
+        <div class="label">
+          البريد الإلكتروني
+        </div>
+
+        <div
+          class="value"
+          id="infoEmail"
+          dir="ltr"
+        >
+          -
+        </div>
+
+      </div>
+
+
+      <div class="row">
+
+        <div class="label">
+          رقم المستخدم
+        </div>
+
+        <div
+          class="value"
+          id="infoId"
+          dir="ltr"
+        >
+          -
+        </div>
+
+      </div>
+
+
+      <div class="row">
+
+        <div class="label">
+          الوكالة
+        </div>
+
+        <div
+          class="value"
+          id="infoAgency"
+        >
+          بدون وكالة
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ===================================================
+         ACTIONS
+    ==================================================== -->
+
+    <section class="actions">
+
+      <button
+        class="action primary"
+        onclick="openEdit()"
+      >
+        ✏️ تعديل الحساب
+      </button>
+
+
+      <button
+        class="action"
+        onclick="changePassword()"
+      >
+        🔐 تغيير كلمة المرور
+      </button>
+
+
+      <button
+        class="action"
+        onclick="copyId()"
+      >
+        📋 نسخ ID
+      </button>
+
+
+      <button
+        class="action danger"
+        onclick="logout()"
+      >
+        🚪 تسجيل الخروج
+      </button>
+
+    </section>
+
+  </main>
+
+</div>
+
+
+<!-- =======================================================
+     BOTTOM NAV
+======================================================== -->
+
+<nav class="bottom">
+
+  <div class="bottom-inner">
+
+    <button
+      class="nav"
+      onclick="goHome()"
+    >
+      <span>🏠</span>
+      الرئيسية
+    </button>
+
+
+    <button
+      class="nav"
+      onclick="goMessages()"
+    >
+      <span>💬</span>
+      الرسائل
+    </button>
+
+
+    <button
+      class="nav active"
+    >
+      <span>👤</span>
+      الحساب
+    </button>
+
+  </div>
+
+</nav>
+
+
+<!-- =======================================================
+     EDIT MODAL
+======================================================== -->
+
+<div
+  class="modal"
+  id="editModal"
+>
+
+  <div class="modal-box">
+
+    <div class="modal-title">
+      تعديل الحساب
+    </div>
+
+
+    <input
+      class="input"
+      id="editName"
+      type="text"
+      placeholder="اسم المستخدم"
+    >
+
+
+    <input
+      class="input"
+      id="editAvatar"
+      type="text"
+      placeholder="رابط صورة الحساب"
+      dir="ltr"
+    >
+
+
+    <div class="modal-actions">
+
+      <button
+        class="modal-btn"
+        onclick="closeEdit()"
+      >
+        إلغاء
+      </button>
+
+      <button
+        class="modal-btn save"
+        onclick="saveProfile()"
+      >
+        حفظ
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<div id="toast"></div>
+
+
+<script>
+
+/* =========================================================
+   RED SEA ACCOUNT
+========================================================= */
+
+const API_BASE =
+  "https://red-sea-server.onrender.com";
+
+
+/* =========================================================
+   FIREBASE CONFIG
+   نفس الـ CONFIG الموجود في home.html بالضبط
+========================================================= */
+
+const firebaseConfig = {
+
+  apiKey:
+    "AIzaSyD_R-LAa0qHFLS36QX7JmCLnh2DJyZhM",
+
+  authDomain:
+    "red-sea-8db76.firebaseapp.com",
+
+  projectId:
+    "red-sea-8db76",
+
+  storageBucket:
+    "red-sea-8db76.firebasestorage.app",
+
+  messagingSenderId:
+    "418468623324",
+
+  appId:
+    "1:418468623324:web:2a5fd96f353efccaf81519"
+
+};
+
+
+/* =========================================================
+   INITIALIZE FIREBASE
+========================================================= */
+
+try{
+
+  if(!firebase.apps.length){
+
+    firebase.initializeApp(
+      firebaseConfig
+    );
+
+  }
+
+}catch(error){
+
+  console.error(
+    "Firebase initialization error:",
+    error
+  );
+
+}
+
+
+/* =========================================================
+   AUTH
+========================================================= */
+
+const auth =
+  firebase.auth();
+
+
+/* =========================================================
+   VARIABLES
+========================================================= */
+
+let firebaseUser = null;
+
+let profile = null;
+
+
+/* =========================================================
+   NAVIGATION
+========================================================= */
+
+function goHome(){
+
+  window.location.href =
+    "home.html";
+
+}
+
+
+function goMessages(){
+
+  window.location.href =
+    "messages.html";
+
+}
+
+
+function goLogin(){
+
+  window.location.href =
+    "login.html";
+
+}
+
+
+/* =========================================================
+   LOADING
+========================================================= */
+
+function showLoading(){
+
+  document
+    .getElementById("loading")
+    .style.display =
+      "flex";
+
+  document
+    .getElementById("content")
+    .style.display =
+      "none";
+
+  document
+    .getElementById("errorBox")
+    .style.display =
+      "none";
+
+}
+
+
+function showContent(){
+
+  document
+    .getElementById("loading")
+    .style.display =
+      "none";
+
+  document
+    .getElementById("errorBox")
+    .style.display =
+      "none";
+
+  document
+    .getElementById("content")
+    .style.display =
+      "block";
+
+}
+
+
+function showLoginError(){
+
+  document
+    .getElementById("loading")
+    .style.display =
+      "none";
+
+  document
+    .getElementById("content")
+    .style.display =
+      "none";
+
+  document
+    .getElementById("errorBox")
+    .style.display =
+      "block";
+
+}
+
+
+/* =========================================================
+   TOAST
+========================================================= */
+
+function toast(message){
+
+  const box =
+    document.getElementById(
+      "toast"
+    );
+
+  box.textContent =
+    message;
+
+  box.classList.add(
+    "show"
+  );
+
+  setTimeout(
+    function(){
+
+      box.classList.remove(
+        "show"
+      );
+
+    },
+    2800
+  );
+
+}
+
+
+/* =========================================================
+   ESCAPE
+========================================================= */
+
+function escapeHtml(value){
+
+  return String(
+    value ?? ""
+  ).replace(
+    /[&<>"']/g,
+    function(c){
+
+      return {
+        "&":"&amp;",
+        "<":"&lt;",
+        ">":"&gt;",
+        '"':"&quot;",
+        "'":"&#039;"
+      }[c];
+
+    }
+  );
+
+}
+
+
+/* =========================================================
+   INITIALS
+========================================================= */
+
+function initials(name){
+
+  const text =
+    String(
+      name ||
+      "U"
+    ).trim();
+
+  return text
+    ? text.charAt(0).toUpperCase()
+    : "U";
+
+}
+
+
+/* =========================================================
+   NUMBER
+========================================================= */
+
+function formatNumber(value){
+
+  const n =
+    Number(
+      value || 0
+    );
+
+  if(!Number.isFinite(n)){
+
+    return "0";
+
+  }
+
+  return n.toLocaleString(
+    "en-US"
+  );
+
+}
+
+
+/* =========================================================
+   LOAD PROFILE FROM SERVER
+========================================================= */
+
+async function loadProfile(){
+
+  if(!firebaseUser){
+
+    return;
+
+  }
+
+
+  try{
+
+    const token =
+      await firebaseUser.getIdToken();
+
+
+    const response =
+      await fetch(
+        API_BASE +
+        "/api/users/by-firebase/" +
+        encodeURIComponent(
+          firebaseUser.uid
+        ),
+        {
+          method:"GET",
+
+          headers:{
+            "Authorization":
+              "Bearer " +
+              token,
+
+            "Accept":
+              "application/json"
+          }
+        }
+      );
+
+
+    let data = null;
+
+
+    try{
+
+      data =
+        await response.json();
+
+    }catch(e){
+
+      data = null;
+
+    }
+
+
+    /*
+     * حتى لو السيرفر رجع خطأ،
+     * لا نخرج المستخدم من الحساب.
+     *
+     * نستخدم بيانات Firebase.
+     */
+
+    if(!response.ok){
+
+      console.warn(
+        "Profile server:",
+        response.status,
+        data
+      );
+
+      renderFirebaseOnly();
+
+      showContent();
+
+      return;
+
+    }
+
+
+    profile =
+      data?.user ||
+      data ||
+      null;
+
+
+    if(profile){
+
+      renderProfile();
+
+    }else{
+
+      renderFirebaseOnly();
+
+    }
+
+
+    showContent();
+
+
+  }catch(error){
+
+    console.warn(
+      "Profile load error:",
+      error
+    );
+
+
+    /*
+     * لا redirect هنا.
+     */
+
+    renderFirebaseOnly();
+
+    showContent();
+
+  }
+
+}
+
+
+/* =========================================================
+   FIREBASE ONLY
+========================================================= */
+
+function renderFirebaseOnly(){
+
+  if(!firebaseUser){
+
+    return;
+
+  }
+
+
+  const name =
+    firebaseUser.displayName ||
+    firebaseUser.email ||
+    "المستخدم";
+
+
+  const email =
+    firebaseUser.email ||
+    "-";
+
+
+  document
+    .getElementById(
+      "userName"
+    )
+    .textContent =
+      name;
+
+
+  document
+    .getElementById(
+      "userId"
+    )
+    .textContent =
+      "ID: " +
+      firebaseUser.uid;
+
+
+  document
+    .getElementById(
+      "infoName"
+    )
+    .textContent =
+      name;
+
+
+  document
+    .getElementById(
+      "infoEmail"
+    )
+    .textContent =
+      email;
+
+
+  document
+    .getElementById(
+      "infoId"
+    )
+    .textContent =
+      firebaseUser.uid;
+
+
+  document
+    .getElementById(
+      "infoAgency"
+    )
+    .textContent =
+      "بدون وكالة";
+
+
+  document
+    .getElementById(
+      "coins"
+    )
+    .textContent =
+      "0";
+
+
+  document
+    .getElementById(
+      "followers"
+    )
+    .textContent =
+      "0";
+
+
+  document
+    .getElementById(
+      "following"
+    )
+    .textContent =
+      "0";
+
+
+  if(firebaseUser.photoURL){
+
+    setAvatar(
+      firebaseUser.photoURL
+    );
+
+  }else{
+
+    document
+      .getElementById(
+        "avatar"
+      )
+      .textContent =
+        initials(name);
+
+  }
+
+}
+
+
+/* =========================================================
+   RENDER PROFILE
+========================================================= */
+
+function renderProfile(){
+
+  if(!firebaseUser){
+
+    return;
+
+  }
+
+
+  const name =
+    profile?.name ||
+    profile?.displayName ||
+    firebaseUser.displayName ||
+    firebaseUser.email ||
+    "المستخدم";
+
+
+  const email =
+    profile?.email ||
+    firebaseUser.email ||
+    "-";
+
+
+  const id =
+    profile?.userId ||
+    profile?.id ||
+    profile?.firebaseUid ||
+    firebaseUser.uid;
+
+
+  const agency =
+    profile?.agencyName ||
+    profile?.agency ||
+    profile?.agencyId ||
+    "بدون وكالة";
+
+
+  const coins =
+    profile?.coins ??
+    profile?.balance ??
+    0;
+
+
+  const followers =
+    profile?.followers ??
+    0;
+
+
+  const following =
+    profile?.following ??
+    0;
+
+
+  const avatar =
+    profile?.avatar ||
+    profile?.photoURL ||
+    firebaseUser.photoURL ||
+    "";
+
+
+  document
+    .getElementById(
+      "userName"
+    )
+    .textContent =
+      name;
+
+
+  document
+    .getElementById(
+      "userId"
+    )
+    .textContent =
+      "ID: " +
+      id;
+
+
+  document
+    .getElementById(
+      "infoName"
+    )
+    .textContent =
+      name;
+
+
+  document
+    .getElementById(
+      "infoEmail"
+    )
+    .textContent =
+      email;
+
+
+  document
+    .getElementById(
+      "infoId"
+    )
+    .textContent =
+      id;
+
+
+  document
+    .getElementById(
+      "infoAgency"
+    )
+    .textContent =
+      agency;
+
+
+  document
+    .getElementById(
+      "coins"
+    )
+    .textContent =
+      formatNumber(
+        coins
+      );
+
+
+  document
+    .getElementById(
+      "followers"
+    )
+    .textContent =
+      formatNumber(
+        followers
+      );
+
+
+  document
+    .getElementById(
+      "following"
+    )
+    .textContent =
+      formatNumber(
+        following
+      );
+
+
+  if(avatar){
+
+    setAvatar(
+      avatar
+    );
+
+  }else{
+
+    document
+      .getElementById(
+        "avatar"
+      )
+      .textContent =
+      initials(
+        name
+      );
+
+  }
+
+}
+
+
+/* =========================================================
+   AVATAR
+========================================================= */
+
+function setAvatar(url){
+
+  const avatar =
+    document.getElementById(
+      "avatar"
+    );
+
+
+  avatar.innerHTML =
+    "";
+
+
+  const img =
+    document.createElement(
+      "img"
+    );
+
+
+  img.src =
+    url;
+
+
+  img.alt =
+    "";
+
+
+  img.onerror =
+    function(){
+
+      avatar.textContent =
+        initials(
+          profile?.name ||
+          firebaseUser?.displayName ||
+          firebaseUser?.email
+        );
+
+    };
+
+
+  avatar.appendChild(
+    img
+  );
+
+}
+
+
+/* =========================================================
+   EDIT
+========================================================= */
+
+function openEdit(){
+
+  if(!firebaseUser){
+
+    return;
+
+  }
+
+
+  const name =
+    profile?.name ||
+    profile?.displayName ||
+    firebaseUser.displayName ||
+    "";
+
+
+  const avatar =
+    profile?.avatar ||
+    profile?.photoURL ||
+    firebaseUser.photoURL ||
+    "";
+
+
+  document
+    .getElementById(
+      "editName"
+    )
+    .value =
+      name;
+
+
+  document
+    .getElementById(
+      "editAvatar"
+    )
+    .value =
+      avatar;
+
+
+  document
+    .getElementById(
+      "editModal"
+    )
+    .style.display =
+      "flex";
+
+}
+
+
+function closeEdit(){
+
+  document
+    .getElementById(
+      "editModal"
+    )
+    .style.display =
+      "none";
+
+}
+
+
+/* =========================================================
+   SAVE PROFILE
+========================================================= */
+
+async function saveProfile(){
+
+  if(!firebaseUser){
+
+    toast(
+      "المستخدم غير مسجل الدخول"
+    );
+
+    return;
+
+  }
+
+
+  const name =
+    document
+      .getElementById(
+        "editName"
+      )
+      .value
+      .trim();
+
+
+  const avatar =
+    document
+      .getElementById(
+        "editAvatar"
+      )
+      .value
+      .trim();
+
+
+  if(!name){
+
+    toast(
+      "اكتب الاسم"
+    );
+
+    return;
+
+  }
+
+
+  try{
+
+    /*
+     * Firebase
+     */
+
+    await firebaseUser.updateProfile({
+
+      displayName:
+        name,
+
+      photoURL:
+        avatar ||
+        null
+
+    });
+
+
+    /*
+     * Server
+     *
+     * لو endpoint مش موجود
+     * مش هنعتبر العملية فاشلة.
+     */
+
+    try{
+
+      const token =
+        await firebaseUser.getIdToken();
+
+
+      await fetch(
+        API_BASE +
+        "/api/users/profile",
+        {
+          method:"PATCH",
+
+          headers:{
+            "Authorization":
+              "Bearer " +
+              token,
+
+            "Content-Type":
+              "application/json"
+          },
+
+          body:
+            JSON.stringify({
+              name:name,
+              avatar:avatar
+            })
+        }
+      );
+
+    }catch(e){
+
+      console.warn(
+        "Server profile update:",
+        e
+      );
+
+    }
+
+
+    /*
+     * تحديث الشاشة
+     */
+
+    if(!profile){
+
+      profile = {};
+
+    }
+
+
+    profile.name =
+      name;
+
+    profile.avatar =
+      avatar;
+
+
+    renderProfile();
+
+
+    closeEdit();
+
+
+    toast(
+      "تم تحديث الحساب"
+    );
+
+
+  }catch(error){
+
+    console.error(
+      "Save profile:",
+      error
+    );
+
+
+    toast(
+      "تعذر تحديث الحساب"
+    );
+
+  }
+
+}
+
+
+/* =========================================================
+   COPY ID
+========================================================= */
+
+async function copyId(){
+
+  if(!firebaseUser){
+
+    return;
+
+  }
+
+
+  const id =
+    profile?.userId ||
+    profile?.id ||
+    firebaseUser.uid;
+
+
+  try{
+
+    await navigator.clipboard.writeText(
+      id
+    );
+
+    toast(
+      "تم نسخ ID"
+    );
+
+  }catch(error){
+
+    toast(
+      "تعذر نسخ ID"
+    );
+
+  }
+
+}
+
+
+/* =========================================================
+   PASSWORD
+========================================================= */
+
+async function changePassword(){
+
+  if(!firebaseUser){
+
+    return;
+
+  }
+
+
+  if(!firebaseUser.email){
+
+    toast(
+      "لا يوجد بريد إلكتروني للحساب"
+    );
+
+    return;
+
+  }
+
+
+  try{
+
+    await auth.sendPasswordResetEmail(
+      firebaseUser.email
+    );
+
+    toast(
+      "تم إرسال رابط تغيير كلمة المرور"
+    );
+
+  }catch(error){
+
+    console.error(
+      error
+    );
+
+    toast(
+      "تعذر إرسال الرابط"
+    );
+
+  }
+
+}
+
+
+/* =========================================================
+   LOGOUT
+========================================================= */
+
+async function logout(){
+
+  try{
+
+    await auth.signOut();
+
+    window.location.replace(
+      "login.html"
+    );
+
+  }catch(error){
+
+    console.error(
+      error
+    );
+
+    toast(
+      "تعذر تسجيل الخروج"
+    );
+
+  }
+
+}
+
+
+/* =========================================================
+   MODAL CLOSE
+========================================================= */
+
+document
+  .getElementById(
+    "editModal"
+  )
+  .addEventListener(
+    "click",
+    function(event){
+
+      if(
+        event.target ===
+        this
+      ){
+
+        closeEdit();
+
+      }
+
+    }
+  );
+
+
+/* =========================================================
+   FIREBASE AUTH STATE
+========================================================= */
+
+showLoading();
+
+
+auth.onAuthStateChanged(
+  function(user){
+
+    console.log(
+      "Red Sea Auth:",
+      user
+        ? "LOGGED_IN"
+        : "LOGGED_OUT"
+    );
+
+
+    if(user){
+
+      /*
+       * المستخدم موجود.
+       *
+       * لا نروح login.
+       * لا نروح home.
+       */
+
+      firebaseUser =
+        user;
+
+
+      loadProfile();
+
+
+    }else{
+
+      /*
+       * هنا فقط لو Firebase
+       * أكد فعلاً إن مفيش تسجيل دخول.
+       */
+
+      showLoginError();
+
+    }
+
+  }
+);
+
+</script>
+
+</body>
+</html>
