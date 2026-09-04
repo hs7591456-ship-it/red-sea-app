@@ -422,106 +422,87 @@
 
 </div>
 
-<script>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+import {
+    getAuth,
+    createUserWithEmailAndPassword,
+    updateProfile
+} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
 
-    // إظهار وإخفاء كلمات المرور
-    document.querySelectorAll(".show-password").forEach(function(button) {
+const firebaseConfig = {
+    apiKey: "AIzaSyD_R-LAa0qHFLS36qXJ7mZbCLnh2DJyZhM",
+    authDomain: "red-sea-8db76.firebaseapp.com",
+    projectId: "red-sea-8db76",
+    storageBucket: "red-sea-8db76.firebasestorage.app",
+    messagingSenderId: "418468623324",
+    appId: "1:418468623324:web:2a5fd96f353efccaf81519"
+};
 
-        button.addEventListener("click", function() {
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
 
-            const input = document.getElementById(
-                button.getAttribute("data-target")
-            );
+const form = document.querySelector("form");
 
-            if (input.type === "password") {
-                input.type = "text";
-                button.textContent = "🙈";
-            } else {
-                input.type = "password";
-                button.textContent = "👁";
-            }
+form.addEventListener("submit", async function(e) {
+    e.preventDefault();
 
-        });
+    const name = document.getElementById("name").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value;
+    const confirmPassword =
+        document.getElementById("confirm_password").value;
 
-    });
-
-
-    // العودة إلى تسجيل الدخول
-    document.getElementById("backBtn").addEventListener("click", function() {
-        window.location.href = "login.html";
-    });
-
-
-    // إنشاء الحساب
-    document.getElementById("registerForm").addEventListener("submit", function(event) {
-
-        event.preventDefault();
-
-        const name = document.getElementById("name").value.trim();
-        const email = document.getElementById("email").value.trim();
-        const password = document.getElementById("password").value;
-        const confirmPassword = document.getElementById("confirmPassword").value;
-        const terms = document.getElementById("terms").checked;
-
-        if (name.length < 2) {
-            showMessage("اكتب اسم مستخدم صحيح.", false);
-            return;
-        }
-
-        if (password.length < 6) {
-            showMessage("كلمة المرور يجب أن تكون 6 أحرف على الأقل.", false);
-            return;
-        }
-
-        if (password !== confirmPassword) {
-            showMessage("كلمتا المرور غير متطابقتين.", false);
-            return;
-        }
-
-        if (!terms) {
-            showMessage("يجب الموافقة على شروط الاستخدام.", false);
-            return;
-        }
-
-        /*
-         * التسجيل الحقيقي سيتم ربطه بالسيرفر لاحقًا.
-         */
-
-        showMessage("جاري إنشاء الحساب...", true);
-
-        setTimeout(function() {
-
-            showMessage(
-                "واجهة التسجيل جاهزة، وسيتم ربطها بالسيرفر في الخطوة القادمة.",
-                true
-            );
-
-        }, 1000);
-
-    });
-
-
-    function showMessage(text, success) {
-
-        const message = document.getElementById("message");
-
-        message.textContent = text;
-        message.style.display = "block";
-
-        if (success) {
-            message.style.color = "#8ee7ff";
-            message.style.background = "rgba(0,170,255,.08)";
-            message.style.border =
-                "1px solid rgba(0,170,255,.18)";
-        } else {
-            message.style.color = "#ff9b9b";
-            message.style.background = "rgba(255,70,70,.10)";
-            message.style.border =
-                "1px solid rgba(255,70,70,.18)";
-        }
-
+    if (!name) {
+        alert("اكتب اسمك");
+        return;
     }
 
+    if (!email) {
+        alert("اكتب البريد الإلكتروني");
+        return;
+    }
+
+    if (password.length < 6) {
+        alert("كلمة المرور لازم تكون 6 أحرف على الأقل");
+        return;
+    }
+
+    if (password !== confirmPassword) {
+        alert("كلمتا المرور غير متطابقتين");
+        return;
+    }
+
+    try {
+        const userCredential =
+            await createUserWithEmailAndPassword(
+                auth,
+                email,
+                password
+            );
+
+        await updateProfile(userCredential.user, {
+            displayName: name
+        });
+
+        alert("تم إنشاء الحساب بنجاح 🎉");
+
+        window.location.href = "home.html";
+
+    } catch (error) {
+        console.error(error);
+
+        if (error.code === "auth/email-already-in-use") {
+            alert("البريد الإلكتروني مستخدم بالفعل");
+        } else if (error.code === "auth/invalid-email") {
+            alert("البريد الإلكتروني غير صحيح");
+        } else if (error.code === "auth/weak-password") {
+            alert("كلمة المرور ضعيفة");
+        } else {
+            alert("حصل خطأ أثناء إنشاء الحساب: " + error.message);
+        }
+    }
+});
 </script>
 
 </body>
