@@ -251,6 +251,7 @@
         }
 
         @media (max-height: 700px) {
+
             .page {
                 padding-top: 12px;
                 padding-bottom: 12px;
@@ -298,12 +299,21 @@
     <div class="glow"></div>
 
     <div class="logo-box">
-        <img src="logo.png" class="logo" alt="Red Sea">
+        <img
+            src="logo.png"
+            class="logo"
+            alt="Red Sea"
+        >
     </div>
 
     <div class="title">
+
         <h1>إنشاء حساب جديد</h1>
-        <p>انضم إلى عالم Red Sea</p>
+
+        <p>
+            انضم إلى عالم Red Sea
+        </p>
+
     </div>
 
     <div class="card">
@@ -312,10 +322,16 @@
 
             <!-- اسم المستخدم -->
             <div class="field">
-                <label for="name">اسم المستخدم</label>
+
+                <label for="name">
+                    اسم المستخدم
+                </label>
 
                 <div class="input-wrap">
-                    <span class="icon">👤</span>
+
+                    <span class="icon">
+                        👤
+                    </span>
 
                     <input
                         type="text"
@@ -325,15 +341,24 @@
                         maxlength="30"
                         required
                     >
+
                 </div>
+
             </div>
 
-            <!-- البريد -->
+
+            <!-- البريد الإلكتروني -->
             <div class="field">
-                <label for="email">البريد الإلكتروني</label>
+
+                <label for="email">
+                    البريد الإلكتروني
+                </label>
 
                 <div class="input-wrap">
-                    <span class="icon">✉</span>
+
+                    <span class="icon">
+                        ✉
+                    </span>
 
                     <input
                         type="email"
@@ -342,16 +367,24 @@
                         autocomplete="email"
                         required
                     >
+
                 </div>
+
             </div>
+
 
             <!-- كلمة المرور -->
             <div class="field">
-                <label for="password">كلمة المرور</label>
+
+                <label for="password">
+                    كلمة المرور
+                </label>
 
                 <div class="input-wrap">
 
-                    <span class="icon">🔒</span>
+                    <span class="icon">
+                        🔒
+                    </span>
 
                     <input
                         type="password"
@@ -367,18 +400,28 @@
                         type="button"
                         class="show-password"
                         data-target="password"
-                    >👁</button>
+                        aria-label="إظهار كلمة المرور"
+                    >
+                        👁
+                    </button>
 
                 </div>
+
             </div>
+
 
             <!-- تأكيد كلمة المرور -->
             <div class="field">
-                <label for="confirmPassword">تأكيد كلمة المرور</label>
+
+                <label for="confirmPassword">
+                    تأكيد كلمة المرور
+                </label>
 
                 <div class="input-wrap">
 
-                    <span class="icon">🔐</span>
+                    <span class="icon">
+                        🔐
+                    </span>
 
                     <input
                         type="password"
@@ -394,10 +437,15 @@
                         type="button"
                         class="show-password"
                         data-target="confirmPassword"
-                    >👁</button>
+                        aria-label="إظهار تأكيد كلمة المرور"
+                    >
+                        👁
+                    </button>
 
                 </div>
+
             </div>
+
 
             <!-- الشروط -->
             <label class="terms">
@@ -408,27 +456,41 @@
                 >
 
                 <span>
+
                     أوافق على
-                    <a href="#" onclick="return false;">
+
+                    <a
+                        href="#"
+                        onclick="return false;"
+                    >
                         شروط الاستخدام
                     </a>
+
                     و
-                    <a href="#" onclick="return false;">
+
+                    <a
+                        href="#"
+                        onclick="return false;"
+                    >
                         سياسة الخصوصية
                     </a>
+
                 </span>
 
             </label>
 
-            <!-- إنشاء الحساب -->
+
+            <!-- زر إنشاء الحساب -->
             <button
                 type="submit"
                 class="register-btn"
+                id="registerBtn"
             >
                 إنشاء الحساب
             </button>
 
-            <!-- الرسائل -->
+
+            <!-- رسالة -->
             <div
                 class="message"
                 id="message"
@@ -436,7 +498,8 @@
 
         </form>
 
-        <!-- العودة -->
+
+        <!-- العودة لتسجيل الدخول -->
         <button
             type="button"
             class="back"
@@ -447,73 +510,115 @@
 
     </div>
 
+
+    <!-- Footer -->
     <div class="footer">
+
         RED SEA • VOICE ROOMS • CHAT • FRIENDS • GAMES • GIFTS
+
     </div>
 
 </div>
 
 
 <!-- =====================================================
-     FIREBASE
+     FIREBASE AUTHENTICATION
 ===================================================== -->
 
 <script type="module">
 
-    import { initializeApp }
-        from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+    /*
+     * Firebase SDK 12.18.0
+     */
+
+    import {
+        initializeApp
+    } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
+
 
     import {
         getAuth,
         createUserWithEmailAndPassword,
         updateProfile
-    }
-    from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+    } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
 
 
-    /* إعداد Firebase */
+    /*
+     * Firebase Configuration
+     */
 
     const firebaseConfig = {
 
-        apiKey: "AIzaSyD_R-LAa0qHFLS36XqJ7mZbCLnh2DJyZhM",
+        apiKey:
+            "AIzaSyD_R-LAa0qHFLS36qXJ7mZbCLnh2DJyZhM",
 
-        authDomain: "red-sea-8db76.firebaseapp.com",
+        authDomain:
+            "red-sea-8db76.firebaseapp.com",
 
-        projectId: "red-sea-8db76",
+        projectId:
+            "red-sea-8db76",
 
-        storageBucket: "red-sea-8db76.firebasestorage.app",
+        storageBucket:
+            "red-sea-8db76.firebasestorage.app",
 
-        messagingSenderId: "418468623324",
+        messagingSenderId:
+            "418468623324",
 
-        appId: "1:418468623324:web:2a5fd96f353efccaf81519"
+        appId:
+            "1:418468623324:web:2a5fd96f353efccaf81519"
 
     };
 
 
-    /* تشغيل Firebase */
+    /*
+     * تشغيل Firebase
+     */
 
-    const app = initializeApp(firebaseConfig);
+    const app =
+        initializeApp(firebaseConfig);
 
-    const auth = getAuth(app);
+
+    /*
+     * تشغيل Authentication
+     */
+
+    const auth =
+        getAuth(app);
 
 
-    /* عناصر الصفحة */
+    /*
+     * عناصر الصفحة
+     */
 
-    const form = document.getElementById("registerForm");
+    const form =
+        document.getElementById("registerForm");
 
-    const message = document.getElementById("message");
+
+    const message =
+        document.getElementById("message");
+
 
     const registerBtn =
-        document.querySelector(".register-btn");
+        document.getElementById("registerBtn");
 
 
-    /* إظهار رسالة */
+    const backBtn =
+        document.getElementById("backBtn");
 
-    function showMessage(text, success = false) {
+
+    /*
+     * عرض رسالة
+     */
+
+    function showMessage(
+        text,
+        success = false
+    ) {
 
         message.style.display = "block";
 
         message.textContent = text;
+
 
         if (success) {
 
@@ -530,277 +635,386 @@
 
             message.style.color =
                 "#ff8b8b";
+
         }
+
     }
 
 
-    /* إنشاء الحساب */
+    /*
+     * إخفاء الرسالة
+     */
 
-    form.addEventListener("submit", async function(e) {
+    function hideMessage() {
 
-        e.preventDefault();
+        message.style.display =
+            "none";
 
+        message.textContent = "";
 
-        /* قراءة البيانات */
-
-        const name =
-            document.getElementById("name")
-            .value
-            .trim();
-
-
-        const email =
-            document.getElementById("email")
-            .value
-            .trim();
+    }
 
 
-        const password =
-            document.getElementById("password")
-            .value;
+    /*
+     * إنشاء الحساب
+     */
+
+    form.addEventListener(
+        "submit",
+        async function(event) {
+
+            event.preventDefault();
+
+            hideMessage();
 
 
-        const confirmPassword =
-            document.getElementById("confirmPassword")
-            .value;
+            /*
+             * قراءة البيانات
+             */
+
+            const name =
+                document
+                    .getElementById("name")
+                    .value
+                    .trim();
 
 
-        const terms =
-            document.getElementById("terms")
-            .checked;
+            const email =
+                document
+                    .getElementById("email")
+                    .value
+                    .trim();
 
 
-        /* التحقق */
-
-        if (!name) {
-
-            showMessage("اكتب اسم المستخدم");
-
-            return;
-        }
+            const password =
+                document
+                    .getElementById("password")
+                    .value;
 
 
-        if (!email) {
-
-            showMessage("اكتب البريد الإلكتروني");
-
-            return;
-        }
+            const confirmPassword =
+                document
+                    .getElementById("confirmPassword")
+                    .value;
 
 
-        if (password.length < 6) {
-
-            showMessage(
-                "كلمة المرور لازم تكون 6 أحرف على الأقل"
-            );
-
-            return;
-        }
+            const terms =
+                document
+                    .getElementById("terms")
+                    .checked;
 
 
-        if (password !== confirmPassword) {
+            /*
+             * التحقق من الاسم
+             */
 
-            showMessage(
-                "كلمتا المرور غير متطابقتين"
-            );
-
-            return;
-        }
-
-
-        if (!terms) {
-
-            showMessage(
-                "لازم توافق على شروط الاستخدام وسياسة الخصوصية"
-            );
-
-            return;
-        }
-
-
-        /* تعطيل الزر أثناء التسجيل */
-
-        registerBtn.disabled = true;
-
-        registerBtn.textContent =
-            "جاري إنشاء الحساب...";
-
-
-        try {
-
-            /* إنشاء الحساب في Firebase */
-
-            const userCredential =
-                await createUserWithEmailAndPassword(
-                    auth,
-                    email,
-                    password
-                );
-
-
-            const user =
-                userCredential.user;
-
-
-            /* حفظ اسم المستخدم */
-
-            await updateProfile(user, {
-
-                displayName: name
-
-            });
-
-
-            /* نجاح */
-
-            showMessage(
-                "تم إنشاء الحساب بنجاح 🎉",
-                true
-            );
-
-
-            /* الانتقال للصفحة الرئيسية */
-
-            setTimeout(function() {
-
-                window.location.href =
-                    "home.html";
-
-            }, 1000);
-
-
-        } catch (error) {
-
-            console.error(
-                "Firebase Auth Error:",
-                error
-            );
-
-
-            /* الأخطاء */
-
-            if (
-                error.code ===
-                "auth/email-already-in-use"
-            ) {
+            if (!name) {
 
                 showMessage(
-                    "البريد الإلكتروني مستخدم بالفعل"
+                    "اكتب اسم المستخدم"
                 );
 
+                return;
 
-            } else if (
-                error.code ===
-                "auth/invalid-email"
-            ) {
-
-                showMessage(
-                    "البريد الإلكتروني غير صحيح"
-                );
-
-
-            } else if (
-                error.code ===
-                "auth/weak-password"
-            ) {
-
-                showMessage(
-                    "كلمة المرور ضعيفة"
-                );
-
-
-            } else if (
-                error.code ===
-                "auth/network-request-failed"
-            ) {
-
-                showMessage(
-                    "تأكد من اتصال الإنترنت"
-                );
-
-
-            } else {
-
-                showMessage(
-                    "حدث خطأ أثناء إنشاء الحساب: " +
-                    error.message
-                );
             }
 
 
-            /* إعادة الزر */
+            /*
+             * التحقق من البريد
+             */
 
-            registerBtn.disabled = false;
+            if (!email) {
+
+                showMessage(
+                    "اكتب البريد الإلكتروني"
+                );
+
+                return;
+
+            }
+
+
+            /*
+             * التحقق من كلمة المرور
+             */
+
+            if (password.length < 6) {
+
+                showMessage(
+                    "كلمة المرور لازم تكون 6 أحرف على الأقل"
+                );
+
+                return;
+
+            }
+
+
+            /*
+             * تأكيد كلمة المرور
+             */
+
+            if (
+                password !==
+                confirmPassword
+            ) {
+
+                showMessage(
+                    "كلمتا المرور غير متطابقتين"
+                );
+
+                return;
+
+            }
+
+
+            /*
+             * الموافقة على الشروط
+             */
+
+            if (!terms) {
+
+                showMessage(
+                    "لازم توافق على شروط الاستخدام وسياسة الخصوصية"
+                );
+
+                return;
+
+            }
+
+
+            /*
+             * تعطيل الزر
+             */
+
+            registerBtn.disabled = true;
 
             registerBtn.textContent =
-                "إنشاء الحساب";
+                "جاري إنشاء الحساب...";
+
+
+            try {
+
+                /*
+                 * إنشاء الحساب في Firebase Authentication
+                 */
+
+                const userCredential =
+                    await createUserWithEmailAndPassword(
+                        auth,
+                        email,
+                        password
+                    );
+
+
+                /*
+                 * الحصول على المستخدم
+                 */
+
+                const user =
+                    userCredential.user;
+
+
+                /*
+                 * حفظ اسم المستخدم
+                 * داخل Firebase Authentication
+                 */
+
+                await updateProfile(
+                    user,
+                    {
+                        displayName: name
+                    }
+                );
+
+
+                /*
+                 * رسالة نجاح
+                 */
+
+                showMessage(
+                    "تم إنشاء الحساب بنجاح 🎉",
+                    true
+                );
+
+
+                /*
+                 * الانتقال للصفحة الرئيسية
+                 */
+
+                setTimeout(
+                    function() {
+
+                        window.location.href =
+                            "home.html";
+
+                    },
+                    1000
+                );
+
+
+            } catch (error) {
+
+                console.error(
+                    "Firebase Authentication Error:",
+                    error
+                );
+
+
+                /*
+                 * Firebase Errors
+                 */
+
+                if (
+                    error.code ===
+                    "auth/email-already-in-use"
+                ) {
+
+                    showMessage(
+                        "البريد الإلكتروني مستخدم بالفعل"
+                    );
+
+
+                } else if (
+                    error.code ===
+                    "auth/invalid-email"
+                ) {
+
+                    showMessage(
+                        "البريد الإلكتروني غير صحيح"
+                    );
+
+
+                } else if (
+                    error.code ===
+                    "auth/weak-password"
+                ) {
+
+                    showMessage(
+                        "كلمة المرور ضعيفة"
+                    );
+
+
+                } else if (
+                    error.code ===
+                    "auth/network-request-failed"
+                ) {
+
+                    showMessage(
+                        "تأكد من اتصال الإنترنت"
+                    );
+
+
+                } else if (
+                    error.code ===
+                    "auth/operation-not-allowed"
+                ) {
+
+                    showMessage(
+                        "تسجيل الدخول بالبريد الإلكتروني غير مفعّل في Firebase"
+                    );
+
+
+                } else if (
+                    error.code ===
+                    "auth/api-key-not-valid"
+                ) {
+
+                    showMessage(
+                        "مفتاح Firebase API غير صالح"
+                    );
+
+
+                } else {
+
+                    showMessage(
+                        "حدث خطأ أثناء إنشاء الحساب: " +
+                        error.message
+                    );
+
+                }
+
+
+                /*
+                 * إعادة تفعيل الزر
+                 */
+
+                registerBtn.disabled =
+                    false;
+
+                registerBtn.textContent =
+                    "إنشاء الحساب";
+
+            }
 
         }
+    );
 
-    });
 
-
-    /* =====================================================
-       إظهار وإخفاء كلمة المرور
-    ===================================================== */
+    /*
+     * إظهار / إخفاء كلمة المرور
+     */
 
     document
         .querySelectorAll(".show-password")
-        .forEach(function(button) {
+        .forEach(
+            function(button) {
 
-            button.addEventListener(
-                "click",
-                function() {
+                button.addEventListener(
+                    "click",
+                    function() {
 
-                    const target =
-                        document.getElementById(
-                            button.getAttribute(
-                                "data-target"
-                            )
-                        );
+                        const target =
+                            document.getElementById(
+                                button.getAttribute(
+                                    "data-target"
+                                )
+                            );
 
 
-                    if (
-                        target.type ===
-                        "password"
-                    ) {
+                        if (
+                            target.type ===
+                            "password"
+                        ) {
 
-                        target.type = "text";
+                            target.type =
+                                "text";
 
-                        button.textContent =
-                            "🙈";
+                            button.textContent =
+                                "🙈";
 
-                    } else {
+                        } else {
 
-                        target.type = "password";
+                            target.type =
+                                "password";
 
-                        button.textContent =
-                            "👁";
+                            button.textContent =
+                                "👁";
+
+                        }
+
                     }
-
-                }
-            );
-
-        });
-
-
-    /* =====================================================
-       العودة لتسجيل الدخول
-    ===================================================== */
-
-    document
-        .getElementById("backBtn")
-        .addEventListener(
-            "click",
-            function() {
-
-                window.location.href =
-                    "login.html";
+                );
 
             }
         );
 
+
+    /*
+     * العودة لتسجيل الدخول
+     */
+
+    backBtn.addEventListener(
+        "click",
+        function() {
+
+            window.location.href =
+                "login.html";
+
+        }
+    );
+
 </script>
 
 </body>
+
 </html>
