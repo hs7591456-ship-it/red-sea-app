@@ -1,2281 +1,658 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
-
 <head>
-
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Red Sea - Home</title>
 
-<meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
->
-
-<meta
-    name="theme-color"
-    content="#020b18"
->
-
-<title>Red Sea - الرئيسية</title>
+<script src="https://www.gstatic.com/firebasejs/12.18.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/12.18.0/firebase-auth-compat.js"></script>
 
 <style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#07111f;--card:#0d1b2d;--card2:#10243a;--line:rgba(255,255,255,.08);
+  --text:#f4f7fb;--muted:#91a1b6;--blue:#28a9ff;--gold:#ffc94a;
+}
+body{font-family:Arial,Tahoma,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;padding-bottom:76px}
+button,input{font:inherit}
+button{border:0;cursor:pointer}
+a{text-decoration:none;color:inherit}
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+.top{
+  position:sticky;top:0;z-index:20;background:rgba(7,17,31,.94);
+  backdrop-filter:blur(16px);border-bottom:1px solid var(--line)
+}
+.top-inner{max-width:680px;margin:auto;padding:12px 14px 9px}
+.user-row{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.user-info{display:flex;align-items:center;gap:10px;min-width:0}
+.avatar{
+  width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  background:linear-gradient(135deg,#168fe0,#6dd2ff);font-weight:900;font-size:18px;
+  box-shadow:0 0 0 3px rgba(40,169,255,.12)
+}
+.name-box{min-width:0}
+.hello{font-size:12px;color:var(--muted);margin-bottom:3px}
+.name{font-size:16px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.top-actions{display:flex;gap:7px}
+.icon-btn{
+  width:38px;height:38px;border-radius:12px;background:var(--card);
+  color:#dce8f5;border:1px solid var(--line);font-size:17px
+}
+.coin-mini{
+  display:flex;align-items:center;gap:5px;background:rgba(255,201,74,.09);
+  border:1px solid rgba(255,201,74,.18);color:var(--gold);padding:8px 10px;border-radius:12px;
+  font-size:12px;font-weight:800
 }
 
-html,
-body {
-    width: 100%;
-    min-height: 100%;
+.tabs{display:flex;align-items:center;gap:5px;margin-top:12px;overflow-x:auto;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{
+  flex:1;min-width:max-content;padding:9px 10px;border-radius:10px;color:var(--muted);
+  background:transparent;font-size:12px;font-weight:800
 }
+.tab.active{background:var(--blue);color:white;box-shadow:0 5px 18px rgba(40,169,255,.2)}
 
-body {
-    min-height: 100vh;
-    font-family: Arial, Tahoma, sans-serif;
-    color: #fff;
-
-    background:
-        radial-gradient(
-            circle at 50% -10%,
-            #084b83 0%,
-            #042744 30%,
-            #020f20 62%,
-            #010711 100%
-        );
-
-    overflow-x: hidden;
+.container{max-width:680px;margin:auto;padding:12px 14px 25px}
+.search{
+  display:flex;align-items:center;gap:8px;background:var(--card);border:1px solid var(--line);
+  border-radius:14px;padding:0 13px;margin-bottom:13px
 }
+.search span{font-size:17px;color:var(--muted)}
+.search input{width:100%;height:46px;background:none;border:0;outline:0;color:white;font-size:13px}
+.search input::placeholder{color:#65758b}
 
-button,
-input {
-    font-family: inherit;
+.section{margin-top:16px}
+.section-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:9px}
+.section-title{font-size:15px;font-weight:900}
+.section-more{font-size:11px;color:var(--blue);font-weight:800}
+
+.ads{
+  display:flex;gap:9px;overflow-x:auto;scroll-snap-type:x mandatory;
+  scrollbar-width:none;padding-bottom:2px
 }
-
-a {
-    text-decoration: none;
-    color: inherit;
+.ads::-webkit-scrollbar{display:none}
+.ad{
+  min-width:100%;height:105px;border-radius:16px;overflow:hidden;scroll-snap-align:center;
+  background:linear-gradient(135deg,#102c47,#0a1627);border:1px solid var(--line);
+  position:relative;display:flex;align-items:center;justify-content:center
 }
+.ad img{width:100%;height:100%;object-fit:cover}
+.ad-content{text-align:center}
+.ad-content b{font-size:18px}.ad-content p{font-size:11px;color:var(--muted);margin-top:6px}
 
-.app {
-    width: 100%;
-    max-width: 600px;
-    min-height: 100vh;
-    margin: auto;
-    position: relative;
-    padding-bottom: 90px;
+.official-grid,.agency-grid,.room-grid{
+  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px
 }
-
-/* =========================================
-   HEADER
-========================================= */
-
-.header {
-    height: 78px;
-    padding: 15px 17px 10px;
-
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    position: sticky;
-    top: 0;
-    z-index: 20;
-
-    background: rgba(2,15,31,.72);
-
-    backdrop-filter: blur(18px);
-    -webkit-backdrop-filter: blur(18px);
-
-    border-bottom:
-        1px solid
-        rgba(255,255,255,.055);
+.official{
+  background:linear-gradient(145deg,#122943,#0d1c2f);border:1px solid rgba(40,169,255,.13);
+  border-radius:15px;padding:13px;min-height:100px;position:relative
 }
+.official.admin{border-color:rgba(255,201,74,.2)}
+.badge{font-size:9px;padding:4px 7px;border-radius:7px;background:rgba(40,169,255,.12);color:#70caff}
+.admin .badge{background:rgba(255,201,74,.12);color:var(--gold)}
+.official h3{font-size:13px;margin-top:11px}
+.official p{font-size:10px;color:var(--muted);margin-top:5px}
+.join{position:absolute;left:9px;bottom:9px;width:27px;height:27px;border-radius:9px;background:rgba(255,255,255,.07);color:white}
 
-.profile-mini {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    min-width: 0;
+.agency{
+  background:var(--card);border:1px solid var(--line);border-radius:15px;padding:11px;
+  position:relative;min-height:132px
 }
-
-.avatar {
-    width: 45px;
-    height: 45px;
-
-    border-radius: 50%;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    flex-shrink: 0;
-
-    font-size: 19px;
-    font-weight: 800;
-
-    color: #fff;
-
-    background:
-        linear-gradient(
-            135deg,
-            #078dff,
-            #0049b9
-        );
-
-    border:
-        2px solid
-        rgba(78,201,255,.55);
-
-    box-shadow:
-        0 0 18px
-        rgba(0,145,255,.25);
+.rank{
+  position:absolute;top:8px;right:8px;width:27px;height:27px;border-radius:9px;
+  display:flex;align-items:center;justify-content:center;background:rgba(255,201,74,.1);color:var(--gold);font-size:11px;font-weight:900
 }
-
-.user-info {
-    min-width: 0;
+.agency-avatar{
+  width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,#173d5e,#0c2035);
+  display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:8px
 }
+.agency h3{font-size:12px;padding-left:25px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.agency p{font-size:9px;color:var(--muted);margin-top:5px}
+.agency .coins{color:var(--gold);font-size:10px;margin-top:7px;font-weight:800}
 
-.welcome {
-    font-size: 10px;
-    color: rgba(255,255,255,.42);
-    margin-bottom: 3px;
+.room{
+  background:var(--card);border:1px solid var(--line);border-radius:15px;overflow:hidden;position:relative;
+  min-height:158px
 }
-
-.username {
-    font-size: 15px;
-    font-weight: 800;
-
-    max-width: 150px;
-
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+.room-cover{height:83px;background:linear-gradient(135deg,#14324d,#0b192b);position:relative;display:flex;align-items:center;justify-content:center}
+.room-cover img{width:100%;height:100%;object-fit:cover}
+.room-icon{font-size:28px}
+.room-rank{position:absolute;top:8px;right:8px;background:rgba(7,17,31,.78);padding:5px 7px;border-radius:8px;color:var(--gold);font-size:10px;font-weight:900}
+.room-body{padding:9px}
+.room-name{font-size:12px;font-weight:900;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.room-meta{display:flex;align-items:center;justify-content:space-between;margin-top:6px;color:var(--muted);font-size:9px}
+.follow{
+  position:absolute;left:8px;top:8px;width:28px;height:28px;border-radius:9px;
+  background:rgba(7,17,31,.78);color:white;font-size:15px
 }
+.follow.on{color:var(--blue);background:rgba(40,169,255,.15)}
 
-.header-actions {
-    display: flex;
-    align-items: center;
-    gap: 8px;
+.empty{
+  grid-column:1/-1;text-align:center;padding:27px 10px;background:var(--card);
+  border:1px dashed rgba(255,255,255,.1);border-radius:15px;color:var(--muted);font-size:12px
 }
+.loading{padding:30px;text-align:center;color:var(--muted);font-size:12px}
+.error{padding:20px;text-align:center;background:rgba(255,75,75,.06);border:1px solid rgba(255,75,75,.14);border-radius:14px;color:#ff9b9b;font-size:12px}
 
-.icon-btn {
-    width: 40px;
-    height: 40px;
-
-    border-radius: 13px;
-
-    border:
-        1px solid
-        rgba(255,255,255,.08);
-
-    background:
-        rgba(255,255,255,.045);
-
-    color: #fff;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    font-size: 18px;
-    cursor: pointer;
+.bottom{
+  position:fixed;bottom:0;left:0;right:0;height:66px;z-index:30;background:rgba(8,18,31,.97);
+  backdrop-filter:blur(18px);border-top:1px solid var(--line)
 }
-
-/* =========================================
-   WALLET
-========================================= */
-
-.wallet-card {
-    margin: 16px 16px 12px;
-    padding: 17px;
-
-    border-radius: 22px;
-
-    position: relative;
-    overflow: hidden;
-
-    background:
-        linear-gradient(
-            135deg,
-            rgba(7,63,108,.92),
-            rgba(3,28,52,.96)
-        );
-
-    border:
-        1px solid
-        rgba(56,180,255,.16);
-
-    box-shadow:
-        0 18px 45px
-        rgba(0,0,0,.25);
+.bottom-inner{max-width:680px;margin:auto;height:100%;display:grid;grid-template-columns:repeat(3,1fr)}
+.nav{
+  background:none;color:var(--muted);display:flex;flex-direction:column;align-items:center;
+  justify-content:center;gap:4px;font-size:10px;font-weight:800
 }
+.nav span:first-child{font-size:19px}.nav.active{color:var(--blue)}
 
-.wallet-card::before {
-    content: "";
-
-    position: absolute;
-
-    width: 150px;
-    height: 150px;
-
-    border-radius: 50%;
-
-    background:
-        rgba(0,161,255,.13);
-
-    filter: blur(35px);
-
-    top: -70px;
-    left: -30px;
+.hidden{display:none!important}
+@media(max-width:360px){
+  .tab{font-size:11px;padding:8px 7px}
+  .container{padding-left:10px;padding-right:10px}
 }
-
-.wallet-top {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    position: relative;
-    z-index: 1;
-}
-
-.wallet-title {
-    color: rgba(255,255,255,.58);
-    font-size: 11px;
-    margin-bottom: 5px;
-}
-
-.coins {
-    display: flex;
-    align-items: center;
-    gap: 7px;
-}
-
-.coin-icon {
-    width: 30px;
-    height: 30px;
-
-    border-radius: 50%;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    background:
-        linear-gradient(
-            135deg,
-            #ffd86b,
-            #e29b20
-        );
-
-    box-shadow:
-        0 0 15px
-        rgba(255,190,45,.25);
-
-    font-size: 15px;
-}
-
-.coin-number {
-    font-size: 22px;
-    font-weight: 900;
-}
-
-.charge-btn {
-    border: none;
-
-    height: 38px;
-
-    padding: 0 15px;
-
-    border-radius: 12px;
-
-    background:
-        linear-gradient(
-            135deg,
-            #00a8ff,
-            #0066e8
-        );
-
-    color: #fff;
-
-    font-size: 12px;
-    font-weight: 800;
-
-    cursor: pointer;
-}
-
-/* =========================================
-   SEARCH
-========================================= */
-
-.search-box {
-    margin: 0 16px 18px;
-
-    height: 48px;
-
-    display: flex;
-    align-items: center;
-
-    gap: 10px;
-
-    padding: 0 15px;
-
-    border-radius: 15px;
-
-    background:
-        rgba(255,255,255,.045);
-
-    border:
-        1px solid
-        rgba(255,255,255,.07);
-}
-
-.search-icon {
-    font-size: 18px;
-    opacity: .5;
-}
-
-.search-box input {
-    flex: 1;
-
-    border: none;
-    outline: none;
-
-    background: transparent;
-    color: #fff;
-
-    font-size: 13px;
-}
-
-.search-box input::placeholder {
-    color: rgba(255,255,255,.35);
-}
-
-/* =========================================
-   SECTIONS
-========================================= */
-
-.section {
-    margin: 0 16px 20px;
-}
-
-.section-head {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    margin-bottom: 13px;
-}
-
-.section-title {
-    display: flex;
-    align-items: center;
-
-    gap: 8px;
-
-    font-size: 17px;
-    font-weight: 800;
-}
-
-.live-dot {
-    width: 8px;
-    height: 8px;
-
-    border-radius: 50%;
-
-    background: #ff3154;
-
-    box-shadow:
-        0 0 10px
-        rgba(255,49,84,.8);
-
-    animation: pulse 1.5s infinite;
-}
-
-@keyframes pulse {
-
-    0%,
-    100% {
-        opacity: .5;
-        transform: scale(.85);
-    }
-
-    50% {
-        opacity: 1;
-        transform: scale(1);
-    }
-
-}
-
-.see-all {
-    color: #39bfff;
-    font-size: 11px;
-    cursor: pointer;
-}
-
-/* =========================================
-   CATEGORIES
-========================================= */
-
-.categories {
-    display: flex;
-
-    gap: 9px;
-
-    overflow-x: auto;
-
-    padding-bottom: 3px;
-
-    scrollbar-width: none;
-}
-
-.categories::-webkit-scrollbar {
-    display: none;
-}
-
-.category {
-    flex-shrink: 0;
-
-    padding: 9px 14px;
-
-    border-radius: 13px;
-
-    border:
-        1px solid
-        rgba(255,255,255,.07);
-
-    background:
-        rgba(255,255,255,.04);
-
-    color:
-        rgba(255,255,255,.65);
-
-    font-size: 11px;
-
-    cursor: pointer;
-}
-
-.category.active {
-    color: #fff;
-
-    background:
-        rgba(0,145,255,.2);
-
-    border-color:
-        rgba(0,168,255,.4);
-}
-
-/* =========================================
-   ROOMS
-========================================= */
-
-.rooms {
-    display: grid;
-
-    grid-template-columns:
-        repeat(2, 1fr);
-
-    gap: 12px;
-}
-
-.room {
-    min-height: 175px;
-
-    padding: 13px;
-
-    border-radius: 20px;
-
-    position: relative;
-    overflow: hidden;
-
-    background:
-        linear-gradient(
-            145deg,
-            rgba(8,51,83,.9),
-            rgba(2,22,40,.95)
-        );
-
-    border:
-        1px solid
-        rgba(255,255,255,.07);
-
-    cursor: pointer;
-
-    transition: .2s;
-}
-
-.room:active {
-    transform: scale(.97);
-}
-
-.room-cover {
-    height: 72px;
-
-    border-radius: 14px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    font-size: 30px;
-
-    margin-bottom: 10px;
-
-    background:
-        radial-gradient(
-            circle at center,
-            #0876bd,
-            #031d38
-        );
-}
-
-.room:nth-child(2) .room-cover {
-    background:
-        radial-gradient(
-            circle at center,
-            #61349c,
-            #1c1234
-        );
-}
-
-.room:nth-child(3) .room-cover {
-    background:
-        radial-gradient(
-            circle at center,
-            #9a5128,
-            #30190e
-        );
-}
-
-.room:nth-child(4) .room-cover {
-    background:
-        radial-gradient(
-            circle at center,
-            #207d68,
-            #092d27
-        );
-}
-
-.live-label {
-    position: absolute;
-
-    top: 9px;
-    right: 9px;
-
-    padding: 4px 7px;
-
-    border-radius: 7px;
-
-    background:
-        rgba(255,38,70,.9);
-
-    font-size: 8px;
-    font-weight: 800;
-}
-
-.room-name {
-    font-size: 13px;
-    font-weight: 800;
-
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-
-    margin-bottom: 5px;
-}
-
-.room-owner {
-    font-size: 10px;
-
-    color:
-        rgba(255,255,255,.42);
-
-    margin-bottom: 9px;
-}
-
-.room-bottom {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.members {
-    color:
-        rgba(255,255,255,.48);
-
-    font-size: 10px;
-}
-
-.mic {
-    font-size: 14px;
-}
-
-/* =========================================
-   QUICK ACTIONS
-========================================= */
-
-.quick-actions {
-    display: grid;
-
-    grid-template-columns:
-        repeat(4,1fr);
-
-    gap: 9px;
-}
-
-.quick {
-    min-height: 82px;
-
-    border-radius: 16px;
-
-    background:
-        rgba(255,255,255,.04);
-
-    border:
-        1px solid
-        rgba(255,255,255,.065);
-
-    display: flex;
-
-    flex-direction: column;
-
-    align-items: center;
-    justify-content: center;
-
-    gap: 7px;
-
-    cursor: pointer;
-}
-
-.quick-icon {
-    font-size: 23px;
-}
-
-.quick span {
-    font-size: 9px;
-
-    color:
-        rgba(255,255,255,.58);
-}
-
-/* =========================================
-   EMPTY
-========================================= */
-
-.empty {
-    display: none;
-
-    padding: 30px 15px;
-
-    text-align: center;
-
-    color:
-        rgba(255,255,255,.4);
-
-    font-size: 12px;
-}
-
-/* =========================================
-   BOTTOM NAV
-========================================= */
-
-.bottom-nav {
-    position: fixed;
-
-    left: 50%;
-    bottom: 0;
-
-    transform:
-        translateX(-50%);
-
-    width: 100%;
-    max-width: 600px;
-
-    height: 72px;
-
-    display: grid;
-
-    grid-template-columns:
-        repeat(5,1fr);
-
-    align-items: center;
-
-    z-index: 50;
-
-    background:
-        rgba(1,10,21,.88);
-
-    border-top:
-        1px solid
-        rgba(255,255,255,.07);
-
-    backdrop-filter:
-        blur(20px);
-
-    -webkit-backdrop-filter:
-        blur(20px);
-}
-
-.nav-item {
-    height: 100%;
-
-    display: flex;
-
-    flex-direction: column;
-
-    align-items: center;
-    justify-content: center;
-
-    gap: 4px;
-
-    color:
-        rgba(255,255,255,.4);
-
-    cursor: pointer;
-
-    font-size: 9px;
-}
-
-.nav-icon {
-    font-size: 21px;
-}
-
-.nav-item.active {
-    color: #27b7ff;
-}
-
-.nav-item.active .nav-icon {
-    filter:
-        drop-shadow(
-            0 0 7px
-            rgba(0,180,255,.5)
-        );
-}
-
-/* =========================================
-   LOADING
-========================================= */
-
-.loading-screen {
-    position: fixed;
-
-    inset: 0;
-
-    z-index: 100;
-
-    background: #020b18;
-
-    display: flex;
-
-    align-items: center;
-    justify-content: center;
-}
-
-.loader {
-    width: 34px;
-    height: 34px;
-
-    border-radius: 50%;
-
-    border:
-        3px solid
-        rgba(255,255,255,.1);
-
-    border-top-color:
-        #12aaff;
-
-    animation:
-        spin .8s linear infinite;
-}
-
-@keyframes spin {
-
-    to {
-        transform: rotate(360deg);
-    }
-
-}
-
-@media (max-width: 360px) {
-
-    .rooms {
-        grid-template-columns: 1fr;
-    }
-
-    .quick-actions {
-        grid-template-columns:
-            repeat(2,1fr);
-    }
-
-}
-
 </style>
-
 </head>
 
+<body>
 
-<body data-page-title="home.title">
-
-
-<!-- =========================================
-     LOADING
-========================================= -->
-
-<div
-    class="loading-screen"
-    id="loadingScreen"
->
-
-    <div class="loader"></div>
-
-</div>
-
-
-<!-- =========================================
-     APP
-========================================= -->
-
-<div class="app">
-
-
-<!-- =========================================
-     HEADER
-========================================= -->
-
-<header class="header">
-
-    <div class="profile-mini">
-
-        <div
-            class="avatar"
-            id="avatar"
-        >
-            ?
+<header class="top">
+  <div class="top-inner">
+    <div class="user-row">
+      <div class="user-info">
+        <div class="avatar" id="avatar">?</div>
+        <div class="name-box">
+          <div class="hello">أهلاً بك 👋</div>
+          <div class="name" id="userName">جارِ التحميل...</div>
         </div>
-
-        <div class="user-info">
-
-            <div
-                class="welcome"
-                data-i18n="home.welcome"
-            >
-                أهلاً بيك 👋
-            </div>
-
-            <div
-                class="username"
-                id="username"
-            >
-                جاري التحميل...
-            </div>
-
+      </div>
+      <div style="display:flex;align-items:center;gap:6px">
+        <div class="coin-mini">🪙 <span id="coinBalance">0</span></div>
+        <div class="top-actions">
+          <button class="icon-btn" onclick="go('settings.html')" title="الإعدادات">⚙️</button>
         </div>
-
+      </div>
     </div>
 
-
-    <div class="header-actions">
-
-        <button
-            class="icon-btn"
-            id="notificationBtn"
-            type="button"
-            aria-label="Notifications"
-        >
-            🔔
-        </button>
-
-        <button
-            class="icon-btn"
-            id="settingsBtn"
-            type="button"
-            aria-label="Settings"
-        >
-            ⚙️
-        </button>
-
+    <div class="tabs">
+      <button class="tab active" data-tab="discover">اكتشاف</button>
+      <button class="tab" data-tab="special">خاصية</button>
+      <button class="tab" data-tab="following">المتابعين</button>
+      <button class="tab" data-tab="top">🏆 TOP</button>
+      <button class="tab" onclick="focusSearch()">🔍</button>
     </div>
-
+  </div>
 </header>
 
+<main class="container">
 
-<!-- =========================================
-     WALLET
-========================================= -->
+  <div class="search">
+    <span>🔍</span>
+    <input id="searchInput" type="search" placeholder="ابحث عن غرفة أو وكالة أو Room ID">
+  </div>
 
-<section class="wallet-card">
+  <div id="pageContent">
 
-    <div class="wallet-top">
-
-        <div>
-
-            <div
-                class="wallet-title"
-                data-i18n="home.wallet"
-            >
-                رصيد العملات
-            </div>
-
-            <div class="coins">
-
-                <div class="coin-icon">
-                    🪙
-                </div>
-
-                <div
-                    class="coin-number"
-                    id="coinBalance"
-                >
-                    0
-                </div>
-
-            </div>
-
+    <section class="section" id="adsSection">
+      <div class="section-head">
+        <div class="section-title">إعلانات</div>
+      </div>
+      <div class="ads" id="adsList">
+        <div class="ad">
+          <div class="ad-content">
+            <b>RED SEA</b>
+            <p>الإعلانات ستظهر هنا من لوحة الإدارة</p>
+          </div>
         </div>
+      </div>
+    </section>
 
-
-        <button
-            class="charge-btn"
-            id="chargeBtn"
-            type="button"
-            data-i18n="home.charge"
-        >
-            + شحن العملات
-        </button>
-
-    </div>
-
-</section>
-
-
-<!-- =========================================
-     SEARCH
-========================================= -->
-
-<div class="search-box">
-
-    <span class="search-icon">
-        🔎
-    </span>
-
-    <input
-        type="text"
-        id="searchInput"
-        data-i18n-placeholder="home.searchPlaceholder"
-        placeholder="ابحث عن غرفة أو مستخدم..."
-    >
-
-</div>
-
-
-<!-- =========================================
-     CATEGORIES
-========================================= -->
-
-<section class="section">
-
-    <div class="section-head">
-
-        <div
-            class="section-title"
-            data-i18n="home.categories"
-        >
-            التصنيفات
+    <section class="section" id="officialSection">
+      <div class="section-head"><div class="section-title">الغرف الرسمية</div></div>
+      <div class="official-grid">
+        <div class="official admin" data-room-id="ADMIN">
+          <span class="badge">OFFICIAL</span>
+          <h3>👑 غرفة الإدارة</h3>
+          <p>الغرفة الرسمية للإدارة</p>
+          <button class="join" onclick="openRoom('ADMIN')">↗</button>
         </div>
-
-    </div>
-
-
-    <div class="categories">
-
-        <div
-            class="category active"
-            data-category="all"
-            data-i18n="home.categoryAll"
-        >
-            الكل
+        <div class="official" data-room-id="ACTIVITIES">
+          <span class="badge">OFFICIAL</span>
+          <h3>🎯 غرفة الأنشطة الرسمية</h3>
+          <p>الفعاليات والأنشطة الرسمية</p>
+          <button class="join" onclick="openRoom('ACTIVITIES')">↗</button>
         </div>
-
-        <div
-            class="category"
-            data-category="friends"
-            data-i18n="home.categoryFriends"
-        >
-            أصدقاء
-        </div>
-
-        <div
-            class="category"
-            data-category="music"
-            data-i18n="home.categoryMusic"
-        >
-            🎵 موسيقى
-        </div>
-
-        <div
-            class="category"
-            data-category="games"
-            data-i18n="home.categoryGames"
-        >
-            🎮 ألعاب
-        </div>
-
-        <div
-            class="category"
-            data-category="vip"
-            data-i18n="home.categoryVip"
-        >
-            👑 VIP
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- =========================================
-     LIVE ROOMS
-========================================= -->
-
-<section class="section">
-
-    <div class="section-head">
-
-        <div
-            class="section-title"
-            data-i18n="home.liveRooms"
-        >
-
-            <span class="live-dot"></span>
-
-            الغرف الصوتية المباشرة
-
-        </div>
-
-        <span
-            class="see-all"
-            id="seeAllBtn"
-            data-i18n="home.seeAll"
-        >
-            عرض الكل
-        </span>
-
-    </div>
-
-
-    <div
-        class="rooms"
-        id="rooms"
-    >
-
-
-        <div
-            class="room"
-            data-name="سهرة البحر الأحمر"
-            data-category="friends"
-        >
-
-            <div class="live-label">
-                LIVE
-            </div>
-
-            <div class="room-cover">
-                🎙️
-            </div>
-
-            <div class="room-name">
-                سهرة البحر الأحمر
-            </div>
-
-            <div class="room-owner">
-                🎤 Ahmed
-            </div>
-
-            <div class="room-bottom">
-
-                <span class="members">
-                    👥 128
-                </span>
-
-                <span class="mic">
-                    🎙️
-                </span>
-
-            </div>
-
-        </div>
-
-
-        <div
-            class="room"
-            data-name="Music Night"
-            data-category="music"
-        >
-
-            <div class="live-label">
-                LIVE
-            </div>
-
-            <div class="room-cover">
-                🎵
-            </div>
-
-            <div class="room-name">
-                Music Night
-            </div>
-
-            <div class="room-owner">
-                🎤 Sara
-            </div>
-
-            <div class="room-bottom">
-
-                <span class="members">
-                    👥 86
-                </span>
-
-                <span class="mic">
-                    🎙️
-                </span>
-
-            </div>
-
-        </div>
-
-
-        <div
-            class="room"
-            data-name="لعبة مين أنا"
-            data-category="games"
-        >
-
-            <div class="live-label">
-                LIVE
-            </div>
-
-            <div class="room-cover">
-                🎮
-            </div>
-
-            <div class="room-name">
-                لعبة مين أنا
-            </div>
-
-            <div class="room-owner">
-                🎤 Karim
-            </div>
-
-            <div class="room-bottom">
-
-                <span class="members">
-                    👥 54
-                </span>
-
-                <span class="mic">
-                    🎙️
-                </span>
-
-            </div>
-
-        </div>
-
-
-        <div
-            class="room"
-            data-name="VIP Lounge"
-            data-category="vip"
-        >
-
-            <div class="live-label">
-                LIVE
-            </div>
-
-            <div class="room-cover">
-                👑
-            </div>
-
-            <div class="room-name">
-                VIP Lounge
-            </div>
-
-            <div class="room-owner">
-                🎤 Red Sea VIP
-            </div>
-
-            <div class="room-bottom">
-
-                <span class="members">
-                    👥 32
-                </span>
-
-                <span class="mic">
-                    🎙️
-                </span>
-
-            </div>
-
-        </div>
-
-    </div>
-
-
-    <div
-        class="empty"
-        id="emptyRooms"
-        data-i18n="home.noRooms"
-    >
-        لا توجد غرف مطابقة للبحث 🔎
-    </div>
-
-</section>
-
-
-<!-- =========================================
-     QUICK ACTIONS
-========================================= -->
-
-<section class="section">
-
-    <div class="section-head">
-
-        <div
-            class="section-title"
-            data-i18n="home.shortcuts"
-        >
-            اختصارات
-        </div>
-
-    </div>
-
-
-    <div class="quick-actions">
-
-
-        <div
-            class="quick"
-            id="walletQuick"
-        >
-
-            <div class="quick-icon">
-                🪙
-            </div>
-
-            <span data-i18n="home.walletShortcut">
-                المحفظة
-            </span>
-
-        </div>
-
-
-        <div
-            class="quick"
-            id="giftsQuick"
-        >
-
-            <div class="quick-icon">
-                🎁
-            </div>
-
-            <span data-i18n="home.giftsShortcut">
-                الهدايا
-            </span>
-
-        </div>
-
-
-        <div
-            class="quick"
-            id="vipQuick"
-        >
-
-            <div class="quick-icon">
-                👑
-            </div>
-
-            <span data-i18n="home.vipShortcut">
-                VIP
-            </span>
-
-        </div>
-
-
-        <div
-            class="quick"
-            id="profileQuick"
-        >
-
-            <div class="quick-icon">
-                👤
-            </div>
-
-            <span data-i18n="home.profileShortcut">
-                حسابي
-            </span>
-
-        </div>
-
-
-    </div>
-
-</section>
-
-
-</div>
-
-
-<!-- =========================================
-     BOTTOM NAV
-========================================= -->
-
-<nav class="bottom-nav">
-
-
-    <div
-        class="nav-item active"
-        data-page="home"
-    >
-
-        <div class="nav-icon">
-            🏠
-        </div>
-
-        <span data-i18n="nav.home">
-            الرئيسية
-        </span>
-
-    </div>
-
-
-    <div
-        class="nav-item"
-        data-page="rooms"
-    >
-
-        <div class="nav-icon">
-            🎙️
-        </div>
-
-        <span data-i18n="nav.rooms">
-            الغرف
-        </span>
-
-    </div>
-
-
-    <div
-        class="nav-item"
-        data-page="wallet"
-    >
-
-        <div class="nav-icon">
-            🪙
-        </div>
-
-        <span data-i18n="nav.wallet">
-            المحفظة
-        </span>
-
-    </div>
-
-
-    <div
-        class="nav-item"
-        data-page="gifts"
-    >
-
-        <div class="nav-icon">
-            🎁
-        </div>
-
-        <span data-i18n="nav.gifts">
-            الهدايا
-        </span>
-
-    </div>
-
-
-    <div
-        class="nav-item"
-        data-page="profile"
-    >
-
-        <div class="nav-icon">
-            👤
-        </div>
-
-        <span data-i18n="nav.profile">
-            حسابي
-        </span>
-
-    </div>
-
-
+      </div>
+    </section>
+
+    <section class="section" id="shippingSection">
+      <div class="section-head">
+        <div class="section-title">🚚 وكالات الشحن</div>
+        <div class="section-more">الكل</div>
+      </div>
+      <div class="agency-grid" id="shippingList">
+        <div class="loading">جارِ تحميل وكالات الشحن...</div>
+      </div>
+    </section>
+
+    <section class="section" id="agenciesSection">
+      <div class="section-head">
+        <div class="section-title">🏆 أفضل الوكالات</div>
+        <div class="section-more">TOP 1 - 4</div>
+      </div>
+      <div class="agency-grid" id="agencyList">
+        <div class="loading">جارِ تحميل الترتيب...</div>
+      </div>
+    </section>
+
+    <section class="section" id="roomsSection">
+      <div class="section-head">
+        <div class="section-title">🎙️ الغرف</div>
+        <div class="section-more" id="roomsCount">0 غرفة</div>
+      </div>
+      <div class="room-grid" id="roomsList">
+        <div class="loading">جارِ تحميل الغرف...</div>
+      </div>
+    </section>
+
+  </div>
+</main>
+
+<nav class="bottom">
+  <div class="bottom-inner">
+    <button class="nav active" onclick="go('home.html')"><span>🏠</span>الرئيسية</button>
+    <button class="nav" onclick="go('messages.html')"><span>💬</span>الرسائل</button>
+    <button class="nav" onclick="go('profile.html')"><span>👤</span>الحساب</button>
+  </div>
 </nav>
 
+<script>
+/* =========================
+   RED SEA HOME
+   Backend-first architecture
+========================= */
 
-<!-- =========================================
-     RED SEA LANGUAGE SYSTEM
-
-     i18n.js موجود بجانب home.html
-========================================= -->
-
-<script src="i18n.js"></script>
-
-
-<!-- =========================================
-     FIREBASE
-========================================= -->
-
-<script type="module">
-
-import {
-    initializeApp
-} from
-    "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
-
-
-import {
-    getAuth,
-    onAuthStateChanged
-} from
-    "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
-
-
-/* =========================================
-   FIREBASE CONFIG
-========================================= */
+const API_BASE = "https://red-sea-server.onrender.com";
 
 const firebaseConfig = {
-
-    apiKey:
-        "AIzaSyD_R-LAa0qHFLS36QXJ7mZbCLnh2DJyZhM",
-
-    authDomain:
-        "red-sea-8db76.firebaseapp.com",
-
-    projectId:
-        "red-sea-8db76",
-
-    storageBucket:
-        "red-sea-8db76.firebasestorage.app",
-
-    messagingSenderId:
-        "418468623324",
-
-    appId:
-        "1:418468623324:web:2a5fd96f353efccaf81519"
-
+  apiKey: "AIzaSyD_R-LAa0qHFLS36QX7JmZbCLnh2DJyZhM",
+  authDomain: "red-sea-8db76.firebaseapp.com",
+  projectId: "red-sea-8db76",
+  storageBucket: "red-sea-8db76.firebasestorage.app",
+  messagingSenderId: "418468623324",
+  appId: "1:418468623324:web:2a5fd96f353efccaf81519"
 };
 
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
 
-/* =========================================
-   FIREBASE START
-========================================= */
+let currentUser = null;
+let currentProfile = null;
+let allRooms = [];
+let allAgencies = [];
+let allShippingAgencies = [];
+let currentTab = "discover";
 
-let firebaseApp = null;
-let auth = null;
-
-try {
-
-    firebaseApp =
-        initializeApp(firebaseConfig);
-
-    auth =
-        getAuth(firebaseApp);
-
-} catch (error) {
-
-    console.error(
-        "Red Sea Firebase initialization error:",
-        error
-    );
-
+function go(page){
+  window.location.href = page;
 }
 
+function focusSearch(){
+  const input = document.getElementById("searchInput");
+  input.focus();
+  input.scrollIntoView({behavior:"smooth",block:"center"});
+}
 
-/* =========================================
-   ELEMENTS
-========================================= */
+function escapeHtml(value){
+  return String(value ?? "").replace(/[&<>"']/g, function(c){
+    return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c];
+  });
+}
 
-const loadingScreen =
-    document.getElementById(
-        "loadingScreen"
-    );
+function initials(name){
+  const text = String(name || "U").trim();
+  return text ? text.charAt(0).toUpperCase() : "U";
+}
 
-const usernameElement =
-    document.getElementById(
-        "username"
-    );
+function number(value){
+  const n = Number(value || 0);
+  return n.toLocaleString("en-US");
+}
 
-const avatarElement =
-    document.getElementById(
-        "avatar"
-    );
-
-
-/* =========================================
-   LOADING CONTROL
-========================================= */
-
-let loadingFinished = false;
-
-function hideLoading() {
-
-    if (loadingFinished) {
-        return;
+async function api(path, options = {}){
+  const response = await fetch(API_BASE + path, {
+    ...options,
+    headers:{
+      "Content-Type":"application/json",
+      ...(options.headers || {})
     }
+  });
 
-    loadingFinished = true;
+  let data = null;
+  try{ data = await response.json(); }catch(e){}
 
-    if (loadingScreen) {
+  if(!response.ok){
+    throw new Error((data && data.message) || "Server request failed");
+  }
+  return data;
+}
 
-        loadingScreen.style.opacity = "0";
+/*
+  Firebase only establishes the logged-in identity.
+  The profile shown in Home comes from Red Sea Server.
+*/
+async function loadUser(user){
+  currentUser = user;
 
-        loadingScreen.style.pointerEvents =
-            "none";
+  document.getElementById("userName").textContent =
+    user.displayName || user.email || "المستخدم";
 
-        setTimeout(
-            function() {
+  document.getElementById("avatar").textContent =
+    initials(user.displayName || user.email);
 
-                if (loadingScreen) {
-
-                    loadingScreen.style.display =
-                        "none";
-
-                }
-
-            },
-            250
-        );
-
+  try{
+    const data = await api("/api/users/by-firebase/" + encodeURIComponent(user.uid));
+    if(data && data.user){
+      currentProfile = data.user;
+      document.getElementById("userName").textContent =
+        data.user.name || user.displayName || user.email || "المستخدم";
+      document.getElementById("avatar").textContent =
+        initials(data.user.name || user.displayName || user.email);
+      document.getElementById("coinBalance").textContent =
+        number(data.user.coins);
     }
-
+  }catch(error){
+    console.warn("Profile API:", error.message);
+    /* Do not redirect/reload Home if the API is temporarily unavailable. */
+  }
 }
 
+async function loadHomeData(){
+  await Promise.allSettled([
+    loadRooms(),
+    loadAgencies(),
+    loadShippingAgencies(),
+    loadAds()
+  ]);
+}
 
-/* =========================================
-   AUTH STATE
+async function loadRooms(){
+  const box = document.getElementById("roomsList");
 
-   مهم:
-   لا يتم تحويل المستخدم إلى login
-   مباشرة عند أول null.
-========================================= */
+  try{
+    const data = await api("/api/rooms");
+    allRooms = Array.isArray(data.rooms) ? data.rooms : [];
+    renderRooms();
+  }catch(error){
+    box.innerHTML = '<div class="error">تعذر تحميل الغرف من السيرفر<br><small>'+escapeHtml(error.message)+'</small></div>';
+    document.getElementById("roomsCount").textContent = "0 غرفة";
+  }
+}
 
-let authChecked = false;
-let redirectStarted = false;
+async function loadAgencies(){
+  const box = document.getElementById("agencyList");
 
-if (auth) {
+  try{
+    const data = await api("/api/agencies/top?limit=4");
+    allAgencies = Array.isArray(data.agencies) ? data.agencies : [];
+    renderAgencies();
+  }catch(error){
+    box.innerHTML = '<div class="empty">لا توجد بيانات ترتيب حالياً</div>';
+  }
+}
 
-    onAuthStateChanged(
-        auth,
-        function(user) {
+async function loadShippingAgencies(){
+  const box = document.getElementById("shippingList");
 
-            console.log(
-                "Red Sea Auth State:",
-                user
-                    ? "SIGNED IN"
-                    : "SIGNED OUT"
-            );
+  try{
+    const data = await api("/api/shipping-agencies");
+    allShippingAgencies = Array.isArray(data.agencies) ? data.agencies : [];
+    renderShippingAgencies();
+  }catch(error){
+    box.innerHTML = '<div class="empty">لا توجد وكالات شحن حالياً</div>';
+  }
+}
 
+async function loadAds(){
+  try{
+    const data = await api("/api/ads");
+    const ads = Array.isArray(data.ads) ? data.ads : [];
+    renderAds(ads);
+  }catch(error){
+    /* Keep a clean placeholder until the admin ads API exists. */
+  }
+}
 
-            /*
-             * أول استدعاء لـ Firebase قد يكون
-             * أثناء تجهيز حالة تسجيل الدخول.
-             *
-             * لذلك لا نعمل redirect فوري.
-             */
+function renderAds(ads){
+  const box = document.getElementById("adsList");
+  if(!ads.length) return;
 
-            if (!user) {
+  box.innerHTML = ads.map(ad => `
+    <div class="ad">
+      ${ad.imageUrl
+        ? `<img src="${escapeHtml(ad.imageUrl)}" alt="إعلان">`
+        : `<div class="ad-content"><b>${escapeHtml(ad.title || "RED SEA")}</b><p>${escapeHtml(ad.description || "")}</p></div>`
+      }
+    </div>
+  `).join("");
+}
 
-                if (!authChecked) {
+function roomMatches(room, query){
+  if(!query) return true;
+  const text = [
+    room.name, room.roomName, room.roomId, room.ownerId,
+    room.agencyId, room.description
+  ].join(" ").toLowerCase();
+  return text.includes(query.toLowerCase());
+}
 
-                    authChecked = true;
+function renderRooms(){
+  const box = document.getElementById("roomsList");
+  const query = document.getElementById("searchInput").value.trim();
 
-                    setTimeout(
-                        function() {
+  let rooms = allRooms.filter(r => roomMatches(r, query));
 
-                            /*
-                             * لو Firebase ما زال
-                             * بدون مستخدم بعد الانتظار،
-                             * وقتها فقط نذهب لتسجيل الدخول.
-                             */
+  if(currentTab === "following"){
+    rooms = rooms.filter(r => r.isFollowing === true || r.followed === true);
+  }
 
-                            if (
-                                auth.currentUser === null &&
-                                !redirectStarted
-                            ) {
+  if(currentTab === "special"){
+    rooms = rooms.filter(r => r.ownerId === currentProfile?.userId ||
+                              r.agencyId === currentProfile?.agencyId);
+  }
 
-                                redirectStarted = true;
+  if(currentTab === "top"){
+    rooms = [...rooms].sort((a,b) =>
+      Number(b.coins || b.activityCoins || b.totalCoins || 0) -
+      Number(a.coins || a.activityCoins || a.totalCoins || 0)
+    ).slice(0,4);
+  }
 
-                                window.location.replace(
-                                    "login.html"
-                                );
+  document.getElementById("roomsCount").textContent = number(rooms.length) + " غرفة";
 
-                            }
+  if(!rooms.length){
+    box.innerHTML = '<div class="empty">لا توجد غرف متاحة حالياً</div>';
+    return;
+  }
 
-                        },
-                        2500
-                    );
+  box.innerHTML = rooms.map((room,index) => {
+    const roomId = room.roomId || room.id || "";
+    const roomName = room.name || room.roomName || "غرفة بدون اسم";
+    const members = room.membersCount ?? room.onlineCount ?? room.members ?? 0;
+    const coins = room.coins ?? room.activityCoins ?? room.totalCoins ?? 0;
+    const following = room.isFollowing === true || room.followed === true;
 
-                    return;
+    return `
+      <div class="room" data-room="${escapeHtml(roomId)}">
+        <div class="room-cover">
+          ${room.coverUrl ? `<img src="${escapeHtml(room.coverUrl)}" alt="">` : `<div class="room-icon">🎙️</div>`}
+          ${currentTab === "top" ? `<div class="room-rank">TOP ${index+1}</div>` : ""}
+          <button class="follow ${following ? "on":""}"
+            onclick="toggleFollow('${encodeURIComponent(roomId)}', this);event.stopPropagation()"
+            title="${following ? "إلغاء المتابعة":"متابعة"}">${following ? "✓":"＋"}</button>
+        </div>
+        <div class="room-body" onclick="openRoom('${encodeURIComponent(roomId)}')">
+          <div class="room-name">${escapeHtml(roomName)}</div>
+          <div class="room-meta">
+            <span>👥 ${number(members)}</span>
+            <span>🪙 ${number(coins)}</span>
+          </div>
+        </div>
+      </div>
+    `;
+  }).join("");
+}
 
-                }
+function renderAgencies(){
+  const box = document.getElementById("agencyList");
 
+  if(!allAgencies.length){
+    box.innerHTML = '<div class="empty">لا توجد وكالات في الترتيب حالياً</div>';
+    return;
+  }
 
-                return;
+  box.innerHTML = allAgencies.slice(0,4).map((agency,index) => `
+    <div class="agency" onclick="openAgency('${encodeURIComponent(agency.agencyId || agency.id || "")}')">
+      <div class="rank">TOP ${index+1}</div>
+      <div class="agency-avatar">${agency.logoUrl ? `<img src="${escapeHtml(agency.logoUrl)}" style="width:100%;height:100%;object-fit:cover;border-radius:12px">` : "🏢"}</div>
+      <h3>${escapeHtml(agency.name || "وكالة")}</h3>
+      <p>ID: ${escapeHtml(agency.agencyId || agency.id || "—")}</p>
+      <div class="coins">🪙 ${number(agency.coins || agency.totalCoins || agency.activityCoins)}</div>
+    </div>
+  `).join("");
+}
 
-            }
+function renderShippingAgencies(){
+  const box = document.getElementById("shippingList");
 
+  if(!allShippingAgencies.length){
+    box.innerHTML = '<div class="empty">لا توجد وكالات شحن حالياً</div>';
+    return;
+  }
 
-            authChecked = true;
+  box.innerHTML = allShippingAgencies.map(agency => `
+    <div class="agency" onclick="openAgency('${encodeURIComponent(agency.agencyId || agency.id || "")}')">
+      <div class="agency-avatar">${agency.logoUrl ? `<img src="${escapeHtml(agency.logoUrl)}" style="width:100%;height:100%;object-fit:cover;border-radius:12px">` : "🚚"}</div>
+      <h3>${escapeHtml(agency.name || "وكالة شحن")}</h3>
+      <p>ID: ${escapeHtml(agency.agencyId || agency.id || "—")}</p>
+      <div class="coins">الشحن الرسمي</div>
+    </div>
+  `).join("");
+}
 
+async function toggleFollow(encodedRoomId, button){
+  if(!currentUser){
+    return;
+  }
 
-            let name =
-                user.displayName;
+  const roomId = decodeURIComponent(encodedRoomId);
+  button.disabled = true;
 
+  try{
+    const data = await api("/api/rooms/" + encodeURIComponent(roomId) + "/follow", {
+      method:"POST",
+      body:JSON.stringify({firebaseUid:currentUser.uid})
+    });
 
-            if (
-                !name ||
-                name.trim() === ""
-            ) {
+    const following = data.following === true;
+    button.classList.toggle("on", following);
+    button.textContent = following ? "✓" : "＋";
 
-                name =
-                    user.email
-                        ? user.email.split("@")[0]
-                        : "User";
-
-            }
-
-
-            if (usernameElement) {
-
-                usernameElement.textContent =
-                    name;
-
-            }
-
-
-            const firstLetter =
-                name
-                    .trim()
-                    .charAt(0);
-
-
-            if (avatarElement) {
-
-                avatarElement.textContent =
-                    firstLetter || "👤";
-
-            }
-
-
-            hideLoading();
-
-        }
-    );
-
-} else {
-
-    /*
-     * Firebase initialization failed.
-     * لا نعمل redirect loop.
-     */
-
-    console.error(
-        "Firebase Auth is unavailable."
-    );
-
-    if (usernameElement) {
-
-        usernameElement.textContent =
-            "Red Sea";
-
+    const room = allRooms.find(r => String(r.roomId || r.id) === String(roomId));
+    if(room){
+      room.isFollowing = following;
+      room.followed = following;
     }
-
-    if (avatarElement) {
-
-        avatarElement.textContent =
-            "R";
-
-    }
-
-    hideLoading();
-
+  }catch(error){
+    console.warn("Follow:", error.message);
+  }finally{
+    button.disabled = false;
+  }
 }
 
-
-/* =========================================
-   SEARCH
-========================================= */
-
-const searchInput =
-    document.getElementById(
-        "searchInput"
-    );
-
-const rooms =
-    document.querySelectorAll(
-        ".room"
-    );
-
-const emptyRooms =
-    document.getElementById(
-        "emptyRooms"
-    );
-
-
-let selectedCategory = "all";
-
-
-function filterRooms() {
-
-    if (!searchInput) {
-        return;
-    }
-
-
-    const value =
-        searchInput.value
-            .trim()
-            .toLowerCase();
-
-
-    let found = 0;
-
-
-    rooms.forEach(
-        function(room) {
-
-            const name =
-                (
-                    room.getAttribute(
-                        "data-name"
-                    ) || ""
-                ).toLowerCase();
-
-
-            const category =
-                room.getAttribute(
-                    "data-category"
-                );
-
-
-            const categoryMatch =
-                selectedCategory === "all" ||
-                category === selectedCategory;
-
-
-            const searchMatch =
-                !value ||
-                name.includes(value);
-
-
-            if (
-                categoryMatch &&
-                searchMatch
-            ) {
-
-                room.style.display =
-                    "";
-
-                found++;
-
-            } else {
-
-                room.style.display =
-                    "none";
-
-            }
-
-        }
-    );
-
-
-    if (emptyRooms) {
-
-        emptyRooms.style.display =
-            found === 0
-                ? "block"
-                : "none";
-
-    }
-
+function openRoom(encodedRoomId){
+  const roomId = decodeURIComponent(encodedRoomId);
+  if(roomId === "ADMIN"){
+    window.location.href = "room.html?roomId=ADMIN";
+    return;
+  }
+  if(roomId === "ACTIVITIES"){
+    window.location.href = "room.html?roomId=ACTIVITIES";
+    return;
+  }
+  if(roomId){
+    window.location.href = "room.html?roomId=" + encodeURIComponent(roomId);
+  }
 }
 
-
-if (searchInput) {
-
-    searchInput.addEventListener(
-        "input",
-        filterRooms
-    );
-
+function openAgency(encodedAgencyId){
+  const id = decodeURIComponent(encodedAgencyId);
+  if(id) window.location.href = "agency.html?agencyId=" + encodeURIComponent(id);
 }
 
+function setTab(tab){
+  currentTab = tab;
+  document.querySelectorAll(".tab").forEach(btn => {
+    btn.classList.toggle("active", btn.dataset.tab === tab);
+  });
 
-/* =========================================
-   CATEGORIES
-========================================= */
+  const official = document.getElementById("officialSection");
+  const shipping = document.getElementById("shippingSection");
+  const agencies = document.getElementById("agenciesSection");
+  const rooms = document.getElementById("roomsSection");
 
-const categories =
-    document.querySelectorAll(
-        ".category"
-    );
+  official.classList.remove("hidden");
+  shipping.classList.remove("hidden");
+  agencies.classList.remove("hidden");
+  rooms.classList.remove("hidden");
 
+  if(tab === "special"){
+    official.classList.add("hidden");
+    shipping.classList.add("hidden");
+    agencies.classList.add("hidden");
+  }else if(tab === "following"){
+    official.classList.add("hidden");
+    shipping.classList.add("hidden");
+    agencies.classList.add("hidden");
+  }else if(tab === "top"){
+    official.classList.add("hidden");
+    shipping.classList.add("hidden");
+    agencies.classList.add("hidden");
+  }
 
-categories.forEach(
-    function(category) {
-
-        category.addEventListener(
-            "click",
-            function() {
-
-                categories.forEach(
-                    function(item) {
-
-                        item.classList.remove(
-                            "active"
-                        );
-
-                    }
-                );
-
-
-                category.classList.add(
-                    "active"
-                );
-
-
-                selectedCategory =
-                    category.getAttribute(
-                        "data-category"
-                    ) || "all";
-
-
-                filterRooms();
-
-            }
-        );
-
-    }
-);
-
-
-/* =========================================
-   SAFE NAVIGATION
-========================================= */
-
-function goToPage(page) {
-
-    if (!page) {
-        return;
-    }
-
-
-    /*
-     * منع إعادة تحميل نفس الصفحة
-     */
-
-    const currentPage =
-        window.location.pathname
-            .split("/")
-            .pop();
-
-
-    if (
-        currentPage === page
-    ) {
-
-        return;
-
-    }
-
-
-    window.location.href =
-        page;
-
+  renderRooms();
 }
 
-
-/* =========================================
-   SETTINGS
-========================================= */
-
-const settingsBtn =
-    document.getElementById(
-        "settingsBtn"
-    );
-
-
-if (settingsBtn) {
-
-    settingsBtn.addEventListener(
-        "click",
-        function() {
-
-            goToPage(
-                "settings.html"
-            );
-
-        }
-    );
-
-}
-
-
-/* =========================================
-   NOTIFICATIONS
-========================================= */
-
-const notificationBtn =
-    document.getElementById(
-        "notificationBtn"
-    );
-
-
-if (notificationBtn) {
-
-    notificationBtn.addEventListener(
-        "click",
-        function() {
-
-            /*
-             * مؤقتًا لا نفتح صفحة غير موجودة.
-             * سيتم ربط الإشعارات لاحقًا.
-             */
-
-            console.log(
-                "Notifications clicked"
-            );
-
-        }
-    );
-
-}
-
-
-/* =========================================
-   PROFILE
-========================================= */
-
-const profileQuick =
-    document.getElementById(
-        "profileQuick"
-    );
-
-
-if (profileQuick) {
-
-    profileQuick.addEventListener(
-        "click",
-        function() {
-
-            goToPage(
-                "profile.html"
-            );
-
-        }
-    );
-
-}
-
-
-/* =========================================
-   WALLET
-========================================= */
-
-const walletQuick =
-    document.getElementById(
-        "walletQuick"
-    );
-
-
-if (walletQuick) {
-
-    walletQuick.addEventListener(
-        "click",
-        function() {
-
-            goToPage(
-                "wallet.html"
-            );
-
-        }
-    );
-
-}
-
-
-/* =========================================
-   CHARGE
-========================================= */
-
-const chargeBtn =
-    document.getElementById(
-        "chargeBtn"
-    );
-
-
-if (chargeBtn) {
-
-    chargeBtn.addEventListener(
-        "click",
-        function() {
-
-            goToPage(
-                "wallet.html"
-            );
-
-        }
-    );
-
-}
-
-
-/* =========================================
-   GIFTS
-========================================= */
-
-const giftsQuick =
-    document.getElementById(
-        "giftsQuick"
-    );
-
-
-if (giftsQuick) {
-
-    giftsQuick.addEventListener(
-        "click",
-        function() {
-
-            goToPage(
-                "gifts.html"
-            );
-
-        }
-    );
-
-}
-
-
-/* =========================================
-   VIP
-========================================= */
-
-const vipQuick =
-    document.getElementById(
-        "vipQuick"
-    );
-
-
-if (vipQuick) {
-
-    vipQuick.addEventListener(
-        "click",
-        function() {
-
-            goToPage(
-                "vip.html"
-            );
-
-        }
-    );
-
-}
-
-
-/* =========================================
-   SEE ALL
-========================================= */
-
-const seeAllBtn =
-    document.getElementById(
-        "seeAllBtn"
-    );
-
-
-if (seeAllBtn) {
-
-    seeAllBtn.addEventListener(
-        "click",
-        function() {
-
-            window.scrollTo({
-                top: 0,
-                behavior: "smooth"
-            });
-
-        }
-    );
-
-}
-
-
-/* =========================================
-   ROOM CLICK
-========================================= */
-
-rooms.forEach(
-    function(room) {
-
-        room.addEventListener(
-            "click",
-            function() {
-
-                goToPage(
-                    "room.html"
-                );
-
-            }
-        );
-
-    }
-);
-
-
-/* =========================================
-   BOTTOM NAV
-========================================= */
-
-const navItems =
-    document.querySelectorAll(
-        ".nav-item"
-    );
-
-
-navItems.forEach(
-    function(item) {
-
-        item.addEventListener(
-            "click",
-            function() {
-
-                const page =
-                    item.getAttribute(
-                        "data-page"
-                    );
-
-
-                if (
-                    page === "home"
-                ) {
-
-                    return;
-
-                }
-
-
-                if (
-                    page === "rooms"
-                ) {
-
-                    window.scrollTo({
-                        top: 0,
-                        behavior: "smooth"
-                    });
-
-                    return;
-
-                }
-
-
-                if (
-                    page === "wallet"
-                ) {
-
-                    goToPage(
-                        "wallet.html"
-                    );
-
-                    return;
-
-                }
-
-
-                if (
-                    page === "gifts"
-                ) {
-
-                    goToPage(
-                        "gifts.html"
-                    );
-
-                    return;
-
-                }
-
-
-                if (
-                    page === "profile"
-                ) {
-
-                    goToPage(
-                        "profile.html"
-                    );
-
-                    return;
-
-                }
-
-            }
-        );
-
-    }
-);
-
-
-/* =========================================
-   GENERAL ERROR PROTECTION
-========================================= */
-
-window.addEventListener(
-    "error",
-    function(event) {
-
-        console.error(
-            "Red Sea page error:",
-            event.error || event.message
-        );
-
-    }
-);
-
-
-window.addEventListener(
-    "unhandledrejection",
-    function(event) {
-
-        console.error(
-            "Red Sea promise error:",
-            event.reason
-        );
-
-    }
-);
-
-
-/* =========================================
-   FALLBACK LOADING
-========================================= */
-
-setTimeout(
-    function() {
-
-        /*
-         * مهما حصل، شاشة التحميل
-         * لن تفضل للأبد.
-         */
-
-        hideLoading();
-
-    },
-    6000
-);
-
+document.querySelectorAll(".tab[data-tab]").forEach(btn => {
+  btn.addEventListener("click", () => setTab(btn.dataset.tab));
+});
+
+document.getElementById("searchInput").addEventListener("input", renderRooms);
+
+/*
+  IMPORTANT:
+  There is intentionally NO redirect to login from Home.
+  This prevents a WebView auth/reload loop.
+  Firebase state is used only when available.
+*/
+auth.onAuthStateChanged(async function(user){
+  if(!user){
+    document.getElementById("userName").textContent = "زائر";
+    document.getElementById("avatar").textContent = "?";
+    document.getElementById("coinBalance").textContent = "0";
+    await loadHomeData();
+    return;
+  }
+
+  await loadUser(user);
+  await loadHomeData();
+});
+
+window.addEventListener("error", function(e){
+  console.warn("Home error:", e.message);
+});
 </script>
 
-
 </body>
-
 </html>
+
