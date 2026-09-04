@@ -325,28 +325,18 @@
 
     <div class="title">
         <h1>إنشاء حساب جديد</h1>
-
-        <p>
-            انضم إلى عالم Red Sea
-        </p>
+        <p>انضم إلى عالم Red Sea</p>
     </div>
 
     <div class="card">
 
         <form id="registerForm">
 
-            <!-- اسم المستخدم -->
             <div class="field">
-
-                <label for="name">
-                    اسم المستخدم
-                </label>
+                <label for="name">اسم المستخدم</label>
 
                 <div class="input-wrap">
-
-                    <span class="icon">
-                        👤
-                    </span>
+                    <span class="icon">👤</span>
 
                     <input
                         type="text"
@@ -356,24 +346,14 @@
                         maxlength="30"
                         required
                     >
-
                 </div>
-
             </div>
 
-
-            <!-- البريد الإلكتروني -->
             <div class="field">
-
-                <label for="email">
-                    البريد الإلكتروني
-                </label>
+                <label for="email">البريد الإلكتروني</label>
 
                 <div class="input-wrap">
-
-                    <span class="icon">
-                        ✉
-                    </span>
+                    <span class="icon">✉</span>
 
                     <input
                         type="email"
@@ -382,24 +362,14 @@
                         autocomplete="email"
                         required
                     >
-
                 </div>
-
             </div>
 
-
-            <!-- كلمة المرور -->
             <div class="field">
-
-                <label for="password">
-                    كلمة المرور
-                </label>
+                <label for="password">كلمة المرور</label>
 
                 <div class="input-wrap">
-
-                    <span class="icon">
-                        🔒
-                    </span>
+                    <span class="icon">🔒</span>
 
                     <input
                         type="password"
@@ -415,27 +385,15 @@
                         type="button"
                         class="show-password"
                         data-target="password"
-                    >
-                        👁
-                    </button>
-
+                    >👁</button>
                 </div>
-
             </div>
 
-
-            <!-- تأكيد كلمة المرور -->
             <div class="field">
-
-                <label for="confirmPassword">
-                    تأكيد كلمة المرور
-                </label>
+                <label for="confirmPassword">تأكيد كلمة المرور</label>
 
                 <div class="input-wrap">
-
-                    <span class="icon">
-                        🔐
-                    </span>
+                    <span class="icon">🔐</span>
 
                     <input
                         type="password"
@@ -451,16 +409,10 @@
                         type="button"
                         class="show-password"
                         data-target="confirmPassword"
-                    >
-                        👁
-                    </button>
-
+                    >👁</button>
                 </div>
-
             </div>
 
-
-            <!-- الشروط -->
             <label class="terms">
 
                 <input
@@ -469,31 +421,21 @@
                 >
 
                 <span>
-
                     أوافق على
 
-                    <a
-                        href="#"
-                        onclick="event.preventDefault();"
-                    >
+                    <a href="#" onclick="event.preventDefault();">
                         شروط الاستخدام
                     </a>
 
                     و
 
-                    <a
-                        href="#"
-                        onclick="event.preventDefault();"
-                    >
+                    <a href="#" onclick="event.preventDefault();">
                         سياسة الخصوصية
                     </a>
-
                 </span>
 
             </label>
 
-
-            <!-- زر التسجيل -->
             <button
                 type="submit"
                 class="register-btn"
@@ -502,8 +444,6 @@
                 إنشاء الحساب
             </button>
 
-
-            <!-- الرسائل -->
             <div
                 class="message"
                 id="message"
@@ -511,8 +451,6 @@
 
         </form>
 
-
-        <!-- زر العودة -->
         <button
             type="button"
             class="back"
@@ -523,19 +461,11 @@
 
     </div>
 
-
     <div class="footer">
-
         RED SEA • VOICE ROOMS • CHAT • FRIENDS • GAMES • GIFTS
-
     </div>
 
 </div>
-
-
-<!-- =====================================================
-     FIREBASE
-===================================================== -->
 
 <script type="module">
 
@@ -550,7 +480,9 @@
     } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
 
 
-    /* Firebase Configuration */
+    // =========================
+    // Firebase
+    // =========================
 
     const firebaseConfig = {
 
@@ -575,52 +507,47 @@
     };
 
 
-    /* تشغيل Firebase */
-
     const app =
         initializeApp(firebaseConfig);
-
 
     const auth =
         getAuth(app);
 
 
-    /* عناصر الصفحة */
+    // =========================
+    // Elements
+    // =========================
 
     const form =
-        document.getElementById(
-            "registerForm"
-        );
+        document.getElementById("registerForm");
 
     const message =
-        document.getElementById(
-            "message"
-        );
+        document.getElementById("message");
 
     const registerBtn =
-        document.getElementById(
-            "registerBtn"
-        );
+        document.getElementById("registerBtn");
 
     const backBtn =
-        document.getElementById(
-            "backBtn"
-        );
+        document.getElementById("backBtn");
 
 
-    /* رسالة */
+    // =========================
+    // API
+    // =========================
 
-    function showMessage(
-        text,
-        success = false
-    ) {
+    const API_URL =
+        "https://red-sea-server.onrender.com";
 
-        message.style.display =
-            "block";
 
-        message.textContent =
-            text;
+    // =========================
+    // Message
+    // =========================
 
+    function showMessage(text, success = false) {
+
+        message.style.display = "block";
+
+        message.textContent = text;
 
         if (success) {
 
@@ -637,13 +564,13 @@
 
             message.style.color =
                 "#ff8b8b";
-
         }
-
     }
 
 
-    /* تسجيل الحساب */
+    // =========================
+    // Register
+    // =========================
 
     form.addEventListener(
         "submit",
@@ -651,13 +578,11 @@
 
             event.preventDefault();
 
-
             const name =
                 document
                     .getElementById("name")
                     .value
                     .trim();
-
 
             const email =
                 document
@@ -665,18 +590,15 @@
                     .value
                     .trim();
 
-
             const password =
                 document
                     .getElementById("password")
                     .value;
 
-
             const confirmPassword =
                 document
                     .getElementById("confirmPassword")
                     .value;
-
 
             const terms =
                 document
@@ -684,7 +606,9 @@
                     .checked;
 
 
-            /* التحقق من الاسم */
+            // =========================
+            // Validation
+            // =========================
 
             if (!name) {
 
@@ -695,9 +619,6 @@
                 return;
             }
 
-
-            /* التحقق من البريد */
-
             if (!email) {
 
                 showMessage(
@@ -706,9 +627,6 @@
 
                 return;
             }
-
-
-            /* التحقق من كلمة المرور */
 
             if (password.length < 6) {
 
@@ -719,13 +637,7 @@
                 return;
             }
 
-
-            /* مطابقة كلمة المرور */
-
-            if (
-                password !==
-                confirmPassword
-            ) {
+            if (password !== confirmPassword) {
 
                 showMessage(
                     "كلمتا المرور غير متطابقتين"
@@ -733,9 +645,6 @@
 
                 return;
             }
-
-
-            /* الشروط */
 
             if (!terms) {
 
@@ -747,10 +656,7 @@
             }
 
 
-            /* تشغيل حالة التحميل */
-
-            registerBtn.disabled =
-                true;
+            registerBtn.disabled = true;
 
             registerBtn.textContent =
                 "جاري إنشاء الحساب...";
@@ -758,7 +664,9 @@
 
             try {
 
-                /* إنشاء الحساب */
+                // =========================
+                // 1. Create Firebase account
+                // =========================
 
                 const userCredential =
                     await createUserWithEmailAndPassword(
@@ -767,26 +675,87 @@
                         password
                     );
 
-
                 const user =
                     userCredential.user;
 
 
-                /* حفظ اسم المستخدم */
+                // =========================
+                // 2. Save display name
+                // =========================
 
                 await updateProfile(
                     user,
                     {
-                        displayName:
-                            name
+                        displayName: name
                     }
                 );
 
 
-                /* نجاح */
+                // =========================
+                // 3. Create Red Sea User
+                // =========================
+
+                registerBtn.textContent =
+                    "جاري تجهيز حسابك...";
+
+
+                const response =
+                    await fetch(
+                        API_URL + "/api/users",
+                        {
+                            method: "POST",
+
+                            headers: {
+                                "Content-Type":
+                                    "application/json"
+                            },
+
+                            body: JSON.stringify({
+
+                                firebaseUid:
+                                    user.uid,
+
+                                name:
+                                    name,
+
+                                email:
+                                    email
+
+                            })
+                        }
+                    );
+
+
+                const data =
+                    await response.json();
+
+
+                // =========================
+                // Server error
+                // =========================
+
+                if (!response.ok || !data.success) {
+
+                    throw new Error(
+                        data.message ||
+                        "تعذر إنشاء بيانات المستخدم"
+                    );
+                }
+
+
+                // =========================
+                // Success
+                // =========================
+
+                console.log(
+                    "Red Sea User ID:",
+                    data.userId
+                );
+
 
                 showMessage(
-                    "تم إنشاء الحساب بنجاح 🎉",
+                    "تم إنشاء حسابك بنجاح 🎉\nرقم المستخدم: " +
+                    data.userId,
                     true
                 );
 
@@ -795,7 +764,12 @@
                     "تم إنشاء الحساب ✓";
 
 
-                /* الذهاب للصفحة الرئيسية */
+                // نحتفظ بالـ ID مؤقتًا للواجهة
+                localStorage.setItem(
+                    "redSeaUserId",
+                    data.userId
+                );
+
 
                 setTimeout(
                     function() {
@@ -805,19 +779,20 @@
                         );
 
                     },
-                    1000
+                    1500
                 );
 
 
             } catch (error) {
 
                 console.error(
+                    "Registration error:",
                     error
                 );
 
 
                 console.error(
-                    "Firebase error code:",
+                    "Firebase/API error code:",
                     error.code
                 );
 
@@ -892,8 +867,8 @@
                 } else {
 
                     errorMessage =
-                        "حدث خطأ أثناء إنشاء الحساب: " +
-                        error.message;
+                        error.message ||
+                        "حدث خطأ أثناء إنشاء الحساب";
 
                 }
 
@@ -915,14 +890,12 @@
     );
 
 
-    /* =====================================================
-       زر إظهار كلمة المرور
-    ===================================================== */
+    // =========================
+    // Show / Hide Password
+    // =========================
 
     document
-        .querySelectorAll(
-            ".show-password"
-        )
+        .querySelectorAll(".show-password")
         .forEach(
             function(button) {
 
@@ -931,7 +904,6 @@
                     function(event) {
 
                         event.preventDefault();
-
 
                         const target =
                             document.getElementById(
@@ -959,7 +931,6 @@
 
                             button.textContent =
                                 "👁";
-
                         }
 
                     }
@@ -969,11 +940,9 @@
         );
 
 
-    /* =====================================================
-       العودة لتسجيل الدخول
-       
-       هذا الزر مستقل عن Firebase.
-       ===================================================== */
+    // =========================
+    // Back
+    // =========================
 
     backBtn.addEventListener(
         "click",
@@ -989,4 +958,4 @@
 
 </body>
 
-    </html>
+</html>
