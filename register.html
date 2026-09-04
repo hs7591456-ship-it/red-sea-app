@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,7 +15,8 @@
             box-sizing: border-box;
         }
 
-        html, body {
+        html,
+        body {
             width: 100%;
             min-height: 100%;
         }
@@ -85,7 +87,7 @@
 
         .title p {
             font-size: 13px;
-            color: rgba(255,255,255,.62);
+            color: rgba(255, 255, 255, .62);
         }
 
         .card {
@@ -93,10 +95,10 @@
             padding: 20px 18px;
             border-radius: 24px;
             background: rgba(3, 18, 35, .72);
-            border: 1px solid rgba(255,255,255,.08);
+            border: 1px solid rgba(255, 255, 255, .08);
             box-shadow:
-                0 20px 60px rgba(0,0,0,.35),
-                inset 0 1px 0 rgba(255,255,255,.04);
+                0 20px 60px rgba(0, 0, 0, .35),
+                inset 0 1px 0 rgba(255, 255, 255, .04);
             backdrop-filter: blur(18px);
             -webkit-backdrop-filter: blur(18px);
             position: relative;
@@ -111,7 +113,7 @@
             display: block;
             margin-bottom: 7px;
             font-size: 13px;
-            color: rgba(255,255,255,.75);
+            color: rgba(255, 255, 255, .75);
         }
 
         .input-wrap {
@@ -131,10 +133,10 @@
         input {
             width: 100%;
             height: 52px;
-            border: 1px solid rgba(255,255,255,.09);
+            border: 1px solid rgba(255, 255, 255, .09);
             border-radius: 15px;
             outline: none;
-            background: rgba(255,255,255,.055);
+            background: rgba(255, 255, 255, .055);
             color: #fff;
             padding: 0 46px 0 15px;
             font-size: 14px;
@@ -142,13 +144,13 @@
         }
 
         input::placeholder {
-            color: rgba(255,255,255,.33);
+            color: rgba(255, 255, 255, .33);
         }
 
         input:focus {
-            border-color: rgba(0,170,255,.65);
-            background: rgba(255,255,255,.075);
-            box-shadow: 0 0 0 3px rgba(0,150,255,.10);
+            border-color: rgba(0, 170, 255, .65);
+            background: rgba(255, 255, 255, .075);
+            box-shadow: 0 0 0 3px rgba(0, 150, 255, .10);
         }
 
         .password-input {
@@ -162,7 +164,7 @@
             transform: translateY(-50%);
             border: 0;
             background: transparent;
-            color: rgba(255,255,255,.55);
+            color: rgba(255, 255, 255, .55);
             font-size: 17px;
             cursor: pointer;
         }
@@ -172,7 +174,7 @@
             align-items: flex-start;
             gap: 8px;
             margin: 5px 2px 17px;
-            color: rgba(255,255,255,.52);
+            color: rgba(255, 255, 255, .52);
             font-size: 11px;
             line-height: 1.6;
         }
@@ -202,13 +204,18 @@
             cursor: pointer;
             background: linear-gradient(135deg, #008cff, #0059d9);
             box-shadow:
-                0 10px 25px rgba(0,119,255,.28),
-                inset 0 1px 0 rgba(255,255,255,.18);
+                0 10px 25px rgba(0, 119, 255, .28),
+                inset 0 1px 0 rgba(255, 255, 255, .18);
             transition: .2s;
         }
 
         .register-btn:active {
             transform: scale(.98);
+        }
+
+        .register-btn:disabled {
+            opacity: .65;
+            cursor: wait;
         }
 
         .message {
@@ -218,6 +225,7 @@
             border-radius: 12px;
             text-align: center;
             font-size: 12px;
+            line-height: 1.5;
         }
 
         .back {
@@ -225,9 +233,9 @@
             height: 49px;
             margin-top: 13px;
             border-radius: 15px;
-            border: 1px solid rgba(255,255,255,.10);
-            background: rgba(255,255,255,.035);
-            color: rgba(255,255,255,.72);
+            border: 1px solid rgba(255, 255, 255, .10);
+            background: rgba(255, 255, 255, .035);
+            color: rgba(255, 255, 255, .72);
             font-size: 14px;
             font-weight: 700;
             cursor: pointer;
@@ -236,7 +244,7 @@
         .footer {
             text-align: center;
             margin-top: 17px;
-            color: rgba(255,255,255,.28);
+            color: rgba(255, 255, 255, .28);
             font-size: 10px;
             position: relative;
             z-index: 1;
@@ -302,6 +310,7 @@
 
         <form id="registerForm">
 
+            <!-- اسم المستخدم -->
             <div class="field">
                 <label for="name">اسم المستخدم</label>
 
@@ -319,6 +328,7 @@
                 </div>
             </div>
 
+            <!-- البريد -->
             <div class="field">
                 <label for="email">البريد الإلكتروني</label>
 
@@ -335,6 +345,7 @@
                 </div>
             </div>
 
+            <!-- كلمة المرور -->
             <div class="field">
                 <label for="password">كلمة المرور</label>
 
@@ -361,6 +372,7 @@
                 </div>
             </div>
 
+            <!-- تأكيد كلمة المرور -->
             <div class="field">
                 <label for="confirmPassword">تأكيد كلمة المرور</label>
 
@@ -387,25 +399,44 @@
                 </div>
             </div>
 
+            <!-- الشروط -->
             <label class="terms">
-                <input type="checkbox" id="terms">
+
+                <input
+                    type="checkbox"
+                    id="terms"
+                >
 
                 <span>
                     أوافق على
-                    <a href="#" onclick="return false;">شروط الاستخدام</a>
+                    <a href="#" onclick="return false;">
+                        شروط الاستخدام
+                    </a>
                     و
-                    <a href="#" onclick="return false;">سياسة الخصوصية</a>
+                    <a href="#" onclick="return false;">
+                        سياسة الخصوصية
+                    </a>
                 </span>
+
             </label>
 
-            <button type="submit" class="register-btn">
+            <!-- إنشاء الحساب -->
+            <button
+                type="submit"
+                class="register-btn"
+            >
                 إنشاء الحساب
             </button>
 
-            <div class="message" id="message"></div>
+            <!-- الرسائل -->
+            <div
+                class="message"
+                id="message"
+            ></div>
 
         </form>
 
+        <!-- العودة -->
         <button
             type="button"
             class="back"
@@ -422,88 +453,354 @@
 
 </div>
 
+
+<!-- =====================================================
+     FIREBASE
+===================================================== -->
+
 <script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
-import {
-    getAuth,
-    createUserWithEmailAndPassword,
-    updateProfile
-} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
 
-const firebaseConfig = {
-    apiKey: "AIzaSyD_R-LAa0qHFLS36qXJ7mZbCLnh2DJyZhM",
-    authDomain: "red-sea-8db76.firebaseapp.com",
-    projectId: "red-sea-8db76",
-    storageBucket: "red-sea-8db76.firebasestorage.app",
-    messagingSenderId: "418468623324",
-    appId: "1:418468623324:web:2a5fd96f353efccaf81519"
-};
+    import { initializeApp }
+        from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
 
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-
-const form = document.querySelector("form");
-
-form.addEventListener("submit", async function(e) {
-    e.preventDefault();
-
-    const name = document.getElementById("name").value.trim();
-    const email = document.getElementById("email").value.trim();
-    const password = document.getElementById("password").value;
-    const confirmPassword =
-        document.getElementById("confirm_password").value;
-
-    if (!name) {
-        alert("اكتب اسمك");
-        return;
+    import {
+        getAuth,
+        createUserWithEmailAndPassword,
+        updateProfile
     }
+    from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
 
-    if (!email) {
-        alert("اكتب البريد الإلكتروني");
-        return;
-    }
 
-    if (password.length < 6) {
-        alert("كلمة المرور لازم تكون 6 أحرف على الأقل");
-        return;
-    }
+    /* إعداد Firebase */
 
-    if (password !== confirmPassword) {
-        alert("كلمتا المرور غير متطابقتين");
-        return;
-    }
+    const firebaseConfig = {
 
-    try {
-        const userCredential =
-            await createUserWithEmailAndPassword(
-                auth,
-                email,
-                password
-            );
+        apiKey: "AIzaSyD_R-LAa0qHFLS36XqJ7mZbCLnh2DJyZhM",
 
-        await updateProfile(userCredential.user, {
-            displayName: name
-        });
+        authDomain: "red-sea-8db76.firebaseapp.com",
 
-        alert("تم إنشاء الحساب بنجاح 🎉");
+        projectId: "red-sea-8db76",
 
-        window.location.href = "home.html";
+        storageBucket: "red-sea-8db76.firebasestorage.app",
 
-    } catch (error) {
-        console.error(error);
+        messagingSenderId: "418468623324",
 
-        if (error.code === "auth/email-already-in-use") {
-            alert("البريد الإلكتروني مستخدم بالفعل");
-        } else if (error.code === "auth/invalid-email") {
-            alert("البريد الإلكتروني غير صحيح");
-        } else if (error.code === "auth/weak-password") {
-            alert("كلمة المرور ضعيفة");
+        appId: "1:418468623324:web:2a5fd96f353efccaf81519"
+
+    };
+
+
+    /* تشغيل Firebase */
+
+    const app = initializeApp(firebaseConfig);
+
+    const auth = getAuth(app);
+
+
+    /* عناصر الصفحة */
+
+    const form = document.getElementById("registerForm");
+
+    const message = document.getElementById("message");
+
+    const registerBtn =
+        document.querySelector(".register-btn");
+
+
+    /* إظهار رسالة */
+
+    function showMessage(text, success = false) {
+
+        message.style.display = "block";
+
+        message.textContent = text;
+
+        if (success) {
+
+            message.style.background =
+                "rgba(0, 200, 120, .15)";
+
+            message.style.color =
+                "#5dffbd";
+
         } else {
-            alert("حصل خطأ أثناء إنشاء الحساب: " + error.message);
+
+            message.style.background =
+                "rgba(255, 70, 70, .15)";
+
+            message.style.color =
+                "#ff8b8b";
         }
     }
-});
+
+
+    /* إنشاء الحساب */
+
+    form.addEventListener("submit", async function(e) {
+
+        e.preventDefault();
+
+
+        /* قراءة البيانات */
+
+        const name =
+            document.getElementById("name")
+            .value
+            .trim();
+
+
+        const email =
+            document.getElementById("email")
+            .value
+            .trim();
+
+
+        const password =
+            document.getElementById("password")
+            .value;
+
+
+        const confirmPassword =
+            document.getElementById("confirmPassword")
+            .value;
+
+
+        const terms =
+            document.getElementById("terms")
+            .checked;
+
+
+        /* التحقق */
+
+        if (!name) {
+
+            showMessage("اكتب اسم المستخدم");
+
+            return;
+        }
+
+
+        if (!email) {
+
+            showMessage("اكتب البريد الإلكتروني");
+
+            return;
+        }
+
+
+        if (password.length < 6) {
+
+            showMessage(
+                "كلمة المرور لازم تكون 6 أحرف على الأقل"
+            );
+
+            return;
+        }
+
+
+        if (password !== confirmPassword) {
+
+            showMessage(
+                "كلمتا المرور غير متطابقتين"
+            );
+
+            return;
+        }
+
+
+        if (!terms) {
+
+            showMessage(
+                "لازم توافق على شروط الاستخدام وسياسة الخصوصية"
+            );
+
+            return;
+        }
+
+
+        /* تعطيل الزر أثناء التسجيل */
+
+        registerBtn.disabled = true;
+
+        registerBtn.textContent =
+            "جاري إنشاء الحساب...";
+
+
+        try {
+
+            /* إنشاء الحساب في Firebase */
+
+            const userCredential =
+                await createUserWithEmailAndPassword(
+                    auth,
+                    email,
+                    password
+                );
+
+
+            const user =
+                userCredential.user;
+
+
+            /* حفظ اسم المستخدم */
+
+            await updateProfile(user, {
+
+                displayName: name
+
+            });
+
+
+            /* نجاح */
+
+            showMessage(
+                "تم إنشاء الحساب بنجاح 🎉",
+                true
+            );
+
+
+            /* الانتقال للصفحة الرئيسية */
+
+            setTimeout(function() {
+
+                window.location.href =
+                    "home.html";
+
+            }, 1000);
+
+
+        } catch (error) {
+
+            console.error(
+                "Firebase Auth Error:",
+                error
+            );
+
+
+            /* الأخطاء */
+
+            if (
+                error.code ===
+                "auth/email-already-in-use"
+            ) {
+
+                showMessage(
+                    "البريد الإلكتروني مستخدم بالفعل"
+                );
+
+
+            } else if (
+                error.code ===
+                "auth/invalid-email"
+            ) {
+
+                showMessage(
+                    "البريد الإلكتروني غير صحيح"
+                );
+
+
+            } else if (
+                error.code ===
+                "auth/weak-password"
+            ) {
+
+                showMessage(
+                    "كلمة المرور ضعيفة"
+                );
+
+
+            } else if (
+                error.code ===
+                "auth/network-request-failed"
+            ) {
+
+                showMessage(
+                    "تأكد من اتصال الإنترنت"
+                );
+
+
+            } else {
+
+                showMessage(
+                    "حدث خطأ أثناء إنشاء الحساب: " +
+                    error.message
+                );
+            }
+
+
+            /* إعادة الزر */
+
+            registerBtn.disabled = false;
+
+            registerBtn.textContent =
+                "إنشاء الحساب";
+
+        }
+
+    });
+
+
+    /* =====================================================
+       إظهار وإخفاء كلمة المرور
+    ===================================================== */
+
+    document
+        .querySelectorAll(".show-password")
+        .forEach(function(button) {
+
+            button.addEventListener(
+                "click",
+                function() {
+
+                    const target =
+                        document.getElementById(
+                            button.getAttribute(
+                                "data-target"
+                            )
+                        );
+
+
+                    if (
+                        target.type ===
+                        "password"
+                    ) {
+
+                        target.type = "text";
+
+                        button.textContent =
+                            "🙈";
+
+                    } else {
+
+                        target.type = "password";
+
+                        button.textContent =
+                            "👁";
+                    }
+
+                }
+            );
+
+        });
+
+
+    /* =====================================================
+       العودة لتسجيل الدخول
+    ===================================================== */
+
+    document
+        .getElementById("backBtn")
+        .addEventListener(
+            "click",
+            function() {
+
+                window.location.href =
+                    "login.html";
+
+            }
+        );
+
 </script>
 
 </body>
-  </html>
+</html>
