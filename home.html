@@ -1,0 +1,1911 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Red Sea - Home</title>
+
+<script src="https://www.gstatic.com/firebasejs/12.18.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/12.18.0/firebase-auth-compat.js"></script>
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#07111f;--card:#0d1b2d;--card2:#10243a;--line:rgba(255,255,255,.08);
+  --text:#f4f7fb;--muted:#91a1b6;--blue:#28a9ff;--gold:#ffc94a;
+}
+body{font-family:Arial,Tahoma,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;padding-bottom:76px}
+button,input{font:inherit}
+button{border:0;cursor:pointer}
+a{text-decoration:none;color:inherit}
+
+.top{
+  position:sticky;top:0;z-index:20;background:rgba(7,17,31,.94);
+  backdrop-filter:blur(16px);border-bottom:1px solid var(--line)
+}
+.top-inner{max-width:680px;margin:auto;padding:12px 14px 9px}
+.user-row{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.user-info{display:flex;align-items:center;gap:10px;min-width:0}
+.avatar{
+  width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  background:linear-gradient(135deg,#168fe0,#6dd2ff);font-weight:900;font-size:18px;
+  box-shadow:0 0 0 3px rgba(40,169,255,.12)
+}
+.name-box{min-width:0}
+.hello{font-size:12px;color:var(--muted);margin-bottom:3px}
+.name{font-size:16px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.top-actions{display:flex;gap:7px}
+.icon-btn{
+  width:38px;height:38px;border-radius:12px;background:var(--card);
+  color:#dce8f5;border:1px solid var(--line);font-size:17px
+}
+.coin-mini{
+  display:flex;align-items:center;gap:5px;background:rgba(255,201,74,.09);
+  border:1px solid rgba(255,201,74,.18);color:var(--gold);padding:8px 10px;border-radius:12px;
+  font-size:12px;font-weight:800
+}
+
+.tabs{display:flex;align-items:center;gap:5px;margin-top:12px;overflow-x:auto;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{
+  flex:1;min-width:max-content;padding:9px 10px;border-radius:10px;color:var(--muted);
+  background:transparent;font-size:12px;font-weight:800
+}
+.tab.active{background:var(--blue);color:white;box-shadow:0 5px 18px rgba(40,169,255,.2)}
+
+.container{max-width:680px;margin:auto;padding:12px 14px 25px}
+.search{
+  display:flex;align-items:center;gap:8px;background:var(--card);border:1px solid var(--line);
+  border-radius:14px;padding:0 13px;margin-bottom:13px
+}
+.search span{font-size:17px;color:var(--muted)}
+.search input{width:100%;height:46px;background:none;border:0;outline:0;color:white;font-size:13px}
+.search input::placeholder{color:#65758b}
+
+.section{margin-top:16px}
+.section-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:9px}
+.section-title{font-size:15px;font-weight:900}
+.section-more{font-size:11px;color:var(--blue);font-weight:800}
+
+.ads{
+  display:flex;gap:9px;overflow-x:auto;scroll-snap-type:x mandatory;
+  scrollbar-width:none;padding-bottom:2px
+}
+.ads::-webkit-scrollbar{display:none}
+.ad{
+  min-width:100%;height:105px;border-radius:16px;overflow:hidden;scroll-snap-align:center;
+  background:linear-gradient(135deg,#102c47,#0a1627);border:1px solid var(--line);
+  position:relative;display:flex;align-items:center;justify-content:center
+}
+.ad img{width:100%;height:100%;object-fit:cover}
+.ad-content{text-align:center}
+.ad-content b{font-size:18px}.ad-content p{font-size:11px;color:var(--muted);margin-top:6px}
+
+.official-grid,.agency-grid,.room-grid{
+  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px
+}
+.official{
+  background:linear-gradient(145deg,#122943,#0d1c2f);border:1px solid rgba(40,169,255,.13);
+  border-radius:15px;padding:13px;min-height:100px;position:relative
+}
+.official.admin{border-color:rgba(255,201,74,.2)}
+.badge{font-size:9px;padding:4px 7px;border-radius:7px;background:rgba(40,169,255,.12);color:#70caff}
+.admin .badge{background:rgba(255,201,74,.12);color:var(--gold)}
+.official h3{font-size:13px;margin-top:11px}
+.official p{font-size:10px;color:var(--muted);margin-top:5px}
+.join{position:absolute;left:9px;bottom:9px;width:27px;height:27px;border-radius:9px;background:rgba(255,255,255,.07);color:white}
+
+.agency{
+  background:var(--card);border:1px solid var(--line);border-radius:15px;padding:11px;
+  position:relative;min-height:132px
+}
+.rank{
+  position:absolute;top:8px;right:8px;width:27px;height:27px;border-radius:9px;
+  display:flex;align-items:center;justify-content:center;background:rgba(255,201,74,.1);color:var(--gold);font-size:11px;font-weight:900
+}
+.agency-avatar{
+  width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,#173d5e,#0c2035);
+  display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:8px
+}
+.agency h3{font-size:12px;padding-left:25px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.agency p{font-size:9px;color:var(--muted);margin-top:5px}
+.agency .coins{color:var(--gold);font-size:10px;margin-top:7px;font-weight:800}
+
+.room{
+  background:var(--card);border:1px solid var(--line);border-radius:15px;overflow:hidden;position:relative;
+  min-height:158px
+}
+.room-cover{height:83px;background:linear-gradient(135deg,#14324d,#0b192b);position:relative;display:flex;align-items:center;justify-content:center}
+.room-cover img{width:100%;height:100%;object-fit:cover}
+.room-icon{font-size:28px}
+.room-rank{position:absolute;top:8px;right:8px;background:rgba(7,17,31,.78);padding:5px 7px;border-radius:8px;color:var(--gold);font-size:10px;font-weight:900}
+.room-body{padding:9px}
+.room-name{font-size:12px;font-weight:900;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.room-meta{display:flex;align-items:center;justify-content:space-between;margin-top:6px;color:var(--muted);font-size:9px}
+.follow{
+  position:absolute;left:8px;top:8px;width:28px;height:28px;border-radius:9px;
+  background:rgba(7,17,31,.78);color:white;font-size:15px
+}
+.follow.on{color:var(--blue);background:rgba(40,169,255,.15)}
+
+.empty{
+  grid-column:1/-1;text-align:center;padding:27px 10px;background:var(--card);
+  border:1px dashed rgba(255,255,255,.1);border-radius:15px;color:var(--muted);font-size:12px
+}
+.loading{padding:30px;text-align:center;color:var(--muted);font-size:12px}
+.error{padding:20px;text-align:center;background:rgba(255,75,75,.06);border:1px solid rgba(255,75,75,.14);border-radius:14px;color:#ff9b9b;font-size:12px}
+
+.bottom{
+  position:fixed;bottom:0;left:0;right:0;height:66px;z-index:30;background:rgba(8,18,31,.97);
+  backdrop-filter:blur(18px);border-top:1px solid var(--line)
+}
+.bottom-inner{max-width:680px;margin:auto;height:100%;display:grid;grid-template-columns:repeat(3,1fr)}
+.nav{
+  background:none;color:var(--muted);display:flex;flex-direction:column;align-items:center;
+  justify-content:center;gap:4px;font-size:10px;font-weight:800
+}
+.nav span:first-child{font-size:19px}.nav.active{color:var(--blue)}
+
+.hidden{display:none!important}
+@media(max-width:360px){
+  .tab{font-size:11px;padding:8px 7px}
+  .container{padding-left:10px;padding-right:10px}
+}
+</style>
+</head>
+
+<body>
+
+<header class="top">
+  <div class="top-inner">
+    <div class="user-row">
+      <div class="user-info">
+        <div class="avatar" id="avatar">?</div>
+
+        <div class="name-box">
+          <div class="hello">أهلاً بك 👋</div>
+          <div class="name" id="userName">جارِ التحميل...</div>
+        </div>
+      </div>
+
+      <div style="display:flex;align-items:center;gap:6px">
+
+        <div class="coin-mini">
+          🪙 <span id="coinBalance">0</span>
+        </div>
+
+        <div class="top-actions">
+          <button
+            class="icon-btn"
+            onclick="go('settings.html')"
+            title="الإعدادات">
+            ⚙️
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="tabs">
+
+      <button
+        class="tab active"
+        data-tab="discover">
+        اكتشاف
+      </button>
+
+      <button
+        class="tab"
+        data-tab="special">
+        خاصية
+      </button>
+
+      <button
+        class="tab"
+        data-tab="following">
+        المتابعين
+      </button>
+
+      <button
+        class="tab"
+        data-tab="top">
+        🏆 TOP
+      </button>
+
+      <button
+        class="tab"
+        onclick="focusSearch()">
+        🔍
+      </button>
+
+    </div>
+  </div>
+</header>
+
+
+<main class="container">
+
+  <div class="search">
+    <span>🔍</span>
+
+    <input
+      id="searchInput"
+      type="search"
+      placeholder="ابحث عن غرفة أو وكالة أو Room ID">
+  </div>
+
+
+  <div id="pageContent">
+
+
+    <!-- ADS -->
+
+    <section
+      class="section"
+      id="adsSection">
+
+      <div class="section-head">
+
+        <div class="section-title">
+          إعلانات
+        </div>
+
+      </div>
+
+      <div
+        class="ads"
+        id="adsList">
+
+        <div class="ad">
+
+          <div class="ad-content">
+
+            <b>RED SEA</b>
+
+            <p>
+              الإعلانات ستظهر هنا من لوحة الإدارة
+            </p>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- OFFICIAL ROOMS -->
+
+    <section
+      class="section"
+      id="officialSection">
+
+      <div class="section-head">
+
+        <div class="section-title">
+          الغرف الرسمية
+        </div>
+
+      </div>
+
+
+      <div class="official-grid">
+
+
+        <div
+          class="official admin"
+          data-room-id="ADMIN">
+
+          <span class="badge">
+            OFFICIAL
+          </span>
+
+          <h3>
+            👑 غرفة الإدارة
+          </h3>
+
+          <p>
+            الغرفة الرسمية للإدارة
+          </p>
+
+          <button
+            class="join"
+            onclick="openRoom('ADMIN')">
+            ↗
+          </button>
+
+        </div>
+
+
+        <div
+          class="official"
+          data-room-id="ACTIVITIES">
+
+          <span class="badge">
+            OFFICIAL
+          </span>
+
+          <h3>
+            🎯 غرفة الأنشطة الرسمية
+          </h3>
+
+          <p>
+            الفعاليات والأنشطة الرسمية
+          </p>
+
+          <button
+            class="join"
+            onclick="openRoom('ACTIVITIES')">
+            ↗
+          </button>
+
+        </div>
+
+
+      </div>
+
+    </section>
+
+
+    <!-- SHIPPING -->
+
+    <section
+      class="section"
+      id="shippingSection">
+
+      <div class="section-head">
+
+        <div class="section-title">
+          🚚 وكالات الشحن
+        </div>
+
+        <div class="section-more">
+          الكل
+        </div>
+
+      </div>
+
+      <div
+        class="agency-grid"
+        id="shippingList">
+
+        <div class="loading">
+          جارِ تحميل وكالات الشحن...
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- AGENCIES -->
+
+    <section
+      class="section"
+      id="agenciesSection">
+
+      <div class="section-head">
+
+        <div class="section-title">
+          🏆 أفضل الوكالات
+        </div>
+
+        <div class="section-more">
+          TOP 1 - 4
+        </div>
+
+      </div>
+
+      <div
+        class="agency-grid"
+        id="agencyList">
+
+        <div class="loading">
+          جارِ تحميل الترتيب...
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ROOMS -->
+
+    <section
+      class="section"
+      id="roomsSection">
+
+      <div class="section-head">
+
+        <div class="section-title">
+          🎙️ الغرف
+        </div>
+
+        <div
+          class="section-more"
+          id="roomsCount">
+          0 غرفة
+        </div>
+
+      </div>
+
+      <div
+        class="room-grid"
+        id="roomsList">
+
+        <div class="loading">
+          جارِ تحميل الغرف...
+        </div>
+
+      </div>
+
+    </section>
+
+
+  </div>
+
+</main>
+
+
+<!-- BOTTOM NAV -->
+
+<nav class="bottom">
+
+  <div class="bottom-inner">
+
+    <button
+      class="nav active"
+      onclick="go('home.html')">
+
+      <span>🏠</span>
+
+      الرئيسية
+
+    </button>
+
+
+    <button
+      class="nav"
+      onclick="go('messages.html')">
+
+      <span>💬</span>
+
+      الرسائل
+
+    </button>
+
+
+    <button
+      class="nav"
+      onclick="go('profile.html')">
+
+      <span>👤</span>
+
+      الحساب
+
+    </button>
+
+  </div>
+
+</nav>
+
+
+<script>
+
+/* =========================================================
+   RED SEA HOME
+========================================================= */
+
+const API_BASE =
+  "https://red-sea-server.onrender.com";
+
+
+/* =========================================================
+   FIREBASE
+========================================================= */
+
+const firebaseConfig = {
+
+  apiKey:
+    "AIzaSyD_R-LAa0qHFLS36QX7JmZbCLnh2DJyZhM",
+
+  authDomain:
+    "red-sea-8db76.firebaseapp.com",
+
+  projectId:
+    "red-sea-8db76",
+
+  storageBucket:
+    "red-sea-8db76.firebasestorage.app",
+
+  messagingSenderId:
+    "418468623324",
+
+  appId:
+    "1:418468623324:web:2a5fd96f353efccaf81519"
+};
+
+
+firebase.initializeApp(firebaseConfig);
+
+const auth =
+  firebase.auth();
+
+
+/* =========================================================
+   GLOBAL VARIABLES
+========================================================= */
+
+let currentUser = null;
+
+let currentProfile = null;
+
+let allRooms = [];
+
+let allAgencies = [];
+
+let allShippingAgencies = [];
+
+let currentTab = "discover";
+
+
+/* =========================================================
+   NAVIGATION
+========================================================= */
+
+function go(page){
+
+  window.location.href = page;
+
+}
+
+
+function focusSearch(){
+
+  const input =
+    document.getElementById("searchInput");
+
+  input.focus();
+
+  input.scrollIntoView({
+    behavior:"smooth",
+    block:"center"
+  });
+
+}
+
+
+/* =========================================================
+   HELPERS
+========================================================= */
+
+function escapeHtml(value){
+
+  return String(value ?? "")
+    .replace(/[&<>"']/g,function(c){
+
+      return {
+        "&":"&amp;",
+        "<":"&lt;",
+        ">":"&gt;",
+        '"':"&quot;",
+        "'":"&#039;"
+      }[c];
+
+    });
+
+}
+
+
+function initials(name){
+
+  const text =
+    String(name || "U").trim();
+
+  return text
+    ? text.charAt(0).toUpperCase()
+    : "U";
+
+}
+
+
+function number(value){
+
+  const n =
+    Number(value || 0);
+
+  return n.toLocaleString("en-US");
+
+}
+
+
+/* =========================================================
+   API
+========================================================= */
+
+async function api(path, options = {}){
+
+  const response =
+    await fetch(
+      API_BASE + path,
+      {
+        ...options,
+
+        headers:{
+          "Content-Type":
+            "application/json",
+
+          ...(options.headers || {})
+        }
+      }
+    );
+
+
+  let data = null;
+
+  try{
+
+    data =
+      await response.json();
+
+  }catch(e){}
+
+
+  if(!response.ok){
+
+    throw new Error(
+      (data && data.message) ||
+      "Server request failed"
+    );
+
+  }
+
+
+  return data;
+
+}
+
+
+/* =========================================================
+   LOAD USER
+========================================================= */
+
+async function loadUser(user){
+
+  currentUser = user;
+
+
+  document.getElementById(
+    "userName"
+  ).textContent =
+    user.displayName ||
+    user.email ||
+    "المستخدم";
+
+
+  document.getElementById(
+    "avatar"
+  ).textContent =
+    initials(
+      user.displayName ||
+      user.email
+    );
+
+
+  try{
+
+    /*
+      Firebase ID Token
+      يتم إرساله للسيرفر للتأكد
+      من هوية المستخدم.
+    */
+
+    const token =
+      await user.getIdToken();
+
+
+    const data =
+      await api(
+        "/api/users/by-firebase/" +
+        encodeURIComponent(user.uid),
+
+        {
+          method:"GET",
+
+          headers:{
+            "Authorization":
+              "Bearer " + token
+          }
+        }
+      );
+
+
+    if(data && data.user){
+
+      currentProfile =
+        data.user;
+
+
+      document.getElementById(
+        "userName"
+      ).textContent =
+        data.user.name ||
+        user.displayName ||
+        user.email ||
+        "المستخدم";
+
+
+      document.getElementById(
+        "avatar"
+      ).textContent =
+        initials(
+          data.user.name ||
+          user.displayName ||
+          user.email
+        );
+
+
+      document.getElementById(
+        "coinBalance"
+      ).textContent =
+        number(
+          data.user.coins || 0
+        );
+
+    }
+
+
+  }catch(error){
+
+    console.warn(
+      "Profile API:",
+      error.message
+    );
+
+  }
+
+}
+
+
+/* =========================================================
+   HOME DATA
+========================================================= */
+
+async function loadHomeData(){
+
+  await Promise.allSettled([
+
+    loadRooms(),
+
+    loadAgencies(),
+
+    loadShippingAgencies(),
+
+    loadAds()
+
+  ]);
+
+}
+
+
+/* =========================================================
+   ROOMS
+========================================================= */
+
+async function loadRooms(){
+
+  const box =
+    document.getElementById(
+      "roomsList"
+    );
+
+
+  try{
+
+    const data =
+      await api("/api/rooms");
+
+
+    allRooms =
+      Array.isArray(data.rooms)
+        ? data.rooms
+        : [];
+
+
+    renderRooms();
+
+
+  }catch(error){
+
+    box.innerHTML =
+      '<div class="error">' +
+      'تعذر تحميل الغرف من السيرفر' +
+      '<br>' +
+      '<small>' +
+      escapeHtml(error.message) +
+      '</small>' +
+      '</div>';
+
+
+    document.getElementById(
+      "roomsCount"
+    ).textContent =
+      "0 غرفة";
+
+  }
+
+}
+
+
+/* =========================================================
+   AGENCIES
+========================================================= */
+
+async function loadAgencies(){
+
+  const box =
+    document.getElementById(
+      "agencyList"
+    );
+
+
+  try{
+
+    const data =
+      await api(
+        "/api/agencies/top?limit=4"
+      );
+
+
+    allAgencies =
+      Array.isArray(data.agencies)
+        ? data.agencies
+        : [];
+
+
+    renderAgencies();
+
+
+  }catch(error){
+
+    box.innerHTML =
+      '<div class="empty">' +
+      'لا توجد بيانات ترتيب حالياً' +
+      '</div>';
+
+  }
+
+}
+
+
+/* =========================================================
+   SHIPPING AGENCIES
+========================================================= */
+
+async function loadShippingAgencies(){
+
+  const box =
+    document.getElementById(
+      "shippingList"
+    );
+
+
+  try{
+
+    const data =
+      await api(
+        "/api/shipping-agencies"
+      );
+
+
+    allShippingAgencies =
+      Array.isArray(data.agencies)
+        ? data.agencies
+        : [];
+
+
+    renderShippingAgencies();
+
+
+  }catch(error){
+
+    box.innerHTML =
+      '<div class="empty">' +
+      'لا توجد وكالات شحن حالياً' +
+      '</div>';
+
+  }
+
+}
+
+
+/* =========================================================
+   ADS
+========================================================= */
+
+async function loadAds(){
+
+  try{
+
+    const data =
+      await api("/api/ads");
+
+
+    const ads =
+      Array.isArray(data.ads)
+        ? data.ads
+        : [];
+
+
+    renderAds(ads);
+
+
+  }catch(error){
+
+    console.warn(
+      "Ads:",
+      error.message
+    );
+
+  }
+
+}
+
+
+function renderAds(ads){
+
+  const box =
+    document.getElementById(
+      "adsList"
+    );
+
+
+  if(!ads.length){
+
+    return;
+
+  }
+
+
+  box.innerHTML =
+    ads.map(ad => `
+
+      <div class="ad">
+
+        ${
+          ad.imageUrl
+
+          ?
+
+          `<img
+            src="${escapeHtml(ad.imageUrl)}"
+            alt="إعلان">`
+
+          :
+
+          `<div class="ad-content">
+
+            <b>
+              ${escapeHtml(
+                ad.title || "RED SEA"
+              )}
+            </b>
+
+            <p>
+              ${escapeHtml(
+                ad.description || ""
+              )}
+            </p>
+
+          </div>`
+        }
+
+      </div>
+
+    `).join("");
+
+}
+
+
+/* =========================================================
+   ROOM SEARCH
+========================================================= */
+
+function roomMatches(room, query){
+
+  if(!query){
+
+    return true;
+
+  }
+
+
+  const text = [
+
+    room.name,
+
+    room.roomName,
+
+    room.roomId,
+
+    room.ownerId,
+
+    room.agencyId,
+
+    room.description
+
+  ]
+  .join(" ")
+  .toLowerCase();
+
+
+  return text.includes(
+    query.toLowerCase()
+  );
+
+}
+
+
+/* =========================================================
+   RENDER ROOMS
+========================================================= */
+
+function renderRooms(){
+
+  const box =
+    document.getElementById(
+      "roomsList"
+    );
+
+
+  const query =
+    document
+      .getElementById(
+        "searchInput"
+      )
+      .value
+      .trim();
+
+
+  let rooms =
+    allRooms.filter(
+      r => roomMatches(r,query)
+    );
+
+
+  if(currentTab === "following"){
+
+    rooms =
+      rooms.filter(
+        r =>
+          r.isFollowing === true ||
+          r.followed === true
+      );
+
+  }
+
+
+  if(currentTab === "special"){
+
+    rooms =
+      rooms.filter(
+        r =>
+          r.ownerId ===
+            currentProfile?.userId ||
+
+          r.agencyId ===
+            currentProfile?.agencyId
+      );
+
+  }
+
+
+  if(currentTab === "top"){
+
+    rooms =
+      [...rooms]
+        .sort(
+          (a,b) =>
+
+            Number(
+              b.coins ||
+              b.activityCoins ||
+              b.totalCoins ||
+              0
+            )
+
+            -
+
+            Number(
+              a.coins ||
+              a.activityCoins ||
+              a.totalCoins ||
+              0
+            )
+        )
+        .slice(0,4);
+
+  }
+
+
+  document.getElementById(
+    "roomsCount"
+  ).textContent =
+    number(rooms.length) +
+    " غرفة";
+
+
+  if(!rooms.length){
+
+    box.innerHTML =
+      '<div class="empty">' +
+      'لا توجد غرف متاحة حالياً' +
+      '</div>';
+
+    return;
+
+  }
+
+
+  box.innerHTML =
+    rooms.map(
+      (room,index) => {
+
+        const roomId =
+          room.roomId ||
+          room.id ||
+          "";
+
+
+        const roomName =
+          room.name ||
+          room.roomName ||
+          "غرفة بدون اسم";
+
+
+        const members =
+          room.membersCount ??
+          room.onlineCount ??
+          room.members ??
+          0;
+
+
+        const coins =
+          room.coins ??
+          room.activityCoins ??
+          room.totalCoins ??
+          0;
+
+
+        const following =
+          room.isFollowing === true ||
+          room.followed === true;
+
+
+        return `
+
+          <div
+            class="room"
+            data-room="${escapeHtml(roomId)}">
+
+            <div class="room-cover">
+
+              ${
+                room.coverUrl
+
+                ?
+
+                `<img
+                  src="${escapeHtml(room.coverUrl)}"
+                  alt="">`
+
+                :
+
+                `<div class="room-icon">
+                  🎙️
+                </div>`
+              }
+
+
+              ${
+                currentTab === "top"
+
+                ?
+
+                `<div class="room-rank">
+                  TOP ${index+1}
+                </div>`
+
+                :
+
+                ""
+              }
+
+
+              <button
+                class="follow ${
+                  following ? "on" : ""
+                }"
+                onclick="
+                  toggleFollow(
+                    '${encodeURIComponent(roomId)}',
+                    this
+                  );
+                  event.stopPropagation()
+                "
+                title="${
+                  following
+                    ? "إلغاء المتابعة"
+                    : "متابعة"
+                }">
+
+                ${
+                  following
+                    ? "✓"
+                    : "＋"
+                }
+
+              </button>
+
+            </div>
+
+
+            <div
+              class="room-body"
+              onclick="
+                openRoom(
+                  '${encodeURIComponent(roomId)}'
+                )
+              ">
+
+              <div class="room-name">
+
+                ${escapeHtml(roomName)}
+
+              </div>
+
+
+              <div class="room-meta">
+
+                <span>
+                  👥 ${number(members)}
+                </span>
+
+                <span>
+                  🪙 ${number(coins)}
+                </span>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        `;
+
+      }
+    ).join("");
+
+}
+
+
+/* =========================================================
+   RENDER AGENCIES
+========================================================= */
+
+function renderAgencies(){
+
+  const box =
+    document.getElementById(
+      "agencyList"
+    );
+
+
+  if(!allAgencies.length){
+
+    box.innerHTML =
+      '<div class="empty">' +
+      'لا توجد وكالات في الترتيب حالياً' +
+      '</div>';
+
+    return;
+
+  }
+
+
+  box.innerHTML =
+    allAgencies
+      .slice(0,4)
+      .map(
+        (agency,index) => `
+
+          <div
+            class="agency"
+            onclick="
+              openAgency(
+                '${encodeURIComponent(
+                  agency.agencyId ||
+                  agency.id ||
+                  ""
+                )}'
+              )
+            ">
+
+            <div class="rank">
+              TOP ${index+1}
+            </div>
+
+
+            <div class="agency-avatar">
+
+              ${
+                agency.logoUrl
+
+                ?
+
+                `<img
+                  src="${escapeHtml(
+                    agency.logoUrl
+                  )}"
+                  style="
+                    width:100%;
+                    height:100%;
+                    object-fit:cover;
+                    border-radius:12px
+                  ">`
+
+                :
+
+                "🏢"
+              }
+
+            </div>
+
+
+            <h3>
+              ${escapeHtml(
+                agency.name || "وكالة"
+              )}
+            </h3>
+
+
+            <p>
+              ID:
+              ${escapeHtml(
+                agency.agencyId ||
+                agency.id ||
+                "—"
+              )}
+            </p>
+
+
+            <div class="coins">
+
+              🪙
+              ${number(
+                agency.coins ||
+                agency.totalCoins ||
+                agency.activityCoins
+              )}
+
+            </div>
+
+          </div>
+
+        `
+      )
+      .join("");
+
+}
+
+
+/* =========================================================
+   RENDER SHIPPING
+========================================================= */
+
+function renderShippingAgencies(){
+
+  const box =
+    document.getElementById(
+      "shippingList"
+    );
+
+
+  if(!allShippingAgencies.length){
+
+    box.innerHTML =
+      '<div class="empty">' +
+      'لا توجد وكالات شحن حالياً' +
+      '</div>';
+
+    return;
+
+  }
+
+
+  box.innerHTML =
+    allShippingAgencies
+      .map(
+        agency => `
+
+          <div
+            class="agency"
+            onclick="
+              openAgency(
+                '${encodeURIComponent(
+                  agency.agencyId ||
+                  agency.id ||
+                  ""
+                )}'
+              )
+            ">
+
+            <div class="agency-avatar">
+
+              ${
+                agency.logoUrl
+
+                ?
+
+                `<img
+                  src="${escapeHtml(
+                    agency.logoUrl
+                  )}"
+                  style="
+                    width:100%;
+                    height:100%;
+                    object-fit:cover;
+                    border-radius:12px
+                  ">`
+
+                :
+
+                "🚚"
+              }
+
+            </div>
+
+
+            <h3>
+
+              ${escapeHtml(
+                agency.name ||
+                "وكالة شحن"
+              )}
+
+            </h3>
+
+
+            <p>
+
+              ID:
+              ${escapeHtml(
+                agency.agencyId ||
+                agency.id ||
+                "—"
+              )}
+
+            </p>
+
+
+            <div class="coins">
+
+              الشحن الرسمي
+
+            </div>
+
+          </div>
+
+        `
+      )
+      .join("");
+
+}
+
+
+/* =========================================================
+   FOLLOW / UNFOLLOW
+========================================================= */
+
+async function toggleFollow(
+  encodedRoomId,
+  button
+){
+
+  if(!currentUser){
+
+    return;
+
+  }
+
+
+  const roomId =
+    decodeURIComponent(
+      encodedRoomId
+    );
+
+
+  button.disabled = true;
+
+
+  try{
+
+    /*
+      احصل على Firebase ID Token
+    */
+
+    const token =
+      await currentUser.getIdToken();
+
+
+    const data =
+      await api(
+        "/api/rooms/" +
+        encodeURIComponent(roomId) +
+        "/follow",
+
+        {
+          method:"POST",
+
+          headers:{
+            "Authorization":
+              "Bearer " + token,
+
+            "Content-Type":
+              "application/json"
+          },
+
+          body:
+            JSON.stringify({})
+        }
+      );
+
+
+    const following =
+      data.following === true;
+
+
+    button.classList.toggle(
+      "on",
+      following
+    );
+
+
+    button.textContent =
+      following
+        ? "✓"
+        : "＋";
+
+
+    const room =
+      allRooms.find(
+        r =>
+          String(
+            r.roomId || r.id
+          ) ===
+          String(roomId)
+      );
+
+
+    if(room){
+
+      room.isFollowing =
+        following;
+
+      room.followed =
+        following;
+
+    }
+
+
+  }catch(error){
+
+    console.warn(
+      "Follow:",
+      error.message
+    );
+
+
+    alert(
+      "تعذر تحديث المتابعة: " +
+      error.message
+    );
+
+
+  }finally{
+
+    button.disabled = false;
+
+  }
+
+}
+
+
+/* =========================================================
+   OPEN ROOM
+========================================================= */
+
+function openRoom(
+  encodedRoomId
+){
+
+  const roomId =
+    decodeURIComponent(
+      encodedRoomId
+    );
+
+
+  if(roomId === "ADMIN"){
+
+    window.location.href =
+      "room.html?roomId=ADMIN";
+
+    return;
+
+  }
+
+
+  if(roomId === "ACTIVITIES"){
+
+    window.location.href =
+      "room.html?roomId=ACTIVITIES";
+
+    return;
+
+  }
+
+
+  if(roomId){
+
+    window.location.href =
+      "room.html?roomId=" +
+      encodeURIComponent(roomId);
+
+  }
+
+}
+
+
+/* =========================================================
+   OPEN AGENCY
+========================================================= */
+
+function openAgency(
+  encodedAgencyId
+){
+
+  const id =
+    decodeURIComponent(
+      encodedAgencyId
+    );
+
+
+  if(id){
+
+    window.location.href =
+      "agency.html?agencyId=" +
+      encodeURIComponent(id);
+
+  }
+
+}
+
+
+/* =========================================================
+   TABS
+========================================================= */
+
+function setTab(tab){
+
+  currentTab =
+    tab;
+
+
+  document
+    .querySelectorAll(".tab")
+    .forEach(btn => {
+
+      btn.classList.toggle(
+        "active",
+        btn.dataset.tab === tab
+      );
+
+    });
+
+
+  const official =
+    document.getElementById(
+      "officialSection"
+    );
+
+
+  const shipping =
+    document.getElementById(
+      "shippingSection"
+    );
+
+
+  const agencies =
+    document.getElementById(
+      "agenciesSection"
+    );
+
+
+  const rooms =
+    document.getElementById(
+      "roomsSection"
+    );
+
+
+  official.classList.remove(
+    "hidden"
+  );
+
+  shipping.classList.remove(
+    "hidden"
+  );
+
+  agencies.classList.remove(
+    "hidden"
+  );
+
+  rooms.classList.remove(
+    "hidden"
+  );
+
+
+  if(tab === "special"){
+
+    official.classList.add(
+      "hidden"
+    );
+
+    shipping.classList.add(
+      "hidden"
+    );
+
+    agencies.classList.add(
+      "hidden"
+    );
+
+  }
+
+
+  else if(tab === "following"){
+
+    official.classList.add(
+      "hidden"
+    );
+
+    shipping.classList.add(
+      "hidden"
+    );
+
+    agencies.classList.add(
+      "hidden"
+    );
+
+  }
+
+
+  else if(tab === "top"){
+
+    official.classList.add(
+      "hidden"
+    );
+
+    shipping.classList.add(
+      "hidden"
+    );
+
+    agencies.classList.add(
+      "hidden"
+    );
+
+  }
+
+
+  renderRooms();
+
+}
+
+
+/* =========================================================
+   TAB EVENTS
+========================================================= */
+
+document
+  .querySelectorAll(
+    ".tab[data-tab]"
+  )
+  .forEach(btn => {
+
+    btn.addEventListener(
+      "click",
+      () =>
+        setTab(
+          btn.dataset.tab
+        )
+    );
+
+  });
+
+
+/* =========================================================
+   SEARCH
+========================================================= */
+
+document
+  .getElementById(
+    "searchInput"
+  )
+  .addEventListener(
+    "input",
+    renderRooms
+  );
+
+
+/* =========================================================
+   FIREBASE AUTH STATE
+========================================================= */
+
+auth.onAuthStateChanged(
+  async function(user){
+
+    if(!user){
+
+      document.getElementById(
+        "userName"
+      ).textContent =
+        "زائر";
+
+
+      document.getElementById(
+        "avatar"
+      ).textContent =
+        "?";
+
+
+      document.getElementById(
+        "coinBalance"
+      ).textContent =
+        "0";
+
+
+      await loadHomeData();
+
+      return;
+
+    }
+
+
+    await loadUser(user);
+
+
+    await loadHomeData();
+
+  }
+);
+
+
+/* =========================================================
+   GLOBAL ERROR
+========================================================= */
+
+window.addEventListener(
+  "error",
+  function(e){
+
+    console.warn(
+      "Home error:",
+      e.message
+    );
+
+  }
+);
+
+</script>
+
+</body>
+</html>
