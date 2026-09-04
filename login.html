@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#03182f">
+
+    <title>Red Sea - تسجيل الدخول</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            width: 100%;
+            min-height: 100%;
+        }
+
+        body {
+            min-height: 100vh;
+            font-family: Arial, Tahoma, sans-serif;
+            color: #fff;
+            background:
+                radial-gradient(circle at 50% 0%, #073d70 0%, #031d38 38%, #010914 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow-x: hidden;
+        }
+
+        .page {
+            width: 100%;
+            max-width: 430px;
+            min-height: 100vh;
+            padding: 28px 22px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+        }
+
+        .glow {
+            position: absolute;
+            width: 230px;
+            height: 230px;
+            border-radius: 50%;
+            background: rgba(0, 150, 255, 0.12);
+            filter: blur(70px);
+            top: 5%;
+            left: 50%;
+            transform: translateX(-50%);
+            pointer-events: none;
+        }
+
+        .logo-box {
+            text-align: center;
+            margin-bottom: 24px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .logo {
+            width: min(62vw, 250px);
+            max-width: 250px;
+            height: auto;
+            filter:
+                drop-shadow(0 0 12px rgba(0, 170, 255, .35))
+                drop-shadow(0 0 28px rgba(0, 110, 255, .18));
+            animation: logoFloat 3s ease-in-out infinite;
+        }
+
+        .welcome {
+            text-align: center;
+            margin-bottom: 24px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .welcome h1 {
+            font-size: 26px;
+            margin-bottom: 8px;
+            font-weight: 800;
+        }
+
+        .welcome p {
+            color: rgba(255,255,255,.65);
+            font-size: 14px;
+        }
+
+        .card {
+            width: 100%;
+            padding: 22px 18px;
+            border-radius: 24px;
+            background: rgba(3, 18, 35, .72);
+            border: 1px solid rgba(255,255,255,.08);
+            box-shadow:
+                0 20px 60px rgba(0,0,0,.35),
+                inset 0 1px 0 rgba(255,255,255,.04);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            position: relative;
+            z-index: 1;
+        }
+
+        .field {
+            margin-bottom: 15px;
+        }
+
+        .field label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 13px;
+            color: rgba(255,255,255,.75);
+        }
+
+        .input-wrap {
+            position: relative;
+        }
+
+        .input-icon {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 18px;
+            opacity: .65;
+            pointer-events: none;
+        }
+
+        input {
+            width: 100%;
+            height: 54px;
+            border: 1px solid rgba(255,255,255,.09);
+            border-radius: 15px;
+            outline: none;
+            background: rgba(255,255,255,.055);
+            color: #fff;
+            padding: 0 46px 0 15px;
+            font-size: 15px;
+            transition: .25s;
+        }
+
+        input::placeholder {
+            color: rgba(255,255,255,.35);
+        }
+
+        input:focus {
+            border-color: rgba(0, 170, 255, .65);
+            background: rgba(255,255,255,.075);
+            box-shadow: 0 0 0 3px rgba(0,150,255,.10);
+        }
+
+        .password-wrap input {
+            padding-left: 48px;
+        }
+
+        .show-password {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            border: 0;
+            background: transparent;
+            color: rgba(255,255,255,.55);
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        .options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 2px 2px 18px;
+            font-size: 12px;
+        }
+
+        .remember {
+            color: rgba(255,255,255,.55);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .remember input {
+            width: 15px;
+            height: 15px;
+            padding: 0;
+            accent-color: #00aaff;
+        }
+
+        .forgot {
+            color: #39bfff;
+            text-decoration: none;
+        }
+
+        .login-btn {
+            width: 100%;
+            height: 55px;
+            border: none;
+            border-radius: 16px;
+            color: #fff;
+            font-size: 16px;
+            font-weight: 800;
+            cursor: pointer;
+            background: linear-gradient(135deg, #008cff, #0059d9);
+            box-shadow:
+                0 10px 25px rgba(0, 119, 255, .28),
+                inset 0 1px 0 rgba(255,255,255,.18);
+            transition: .2s;
+        }
+
+        .login-btn:active {
+            transform: scale(.98);
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 20px 0;
+            color: rgba(255,255,255,.3);
+            font-size: 12px;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: "";
+            flex: 1;
+            height: 1px;
+            background: rgba(255,255,255,.08);
+        }
+
+        .register-btn {
+            width: 100%;
+            height: 52px;
+            border-radius: 15px;
+            border: 1px solid rgba(0, 174, 255, .35);
+            background: rgba(0, 130, 255, .06);
+            color: #55c9ff;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .message {
+            display: none;
+            margin-top: 14px;
+            padding: 11px;
+            border-radius: 12px;
+            text-align: center;
+            font-size: 13px;
+            background: rgba(255, 70, 70, .10);
+            border: 1px solid rgba(255, 70, 70, .18);
+            color: #ff9b9b;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 22px;
+            color: rgba(255,255,255,.3);
+            font-size: 11px;
+            position: relative;
+            z-index: 1;
+        }
+
+        @keyframes logoFloat {
+            0%, 100% {
+                transform: translateY(0) scale(.98);
+            }
+
+            50% {
+                transform: translateY(-5px) scale(1.01);
+            }
+        }
+
+        @media (max-height: 650px) {
+            .page {
+                padding-top: 15px;
+                padding-bottom: 15px;
+            }
+
+            .logo {
+                width: 150px;
+            }
+
+            .logo-box {
+                margin-bottom: 12px;
+            }
+
+            .welcome {
+                margin-bottom: 15px;
+            }
+
+            .card {
+                padding: 17px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="page">
+
+    <div class="glow"></div>
+
+    <div class="logo-box">
+        <img src="logo.png" class="logo" alt="Red Sea">
+    </div>
+
+    <div class="welcome">
+        <h1>مرحبًا بك في Red Sea</h1>
+        <p>سجّل دخولك واستمتع بعالم الصوت والأصدقاء</p>
+    </div>
+
+    <div class="card">
+
+        <form id="loginForm">
+
+            <div class="field">
+                <label for="email">البريد الإلكتروني</label>
+
+                <div class="input-wrap">
+                    <span class="input-icon">✉</span>
+
+                    <input
+                        type="email"
+                        id="email"
+                        placeholder="أدخل البريد الإلكتروني"
+                        autocomplete="email"
+                        required
+                    >
+                </div>
+            </div>
+
+            <div class="field">
+                <label for="password">كلمة المرور</label>
+
+                <div class="input-wrap password-wrap">
+
+                    <span class="input-icon">🔒</span>
+
+                    <input
+                        type="password"
+                        id="password"
+                        placeholder="أدخل كلمة المرور"
+                        autocomplete="current-password"
+                        required
+                    >
+
+                    <button
+                        type="button"
+                        class="show-password"
+                        id="showPassword"
+                        aria-label="إظهار كلمة المرور"
+                    >👁</button>
+
+                </div>
+            </div>
+
+            <div class="options">
+
+                <label class="remember">
+                    <input type="checkbox" id="remember">
+                    تذكرني
+                </label>
+
+                <a href="#" class="forgot" id="forgotPassword">
+                    نسيت كلمة المرور؟
+                </a>
+
+            </div>
+
+            <button type="submit" class="login-btn">
+                تسجيل الدخول
+            </button>
+
+            <div class="message" id="message"></div>
+
+        </form>
+
+        <div class="divider">
+            <span>أو</span>
+        </div>
+
+        <button
+            type="button"
+            class="register-btn"
+            id="registerBtn"
+        >
+            إنشاء حساب جديد
+        </button>
+
+    </div>
+
+    <div class="footer">
+        RED SEA • VOICE ROOMS • CHAT • FRIENDS • GAMES • GIFTS
+    </div>
+
+</div>
+
+<script>
+
+    // إظهار / إخفاء كلمة المرور
+    const password = document.getElementById("password");
+    const showPassword = document.getElementById("showPassword");
+
+    showPassword.addEventListener("click", function () {
+
+        if (password.type === "password") {
+            password.type = "text";
+            showPassword.textContent = "🙈";
+        } else {
+            password.type = "password";
+            showPassword.textContent = "👁";
+        }
+
+    });
+
+
+    // إنشاء حساب
+    document.getElementById("registerBtn").addEventListener("click", function () {
+        window.location.href = "register.html";
+    });
+
+
+    // نسيت كلمة المرور
+    document.getElementById("forgotPassword").addEventListener("click", function (event) {
+
+        event.preventDefault();
+
+        showMessage("ميزة استعادة كلمة المرور سيتم تفعيلها مع السيرفر.", false);
+
+    });
+
+
+    // تسجيل الدخول
+    document.getElementById("loginForm").addEventListener("submit", function (event) {
+
+        event.preventDefault();
+
+        const email = document.getElementById("email").value.trim();
+        const pass = document.getElementById("password").value.trim();
+
+        if (!email || !pass) {
+            showMessage("من فضلك أدخل البريد الإلكتروني وكلمة المرور.", false);
+            return;
+        }
+
+        /*
+         * مؤقتًا فقط:
+         * هنا سيتم لاحقًا ربط تسجيل الدخول بالسيرفر.
+         */
+
+        showMessage("جاري تسجيل الدخول...", true);
+
+        setTimeout(function () {
+
+            showMessage(
+                "تسجيل الدخول غير مفعل حتى الآن — سنربطه بالسيرفر في الخطوة القادمة.",
+                false
+            );
+
+        }, 1000);
+
+    });
+
+
+    function showMessage(text, success) {
+
+        const message = document.getElementById("message");
+
+        message.textContent = text;
+        message.style.display = "block";
+
+        if (success) {
+            message.style.color = "#8ee7ff";
+            message.style.background = "rgba(0,170,255,.08)";
+            message.style.borderColor = "rgba(0,170,255,.18)";
+        } else {
+            message.style.color = "#ff9b9b";
+            message.style.background = "rgba(255,70,70,.10)";
+            message.style.borderColor = "rgba(255,70,70,.18)";
+        }
+
+    }
+
+</script>
+
+</body>
+                  </html>
