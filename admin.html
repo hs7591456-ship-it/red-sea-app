@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
+
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Red Sea - لوحة المالك</title>
 
-<script src="https://www.gstatic.com/firebasejs/12.18.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/12.18.0/firebase-auth-compat.js"></script>
+<title>Red Sea - لوحة الإدارة</title>
 
 <style>
+
 *{
     box-sizing:border-box;
     margin:0;
@@ -346,12 +346,15 @@ button{
 }
 
 @media(max-width:900px){
+
     .grid{
         grid-template-columns:repeat(2,1fr);
     }
+
 }
 
 @media(max-width:650px){
+
     .topbar-inner{
         align-items:flex-start;
     }
@@ -393,401 +396,705 @@ button{
     .item-actions .btn{
         flex:1;
     }
+
 }
+
 </style>
+
 </head>
+
 
 <body>
 
+
 <header class="topbar">
-    <div class="topbar-inner">
 
-        <div class="brand">
-            <img src="logo.png" class="logo" onerror="this.style.display='none'">
-            <div>
-                <h1>Red Sea</h1>
-                <p>لوحة تحكم المالك 👑</p>
-            </div>
-        </div>
+<div class="topbar-inner">
 
-        <div class="owner-box">
-            <div>
-                <div id="ownerName">جاري التحميل...</div>
-                <div id="ownerEmail" style="font-size:11px;color:#7891aa"></div>
-            </div>
+<div class="brand">
 
-            <div class="owner-avatar" id="ownerAvatar">R</div>
-        </div>
+<img
+src="logo.png"
+class="logo"
+onerror="this.style.display='none'"
+>
 
-    </div>
+<div>
+
+<h1>Red Sea</h1>
+
+<p>لوحة تحكم الإدارة 👑</p>
+
+</div>
+
+</div>
+
+
+<div class="owner-box">
+
+<div>
+
+<div id="ownerName">
+جاري التحميل...
+</div>
+
+<div
+id="ownerRole"
+style="font-size:11px;color:#7891aa"
+>
+</div>
+
+</div>
+
+
+<div
+class="owner-avatar"
+id="ownerAvatar"
+>
+R
+</div>
+
+</div>
+
+</div>
+
 </header>
+
+
 
 <main class="container">
 
-    <div id="errorBox" class="error"></div>
 
-    <section class="welcome">
-        <h2>أهلاً يا مالك Red Sea 👑</h2>
-        <p>
-            من هنا تقدر تتحكم في المستخدمين والوكالات والشحن والإعلانات.
-        </p>
-    </section>
+<div
+id="errorBox"
+class="error"
+></div>
 
-    <!-- STATISTICS -->
 
-    <div class="grid">
 
-        <div class="stat">
-            <div class="stat-title">الغرف الحالية</div>
-            <div class="stat-value" id="roomsCount">0</div>
-        </div>
+<section class="welcome">
 
-        <div class="stat">
-            <div class="stat-title">الوكالات العادية</div>
-            <div class="stat-value" id="agenciesCount">0</div>
-        </div>
+<h2>
+أهلاً بك في لوحة إدارة Red Sea 👑
+</h2>
 
-        <div class="stat">
-            <div class="stat-title">وكالات الشحن</div>
-            <div class="stat-value" id="shippingCount">0</div>
-        </div>
+<p>
+من هنا تقدر تتحكم في المستخدمين والوكالات والشحن والإعلانات والغرف.
+</p>
 
-        <div class="stat">
-            <div class="stat-title">الإعلانات</div>
-            <div class="stat-value" id="adsCount">0</div>
-        </div>
+</section>
 
-    </div>
 
 
-    <!-- CREATE NORMAL AGENCY -->
+<div class="grid">
 
-    <section class="section">
 
-        <div class="section-head">
-            <h3>🏢 إنشاء وكالة عادية</h3>
-            <span>Owner / Admin</span>
-        </div>
+<div class="stat">
 
-        <div class="section-body">
+<div class="stat-title">
+الغرف الحالية
+</div>
 
-            <div class="form-grid">
+<div
+class="stat-value"
+id="roomsCount"
+>
+0
+</div>
 
-                <div class="field">
-                    <label>اسم الوكالة</label>
-                    <input
-                        id="agencyName"
-                        type="text"
-                        placeholder="مثال: وكالة البحر"
-                    >
-                </div>
+</div>
 
-            </div>
 
-            <div class="actions">
-                <button class="btn" onclick="createAgency()">
-                    إنشاء الوكالة
-                </button>
-            </div>
 
-            <div id="agencyResult" class="result"></div>
+<div class="stat">
 
-        </div>
+<div class="stat-title">
+الوكالات العادية
+</div>
 
-    </section>
+<div
+class="stat-value"
+id="agenciesCount"
+>
+0
+</div>
 
+</div>
 
-    <!-- CREATE SHIPPING AGENCY -->
 
-    <section class="section">
 
-        <div class="section-head">
-            <h3>🚚 إنشاء وكالة شحن</h3>
-            <span>Owner فقط</span>
-        </div>
+<div class="stat">
 
-        <div class="section-body">
+<div class="stat-title">
+وكالات الشحن
+</div>
 
-            <div class="form-grid">
+<div
+class="stat-value"
+id="shippingCount"
+>
+0
+</div>
 
-                <div class="field">
-                    <label>اسم وكالة الشحن</label>
-                    <input
-                        id="shippingName"
-                        type="text"
-                        placeholder="مثال: شحن Red Sea"
-                    >
-                </div>
+</div>
 
-                <div class="field">
-                    <label>رقم المستخدم 8 أرقام</label>
-                    <input
-                        id="shippingUserId"
-                        type="text"
-                        inputmode="numeric"
-                        maxlength="8"
-                        placeholder="12345678"
-                    >
-                </div>
 
-            </div>
 
-            <div class="actions">
-                <button class="btn" onclick="createShippingAgency()">
-                    إنشاء وكالة الشحن
-                </button>
-            </div>
+<div class="stat">
 
-            <div id="shippingResult" class="result"></div>
+<div class="stat-title">
+الإعلانات
+</div>
 
-        </div>
-
-    </section>
+<div
+class="stat-value"
+id="adsCount"
+>
+0
+</div>
 
+</div>
 
-    <!-- MAKE ADMIN -->
+</div>
 
-    <section class="section">
 
-        <div class="section-head">
-            <h3>🛡️ تعيين مدير</h3>
-            <span>Owner فقط</span>
-        </div>
 
-        <div class="section-body">
+<!-- CREATE NORMAL AGENCY -->
 
-            <div class="form-grid">
+<section class="section">
 
-                <div class="field">
-                    <label>رقم المستخدم 8 أرقام</label>
-                    <input
-                        id="adminUserId"
-                        type="text"
-                        inputmode="numeric"
-                        maxlength="8"
-                        placeholder="12345678"
-                    >
-                </div>
+<div class="section-head">
 
-            </div>
+<h3>
+🏢 إنشاء وكالة عادية
+</h3>
 
-            <div class="actions">
-                <button class="btn" onclick="makeAdmin()">
-                    تعيين كمدير
-                </button>
-            </div>
+<span>
+Owner / Admin
+</span>
 
-            <div id="adminResult" class="result"></div>
+</div>
 
-        </div>
 
-    </section>
+<div class="section-body">
 
+<div class="form-grid">
 
-    <!-- ADD AD -->
+<div class="field">
 
-    <section class="section">
+<label>
+اسم الوكالة
+</label>
 
-        <div class="section-head">
-            <h3>📢 إضافة إعلان</h3>
-            <span>Owner فقط</span>
-        </div>
+<input
+id="agencyName"
+type="text"
+placeholder="مثال: وكالة البحر"
+>
 
-        <div class="section-body">
+</div>
 
-            <div class="form-grid">
+</div>
 
-                <div class="field">
-                    <label>عنوان الإعلان</label>
-                    <input
-                        id="adTitle"
-                        type="text"
-                        placeholder="عنوان الإعلان"
-                    >
-                </div>
 
-                <div class="field">
-                    <label>ترتيب الإعلان</label>
-                    <input
-                        id="adOrder"
-                        type="number"
-                        value="0"
-                        placeholder="0"
-                    >
-                </div>
+<div class="actions">
 
-                <div class="field full">
-                    <label>الوصف</label>
-                    <input
-                        id="adDescription"
-                        type="text"
-                        placeholder="وصف مختصر للإعلان"
-                    >
-                </div>
+<button
+class="btn"
+onclick="createAgency()"
+>
+إنشاء الوكالة
+</button>
 
-                <div class="field full">
-                    <label>رابط صورة الإعلان</label>
-                    <input
-                        id="adImage"
-                        type="url"
-                        placeholder="https://..."
-                    >
-                </div>
+</div>
 
-            </div>
 
-            <div class="actions">
-                <button class="btn" onclick="createAd()">
-                    نشر الإعلان
-                </button>
-            </div>
+<div
+id="agencyResult"
+class="result"
+></div>
 
-            <div id="adResult" class="result"></div>
+</div>
 
-        </div>
+</section>
 
-    </section>
 
 
-    <!-- SHIPPING AGENCIES -->
+<!-- SHIPPING -->
 
-    <section class="section">
+<section class="section">
 
-        <div class="section-head">
-            <h3>🚚 وكالات الشحن</h3>
+<div class="section-head">
 
-            <button
-                class="btn btn-secondary"
-                onclick="loadShippingAgencies()"
-            >
-                تحديث
-            </button>
-        </div>
+<h3>
+🚚 إنشاء وكالة شحن
+</h3>
 
-        <div class="section-body">
+<span>
+Owner فقط
+</span>
 
-            <div id="shippingList" class="list">
-                <div class="loading">جاري التحميل...</div>
-            </div>
+</div>
 
-        </div>
 
-    </section>
+<div class="section-body">
 
+<div class="form-grid">
 
-    <!-- NORMAL AGENCIES -->
 
-    <section class="section">
+<div class="field">
 
-        <div class="section-head">
-            <h3>🏢 الوكالات العادية</h3>
+<label>
+اسم وكالة الشحن
+</label>
 
-            <button
-                class="btn btn-secondary"
-                onclick="loadAgencies()"
-            >
-                تحديث
-            </button>
-        </div>
+<input
+id="shippingName"
+type="text"
+placeholder="مثال: شحن Red Sea"
+>
 
-        <div class="section-body">
+</div>
 
-            <div id="agencyList" class="list">
-                <div class="loading">جاري التحميل...</div>
-            </div>
 
-        </div>
+<div class="field">
 
-    </section>
+<label>
+رقم المستخدم 8 أرقام
+</label>
 
+<input
+id="shippingUserId"
+type="text"
+inputmode="numeric"
+maxlength="8"
+placeholder="12345678"
+>
 
-    <!-- ROOMS -->
+</div>
 
-    <section class="section">
 
-        <div class="section-head">
-            <h3>🏠 الغرف</h3>
+</div>
 
-            <button
-                class="btn btn-secondary"
-                onclick="loadRooms()"
-            >
-                تحديث
-            </button>
-        </div>
 
-        <div class="section-body">
+<div class="actions">
 
-            <div id="roomList" class="list">
-                <div class="loading">جاري التحميل...</div>
-            </div>
+<button
+class="btn"
+onclick="createShippingAgency()"
+>
+إنشاء وكالة الشحن
+</button>
 
-        </div>
+</div>
 
-    </section>
 
+<div
+id="shippingResult"
+class="result"
+></div>
 
-    <!-- ADS -->
+</div>
 
-    <section class="section">
+</section>
 
-        <div class="section-head">
-            <h3>📢 الإعلانات الحالية</h3>
 
-            <button
-                class="btn btn-secondary"
-                onclick="loadAds()"
-            >
-                تحديث
-            </button>
-        </div>
 
-        <div class="section-body">
+<!-- ADMIN -->
 
-            <div id="adsList" class="list">
-                <div class="loading">جاري التحميل...</div>
-            </div>
+<section class="section">
 
-        </div>
+<div class="section-head">
 
-    </section>
+<h3>
+🛡️ تعيين مدير
+</h3>
 
+<span>
+Owner فقط
+</span>
 
-    <div class="actions">
-        <button class="btn btn-secondary" onclick="goHome()">
-            🏠 العودة للرئيسية
-        </button>
+</div>
 
-        <button class="btn logout" onclick="logout()">
-            تسجيل الخروج
-        </button>
-    </div>
+
+<div class="section-body">
+
+<div class="form-grid">
+
+<div class="field">
+
+<label>
+رقم المستخدم 8 أرقام
+</label>
+
+<input
+id="adminUserId"
+type="text"
+inputmode="numeric"
+maxlength="8"
+placeholder="12345678"
+>
+
+</div>
+
+</div>
+
+
+<div class="actions">
+
+<button
+class="btn"
+onclick="makeAdmin()"
+>
+تعيين كمدير
+</button>
+
+</div>
+
+
+<div
+id="adminResult"
+class="result"
+></div>
+
+</div>
+
+</section>
+
+
+
+<!-- ADS -->
+
+<section class="section">
+
+<div class="section-head">
+
+<h3>
+📢 إضافة إعلان
+</h3>
+
+<span>
+Owner فقط
+</span>
+
+</div>
+
+
+<div class="section-body">
+
+<div class="form-grid">
+
+
+<div class="field">
+
+<label>
+عنوان الإعلان
+</label>
+
+<input
+id="adTitle"
+type="text"
+placeholder="عنوان الإعلان"
+>
+
+</div>
+
+
+<div class="field">
+
+<label>
+ترتيب الإعلان
+</label>
+
+<input
+id="adOrder"
+type="number"
+value="0"
+>
+
+</div>
+
+
+<div class="field full">
+
+<label>
+الوصف
+</label>
+
+<input
+id="adDescription"
+type="text"
+placeholder="وصف مختصر للإعلان"
+>
+
+</div>
+
+
+<div class="field full">
+
+<label>
+رابط صورة الإعلان
+</label>
+
+<input
+id="adImage"
+type="url"
+placeholder="https://..."
+>
+
+</div>
+
+
+</div>
+
+
+<div class="actions">
+
+<button
+class="btn"
+onclick="createAd()"
+>
+نشر الإعلان
+</button>
+
+</div>
+
+
+<div
+id="adResult"
+class="result"
+></div>
+
+</div>
+
+</section>
+
+
+
+<!-- SHIPPING LIST -->
+
+<section class="section">
+
+<div class="section-head">
+
+<h3>
+🚚 وكالات الشحن
+</h3>
+
+<button
+class="btn btn-secondary"
+onclick="loadShippingAgencies()"
+>
+تحديث
+</button>
+
+</div>
+
+
+<div class="section-body">
+
+<div
+id="shippingList"
+class="list"
+>
+
+<div class="loading">
+جاري التحميل...
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+
+<!-- AGENCIES -->
+
+<section class="section">
+
+<div class="section-head">
+
+<h3>
+🏢 الوكالات العادية
+</h3>
+
+<button
+class="btn btn-secondary"
+onclick="loadAgencies()"
+>
+تحديث
+</button>
+
+</div>
+
+
+<div class="section-body">
+
+<div
+id="agencyList"
+class="list"
+>
+
+<div class="loading">
+جاري التحميل...
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+
+<!-- ROOMS -->
+
+<section class="section">
+
+<div class="section-head">
+
+<h3>
+🏠 الغرف
+</h3>
+
+<button
+class="btn btn-secondary"
+onclick="loadRooms()"
+>
+تحديث
+</button>
+
+</div>
+
+
+<div class="section-body">
+
+<div
+id="roomList"
+class="list"
+>
+
+<div class="loading">
+جاري التحميل...
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+
+<!-- ADS LIST -->
+
+<section class="section">
+
+<div class="section-head">
+
+<h3>
+📢 الإعلانات الحالية
+</h3>
+
+<button
+class="btn btn-secondary"
+onclick="loadAds()"
+>
+تحديث
+</button>
+
+</div>
+
+
+<div class="section-body">
+
+<div
+id="adsList"
+class="list"
+>
+
+<div class="loading">
+جاري التحميل...
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+
+<div class="actions">
+
+<button
+class="btn btn-secondary"
+onclick="goHome()"
+>
+🏠 العودة للرئيسية
+</button>
+
+
+<button
+class="btn logout"
+onclick="logout()"
+>
+تسجيل الخروج
+</button>
+
+</div>
+
 
 </main>
 
-<div id="toast" class="toast"></div>
+
+<div
+id="toast"
+class="toast"
+></div>
+
 
 
 <script>
 
-const firebaseConfig = {
-    apiKey: "AIzaSyD_R-LAa0qHFLS36QX7JmCLnh2DJyZhM",
-    authDomain: "red-sea-8db76.firebaseapp.com",
-    projectId: "red-sea-8db76",
-    storageBucket: "red-sea-8db76.firebasestorage.app",
-    messagingSenderId: "418468623324",
-    appId: "1:418468623324:web:2a5fd96f353efccaf81519"
-};
 
-firebase.initializeApp(firebaseConfig);
-
-const auth = firebase.auth();
+/* =========================================================
+   ADMIN SESSION
+========================================================= */
 
 const API_BASE =
-    "https://red-sea-server.onrender.com";
+"https://red-sea-server.onrender.com";
 
-let currentUser = null;
-let profile = null;
+
+const ADMIN_TOKEN_KEY =
+"redsea_admin_token";
+
+
+const ADMIN_USER_KEY =
+"redsea_admin_user";
+
+
+let adminToken =
+localStorage.getItem(ADMIN_TOKEN_KEY);
+
+
+let adminUser = null;
+
+
+try{
+
+    adminUser =
+        JSON.parse(
+            localStorage.getItem(ADMIN_USER_KEY) || "{}"
+        );
+
+}catch(error){
+
+    adminUser = {};
+
+}
 
 
 /* =========================================================
@@ -795,12 +1102,18 @@ let profile = null;
 ========================================================= */
 
 function $(id){
+
     return document.getElementById(id);
+
 }
 
+
 function clean(value){
+
     return String(value ?? "").trim();
+
 }
+
 
 function escapeHtml(value){
 
@@ -810,213 +1123,294 @@ function escapeHtml(value){
         .replace(/>/g,"&gt;")
         .replace(/"/g,"&quot;")
         .replace(/'/g,"&#039;");
+
 }
 
+
 function number(value){
-    return Number(value || 0).toLocaleString("en-US");
+
+    return Number(value || 0)
+        .toLocaleString("en-US");
+
 }
+
 
 function showToast(message){
 
     const box = $("toast");
 
-    box.textContent = message;
-    box.style.display = "block";
+    box.textContent =
+        message;
+
+    box.style.display =
+        "block";
 
     setTimeout(()=>{
-        box.style.display = "none";
+
+        box.style.display =
+            "none";
+
     },3000);
+
 }
+
 
 function showResult(id,message){
 
-    const box = $(id);
+    const box =
+        $(id);
 
-    box.textContent = message;
-    box.style.display = "block";
+    box.textContent =
+        message;
+
+    box.style.display =
+        "block";
+
 }
+
 
 function showError(message){
 
-    const box = $("errorBox");
+    const box =
+        $("errorBox");
 
-    box.textContent = message;
-    box.style.display = "block";
+    box.textContent =
+        message;
+
+    box.style.display =
+        "block";
+
 }
+
 
 function hideError(){
 
-    $("errorBox").style.display = "none";
+    $("errorBox").style.display =
+        "none";
+
 }
 
 
 /* =========================================================
-   API
+   ADMIN API
 ========================================================= */
 
-async function api(path, options = {}){
-
-    let token = null;
-
-    if(currentUser){
-
-        try{
-            token =
-                await currentUser.getIdToken(true);
-        }catch(error){
-            console.error(error);
-        }
-    }
+async function api(path,options={}){
 
     const headers = {
-        "Content-Type":"application/json",
+
+        "Content-Type":
+            "application/json",
+
         ...(options.headers || {})
+
     };
 
-    if(token){
+
+    if(adminToken){
+
         headers.Authorization =
-            "Bearer " + token;
+            "Bearer " + adminToken;
+
     }
 
-    const response =
-        await fetch(
-            API_BASE + path,
-            {
-                ...options,
-                headers
-            }
+
+    let response;
+
+    try{
+
+        response =
+            await fetch(
+                API_BASE + path,
+                {
+                    ...options,
+                    headers
+                }
+            );
+
+    }catch(error){
+
+        throw new Error(
+            "تعذر الاتصال بالسيرفر"
         );
+
+    }
+
 
     let data = null;
 
+
     try{
-        data = await response.json();
-    }catch(error){}
+
+        data =
+            await response.json();
+
+    }catch(error){
+
+        data = {};
+
+    }
+
+
+    if(
+        response.status === 401 ||
+        response.status === 403
+    ){
+
+        localStorage.removeItem(
+            ADMIN_TOKEN_KEY
+        );
+
+        localStorage.removeItem(
+            ADMIN_USER_KEY
+        );
+
+        window.location.href =
+            "admin-login.html";
+
+        throw new Error(
+            "انتهت جلسة الإدارة"
+        );
+
+    }
+
 
     if(!response.ok){
 
         throw new Error(
-            data?.message ||
+            data.message ||
             "حدث خطأ في السيرفر"
         );
+
     }
 
+
     return data;
+
 }
 
 
 /* =========================================================
-   LOAD PROFILE
+   CHECK ADMIN SESSION
 ========================================================= */
 
-async function loadProfile(){
+async function checkAdminSession(){
 
-    if(!currentUser){
-        return;
+    if(!adminToken){
+
+        window.location.replace(
+            "admin-login.html"
+        );
+
+        return false;
+
     }
+
 
     try{
 
         const data =
             await api(
-                "/api/users/by-firebase/" +
-                encodeURIComponent(currentUser.uid)
+                "/api/admin/me"
             );
 
-        profile = data.user;
 
-        if(!profile){
-            throw new Error("بيانات المستخدم غير موجودة");
+        if(!data.success){
+
+            throw new Error(
+                "جلسة الإدارة غير صالحة"
+            );
+
         }
 
-        if(
-            profile.role !== "OWNER"
-        ){
 
-            document.body.innerHTML = `
-                <div style="
-                    min-height:100vh;
-                    display:flex;
-                    align-items:center;
-                    justify-content:center;
-                    padding:25px;
-                    text-align:center;
-                    background:#07111f;
-                    color:white;
-                    font-family:Arial;
-                ">
-                    <div>
-                        <div style="font-size:60px">🚫</div>
-                        <h2>ليس لديك صلاحية</h2>
-                        <p style="color:#91a7bd;margin-top:10px">
-                            هذه الصفحة مخصصة لمالك النظام فقط.
-                        </p>
-                        <button
-                            onclick="goHome()"
-                            style="
-                                margin-top:20px;
-                                padding:12px 20px;
-                                border:0;
-                                border-radius:12px;
-                                background:#1769aa;
-                                color:white;
-                                font-weight:bold;
-                            "
-                        >
-                            العودة للرئيسية
-                        </button>
-                    </div>
-                </div>
-            `;
+        adminUser =
+            data.admin ||
+            data.user ||
+            adminUser ||
+            {};
 
-            return;
-        }
+
+        localStorage.setItem(
+            ADMIN_USER_KEY,
+            JSON.stringify(adminUser)
+        );
+
 
         $("ownerName").textContent =
-            profile.name ||
-            currentUser.displayName ||
-            "المالك";
+            adminUser.name ||
+            adminUser.username ||
+            "مدير النظام";
 
-        $("ownerEmail").textContent =
-            profile.email ||
-            currentUser.email ||
-            "";
+
+        $("ownerRole").textContent =
+            adminUser.role ||
+            "ADMIN";
+
 
         $("ownerAvatar").textContent =
-            (profile.name ||
-            currentUser.email ||
-            "R")
+            (
+                adminUser.name ||
+                adminUser.username ||
+                "R"
+            )
             .charAt(0)
             .toUpperCase();
+
+
+        return true;
+
 
     }catch(error){
 
         console.error(error);
 
+        if(
+            !adminToken
+        ){
+
+            return false;
+
+        }
+
+
         showError(
-            "تعذر تحميل بيانات المالك: " +
+            "تعذر التحقق من جلسة الإدارة: " +
             error.message
         );
+
+        return false;
+
     }
+
 }
 
 
 /* =========================================================
-   CREATE NORMAL AGENCY
+   CREATE AGENCY
 ========================================================= */
 
 async function createAgency(){
 
     hideError();
 
+
     const name =
-        clean($("agencyName").value);
+        clean(
+            $("agencyName").value
+        );
+
 
     if(!name){
 
-        showToast("اكتب اسم الوكالة أولاً");
+        showToast(
+            "اكتب اسم الوكالة أولاً"
+        );
+
         return;
+
     }
+
 
     try{
 
@@ -1025,33 +1419,50 @@ async function createAgency(){
                 "/api/agencies",
                 {
                     method:"POST",
+
                     body:JSON.stringify({
                         name
                     })
                 }
             );
 
+
         showResult(
             "agencyResult",
+
             "تم إنشاء الوكالة بنجاح\n" +
             "رقم الوكالة: " +
-            data.agency.agencyId
+            (
+                data.agency?.agencyId ||
+                data.agency?.id ||
+                "-"
+            )
         );
 
-        $("agencyName").value = "";
 
-        showToast("تم إنشاء الوكالة");
+        $("agencyName").value =
+            "";
+
+
+        showToast(
+            "تم إنشاء الوكالة"
+        );
+
 
         loadAgencies();
+
 
     }catch(error){
 
         showResult(
             "agencyResult",
+
             "فشل إنشاء الوكالة: " +
             error.message
         );
+
     }
+
 }
 
 
@@ -1063,17 +1474,29 @@ async function createShippingAgency(){
 
     hideError();
 
+
     const name =
-        clean($("shippingName").value);
+        clean(
+            $("shippingName").value
+        );
+
 
     const userId =
-        clean($("shippingUserId").value);
+        clean(
+            $("shippingUserId").value
+        );
+
 
     if(!name){
 
-        showToast("اكتب اسم وكالة الشحن");
+        showToast(
+            "اكتب اسم وكالة الشحن"
+        );
+
         return;
+
     }
+
 
     if(!/^\d{8}$/.test(userId)){
 
@@ -1082,7 +1505,9 @@ async function createShippingAgency(){
         );
 
         return;
+
     }
+
 
     try{
 
@@ -1091,6 +1516,7 @@ async function createShippingAgency(){
                 "/api/shipping-agencies",
                 {
                     method:"POST",
+
                     body:JSON.stringify({
                         name,
                         userId
@@ -1098,30 +1524,46 @@ async function createShippingAgency(){
                 }
             );
 
+
         showResult(
             "shippingResult",
+
             "تم إنشاء وكالة الشحن بنجاح\n" +
             "رقم الوكالة: " +
-            data.agency.agencyId +
-            "\nالمستخدم: " +
-            userId
+            (
+                data.agency?.agencyId ||
+                data.agency?.id ||
+                "-"
+            )
         );
 
-        $("shippingName").value = "";
-        $("shippingUserId").value = "";
 
-        showToast("تم إنشاء وكالة الشحن");
+        $("shippingName").value =
+            "";
+
+        $("shippingUserId").value =
+            "";
+
+
+        showToast(
+            "تم إنشاء وكالة الشحن"
+        );
+
 
         loadShippingAgencies();
+
 
     }catch(error){
 
         showResult(
             "shippingResult",
+
             "فشل إنشاء وكالة الشحن: " +
             error.message
         );
+
     }
+
 }
 
 
@@ -1133,8 +1575,12 @@ async function makeAdmin(){
 
     hideError();
 
+
     const userId =
-        clean($("adminUserId").value);
+        clean(
+            $("adminUserId").value
+        );
+
 
     if(!/^\d{8}$/.test(userId)){
 
@@ -1143,7 +1589,9 @@ async function makeAdmin(){
         );
 
         return;
+
     }
+
 
     try{
 
@@ -1152,30 +1600,42 @@ async function makeAdmin(){
                 "/api/owner/admins",
                 {
                     method:"POST",
+
                     body:JSON.stringify({
                         userId
                     })
                 }
             );
 
+
         showResult(
             "adminResult",
+
             data.message ||
             "تم تعيين المستخدم كمدير"
         );
 
-        $("adminUserId").value = "";
 
-        showToast("تم تعيين المدير");
+        $("adminUserId").value =
+            "";
+
+
+        showToast(
+            "تم تعيين المدير"
+        );
+
 
     }catch(error){
 
         showResult(
             "adminResult",
+
             "فشل تعيين المدير: " +
             error.message
         );
+
     }
+
 }
 
 
@@ -1187,17 +1647,30 @@ async function createAd(){
 
     hideError();
 
+
     const title =
-        clean($("adTitle").value);
+        clean(
+            $("adTitle").value
+        );
+
 
     const description =
-        clean($("adDescription").value);
+        clean(
+            $("adDescription").value
+        );
+
 
     const imageUrl =
-        clean($("adImage").value);
+        clean(
+            $("adImage").value
+        );
+
 
     const order =
-        Number($("adOrder").value || 0);
+        Number(
+            $("adOrder").value || 0
+        );
+
 
     if(!title && !imageUrl){
 
@@ -1206,7 +1679,9 @@ async function createAd(){
         );
 
         return;
+
     }
+
 
     try{
 
@@ -1215,39 +1690,64 @@ async function createAd(){
                 "/api/ads",
                 {
                     method:"POST",
+
                     body:JSON.stringify({
+
                         title,
                         description,
                         imageUrl,
                         order
+
                     })
                 }
             );
 
+
         showResult(
             "adResult",
+
             "تم نشر الإعلان بنجاح\n" +
             "رقم الإعلان: " +
-            data.ad.adId
+            (
+                data.ad?.adId ||
+                data.ad?.id ||
+                "-"
+            )
         );
 
-        $("adTitle").value = "";
-        $("adDescription").value = "";
-        $("adImage").value = "";
-        $("adOrder").value = "0";
 
-        showToast("تم نشر الإعلان");
+        $("adTitle").value =
+            "";
+
+        $("adDescription").value =
+            "";
+
+        $("adImage").value =
+            "";
+
+        $("adOrder").value =
+            "0";
+
+
+        showToast(
+            "تم نشر الإعلان"
+        );
+
 
         loadAds();
+
 
     }catch(error){
 
         showResult(
             "adResult",
+
             "فشل نشر الإعلان: " +
             error.message
         );
+
     }
+
 }
 
 
@@ -1257,23 +1757,31 @@ async function createAd(){
 
 async function loadRooms(){
 
-    const box = $("roomList");
+    const box =
+        $("roomList");
+
 
     box.innerHTML =
         '<div class="loading">جاري التحميل...</div>';
 
+
     try{
 
         const data =
-            await api("/api/rooms",{
-                method:"GET"
-            });
+            await api(
+                "/api/rooms"
+            );
+
 
         const rooms =
             data.rooms || [];
 
+
         $("roomsCount").textContent =
-            number(rooms.length);
+            number(
+                rooms.length
+            );
+
 
         if(!rooms.length){
 
@@ -1281,87 +1789,134 @@ async function loadRooms(){
                 '<div class="empty">لا توجد غرف حالياً</div>';
 
             return;
+
         }
 
-        box.innerHTML =
-            rooms.map(room => {
 
-                return `
+        box.innerHTML =
+            rooms.map(
+                room => {
+
+                    return `
+
                     <div class="item">
 
                         <div class="item-main">
 
                             <div class="item-title">
-                                ${escapeHtml(room.name)}
+
+                                ${escapeHtml(
+                                    room.name ||
+                                    "غرفة بدون اسم"
+                                )}
+
                             </div>
 
+
                             <div class="item-meta">
+
                                 رقم الغرفة:
-                                ${escapeHtml(room.roomId)}
+                                ${escapeHtml(
+                                    room.roomId ||
+                                    "-"
+                                )}
+
                                 <br>
 
                                 المالك:
-                                ${escapeHtml(room.ownerId || "-")}
+                                ${escapeHtml(
+                                    room.ownerId ||
+                                    "-"
+                                )}
+
                                 <br>
 
                                 الأعضاء:
-                                ${number(room.membersCount)}
-                                |
-                                نشاط:
-                                ${number(room.activityCoins)}
+                                ${number(
+                                    room.membersCount
+                                )}
+
                             </div>
 
                         </div>
 
+
                         <div class="item-actions">
 
                             <span class="badge">
-                                ${room.active !== false
+
+                                ${
+                                    room.active !== false
                                     ? "نشطة"
-                                    : "متوقفة"}
+                                    : "متوقفة"
+                                }
+
                             </span>
 
                         </div>
 
                     </div>
-                `;
 
-            }).join("");
+                    `;
+
+                }
+            ).join("");
+
 
     }catch(error){
 
-        box.innerHTML =
-            `<div class="empty">
-                تعذر تحميل الغرف<br>
-                ${escapeHtml(error.message)}
-            </div>`;
+        box.innerHTML = `
+
+            <div class="empty">
+
+                تعذر تحميل الغرف
+
+                <br>
+
+                ${escapeHtml(
+                    error.message
+                )}
+
+            </div>
+
+        `;
+
     }
+
 }
 
 
 /* =========================================================
-   LOAD NORMAL AGENCIES
+   LOAD AGENCIES
 ========================================================= */
 
 async function loadAgencies(){
 
-    const box = $("agencyList");
+    const box =
+        $("agencyList");
+
 
     box.innerHTML =
         '<div class="loading">جاري التحميل...</div>';
+
 
     try{
 
         const data =
             await api(
-                "/api/agencies/top?limit=20"
+                "/api/agencies/top?limit=50"
             );
+
 
         const agencies =
             data.agencies || [];
 
+
         $("agenciesCount").textContent =
-            number(agencies.length);
+            number(
+                agencies.length
+            );
+
 
         if(!agencies.length){
 
@@ -1369,71 +1924,114 @@ async function loadAgencies(){
                 '<div class="empty">لا توجد وكالات عادية</div>';
 
             return;
+
         }
 
-        box.innerHTML =
-            agencies.map((agency,index)=>{
 
-                return `
+        box.innerHTML =
+            agencies.map(
+                (agency,index) => {
+
+                    return `
+
                     <div class="item">
 
                         <div class="item-main">
 
                             <div class="item-title">
+
                                 #${index + 1}
-                                ${escapeHtml(agency.name)}
+
+                                ${escapeHtml(
+                                    agency.name ||
+                                    "وكالة"
+                                )}
+
                             </div>
 
+
                             <div class="item-meta">
+
                                 رقم الوكالة:
-                                ${escapeHtml(agency.agencyId)}
+                                ${escapeHtml(
+                                    agency.agencyId ||
+                                    "-"
+                                )}
+
                                 <br>
 
                                 المالك:
-                                ${escapeHtml(agency.ownerId || "-")}
+                                ${escapeHtml(
+                                    agency.ownerId ||
+                                    "-"
+                                )}
+
                                 <br>
 
                                 العملات:
-                                ${number(agency.coins)}
-                                |
-                                النشاط:
-                                ${number(agency.activityCoins)}
+                                ${number(
+                                    agency.coins
+                                )}
+
                             </div>
 
                         </div>
 
+
                         <div class="item-actions">
+
                             <span class="badge">
+
                                 وكالة عادية
+
                             </span>
+
                         </div>
 
                     </div>
-                `;
 
-            }).join("");
+                    `;
+
+                }
+            ).join("");
+
 
     }catch(error){
 
-        box.innerHTML =
-            `<div class="empty">
-                تعذر تحميل الوكالات<br>
-                ${escapeHtml(error.message)}
-            </div>`;
+        box.innerHTML = `
+
+            <div class="empty">
+
+                تعذر تحميل الوكالات
+
+                <br>
+
+                ${escapeHtml(
+                    error.message
+                )}
+
+            </div>
+
+        `;
+
     }
+
 }
 
 
 /* =========================================================
-   LOAD SHIPPING AGENCIES
+   LOAD SHIPPING
 ========================================================= */
 
 async function loadShippingAgencies(){
 
-    const box = $("shippingList");
+    const box =
+        $("shippingList");
+
 
     box.innerHTML =
         '<div class="loading">جاري التحميل...</div>';
+
 
     try{
 
@@ -1442,11 +2040,16 @@ async function loadShippingAgencies(){
                 "/api/shipping-agencies"
             );
 
+
         const agencies =
             data.agencies || [];
 
+
         $("shippingCount").textContent =
-            number(agencies.length);
+            number(
+                agencies.length
+            );
+
 
         if(!agencies.length){
 
@@ -1454,56 +2057,96 @@ async function loadShippingAgencies(){
                 '<div class="empty">لا توجد وكالات شحن</div>';
 
             return;
+
         }
 
-        box.innerHTML =
-            agencies.map(agency=>{
 
-                return `
+        box.innerHTML =
+            agencies.map(
+                agency => {
+
+                    return `
+
                     <div class="item">
 
                         <div class="item-main">
 
                             <div class="item-title">
-                                ${escapeHtml(agency.name)}
+
+                                ${escapeHtml(
+                                    agency.name ||
+                                    "وكالة شحن"
+                                )}
+
                             </div>
 
+
                             <div class="item-meta">
+
                                 رقم الوكالة:
-                                ${escapeHtml(agency.agencyId)}
+                                ${escapeHtml(
+                                    agency.agencyId ||
+                                    "-"
+                                )}
+
                                 <br>
 
                                 المستخدم:
-                                ${escapeHtml(agency.ownerId || "-")}
+                                ${escapeHtml(
+                                    agency.ownerId ||
+                                    "-"
+                                )}
+
                                 <br>
 
                                 الرصيد:
-                                ${number(agency.balance)}
+                                ${number(
+                                    agency.balance
+                                )}
+
                             </div>
 
                         </div>
 
+
                         <div class="item-actions">
 
                             <span class="badge">
+
                                 شحن
+
                             </span>
 
                         </div>
 
                     </div>
-                `;
 
-            }).join("");
+                    `;
+
+                }
+            ).join("");
+
 
     }catch(error){
 
-        box.innerHTML =
-            `<div class="empty">
-                تعذر تحميل وكالات الشحن<br>
-                ${escapeHtml(error.message)}
-            </div>`;
+        box.innerHTML = `
+
+            <div class="empty">
+
+                تعذر تحميل وكالات الشحن
+
+                <br>
+
+                ${escapeHtml(
+                    error.message
+                )}
+
+            </div>
+
+        `;
+
     }
+
 }
 
 
@@ -1513,21 +2156,31 @@ async function loadShippingAgencies(){
 
 async function loadAds(){
 
-    const box = $("adsList");
+    const box =
+        $("adsList");
+
 
     box.innerHTML =
         '<div class="loading">جاري التحميل...</div>';
 
+
     try{
 
         const data =
-            await api("/api/ads");
+            await api(
+                "/api/ads"
+            );
+
 
         const ads =
             data.ads || [];
 
+
         $("adsCount").textContent =
-            number(ads.length);
+            number(
+                ads.length
+            );
+
 
         if(!ads.length){
 
@@ -1535,137 +2188,208 @@ async function loadAds(){
                 '<div class="empty">لا توجد إعلانات</div>';
 
             return;
+
         }
 
-        box.innerHTML =
-            ads.map(ad=>{
 
-                return `
+        box.innerHTML =
+            ads.map(
+                ad => {
+
+                    return `
+
                     <div class="item">
 
                         <div class="item-main">
 
                             <div class="item-title">
+
                                 ${escapeHtml(
                                     ad.title ||
                                     "إعلان بدون عنوان"
                                 )}
+
                             </div>
+
 
                             <div class="item-meta">
 
                                 ${escapeHtml(
-                                    ad.description || ""
+                                    ad.description ||
+                                    ""
                                 )}
 
                                 <br>
 
                                 رقم الإعلان:
-                                ${escapeHtml(ad.adId || ad.id)}
+                                ${escapeHtml(
+                                    ad.adId ||
+                                    ad.id ||
+                                    "-"
+                                )}
 
                                 <br>
 
                                 الترتيب:
-                                ${number(ad.order)}
+                                ${number(
+                                    ad.order
+                                )}
 
                             </div>
 
                         </div>
 
+
                         <div class="item-actions">
 
                             <span class="badge">
-                                ${ad.active !== false
+
+                                ${
+                                    ad.active !== false
                                     ? "فعال"
-                                    : "متوقف"}
+                                    : "متوقف"
+                                }
+
                             </span>
 
                         </div>
 
                     </div>
-                `;
 
-            }).join("");
+                    `;
+
+                }
+            ).join("");
+
 
     }catch(error){
 
-        box.innerHTML =
-            `<div class="empty">
-                تعذر تحميل الإعلانات<br>
-                ${escapeHtml(error.message)}
-            </div>`;
+        box.innerHTML = `
+
+            <div class="empty">
+
+                تعذر تحميل الإعلانات
+
+                <br>
+
+                ${escapeHtml(
+                    error.message
+                )}
+
+            </div>
+
+        `;
+
     }
+
 }
 
 
 /* =========================================================
-   NAVIGATION
+   LOGOUT
 ========================================================= */
-
-function goHome(){
-    window.location.href = "home.html";
-}
 
 async function logout(){
 
     try{
 
-        await auth.signOut();
+        if(adminToken){
 
-        window.location.href =
-            "login.html";
+            await fetch(
+                API_BASE +
+                "/api/admin/logout",
+                {
+                    method:"POST",
+
+                    headers:{
+                        "Content-Type":
+                            "application/json",
+
+                        "Authorization":
+                            "Bearer " +
+                            adminToken
+                    }
+                }
+            );
+
+        }
 
     }catch(error){
 
-        showToast(
-            "تعذر تسجيل الخروج"
-        );
+        console.error(error);
+
     }
+
+
+    localStorage.removeItem(
+        ADMIN_TOKEN_KEY
+    );
+
+
+    localStorage.removeItem(
+        ADMIN_USER_KEY
+    );
+
+
+    adminToken =
+        null;
+
+
+    window.location.replace(
+        "admin-login.html"
+    );
+
 }
 
 
 /* =========================================================
-   AUTH
+   HOME
 ========================================================= */
 
-auth.onAuthStateChanged(
-    async user => {
+function goHome(){
 
-        if(!user){
+    window.location.href =
+        "home.html";
 
-            window.location.href =
-                "login.html";
+}
 
-            return;
-        }
 
-        currentUser = user;
+/* =========================================================
+   START
+========================================================= */
 
-        await loadProfile();
+async function startAdmin(){
 
-        if(
-            profile &&
-            profile.role === "OWNER"
-        ){
+    const valid =
+        await checkAdminSession();
 
-            await Promise.allSettled([
 
-                loadRooms(),
+    if(!valid){
 
-                loadAgencies(),
-
-                loadShippingAgencies(),
-
-                loadAds()
-
-            ]);
-
-        }
+        return;
 
     }
-);
+
+
+    await Promise.allSettled([
+
+        loadRooms(),
+
+        loadAgencies(),
+
+        loadShippingAgencies(),
+
+        loadAds()
+
+    ]);
+
+}
+
+
+startAdmin();
 
 </script>
 
 </body>
-  </html>
+
+    </html>
